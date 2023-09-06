@@ -19,17 +19,22 @@ def main():
    
     filesList = [] 
     for idataset in datasets: 
-        getFiles(idataset)
+        iList = getFiles(idataset)
+        filesList.extend(iList)
+    print(filesList)
     
     
     outList = 'input/' + outList +'.txt'
     print(outList)
     
 def getFiles(dataset):
-    command = 'dasgoclient --query=\"file ' + dataset   
-    output = subprocess.run(command, shell=True)
-    print(output)
-    lists = output.splitlines()
+    command = 'dasgoclient --query=\"file dataset={}\"'.format( dataset)   
+    print('run command: ', command)
+    output = subprocess.run(command, shell=True, capture_output=True, text=True)
+    print(output.stdout)
+    lists = output.stdout.splitlines()
+    # print(lists)
+    return lists
     
     
     
