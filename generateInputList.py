@@ -3,8 +3,8 @@ import subprocess
 def main():
     #dasgoclient --query="dataset=/Muon*/Run2023*-PromptNanoAODv*/NANOAOD"  for getting datasets
     datasets = [
-    '/Muon0/Run2023B-PromptNanoAODv11p9_v1-v2/NANOAOD',
-    '/Muon1/Run2023B-PromptNanoAODv11p9_v1-v2/NANOAOD',
+    # '/Muon0/Run2023B-PromptNanoAODv11p9_v1-v2/NANOAOD',
+    # '/Muon1/Run2023B-PromptNanoAODv11p9_v1-v2/NANOAOD',
     # '/Muon0/Run2023C-PromptNanoAODv11p9_v1-v1/NANOAOD',
     # '/Muon0/Run2023C-PromptNanoAODv12_v2-v2/NANOAOD',
     # '/Muon0/Run2023C-PromptNanoAODv12_v3-v1/NANOAOD',
@@ -13,10 +13,19 @@ def main():
     # '/Muon1/Run2023C-PromptNanoAODv12_v2-v2/NANOAOD',
     # '/Muon1/Run2023C-PromptNanoAODv12_v3-v1/NANOAOD',
     # '/Muon1/Run2023C-PromptNanoAODv12_v4-v1/NANOAOD',
+    '/Muon0/Run2023D-PromptReco-v1/NANOAOD',
+    '/Muon0/Run2023D-PromptReco-v2/NANOAOD',
+    '/Muon1/Run2023D-PromptReco-v1/NANOAOD',
+    '/Muon1/Run2023D-PromptReco-v2/NANOAOD ',
+    
     ]
     
-    outList = 'Muon2023B'
+    # outList = 'Muon2023B'
     # outList = 'Muon2023C'
+    outList = 'Muon2023D'
+  
+  
+  
    
     filesList = [] 
     for idataset in datasets: 

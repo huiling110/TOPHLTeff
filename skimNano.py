@@ -2,11 +2,15 @@ import ROOT
 import os
 import argparse
 
+
+#!!!Maybe try rDataFrame in the future
 # def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023C/Muon0/NANOAOD/PromptNanoAODv12_v4-v1/60000/fdd8324d-a4f8-4286-945f-5528e7ae46e9.root', version = 'v0ForHadronic', ifForHardronic = True,   ifTest = False):
-def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023D/Muon0/NANOAOD/PromptReco-v1/000/369/901/00000/3bdb0fca-4c12-4394-9812-509cb1d05cb7.root', version = 'v0ForHadronic', ifForHardronic = True,   ifTest = True):
-        
-      
+# def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023D/Muon0/NANOAOD/PromptReco-v1/000/369/901/00000/3bdb0fca-4c12-4394-9812-509cb1d05cb7.root', version = 'v0ForHadronic', ifForHardronic = True,   ifTest = True):
+# def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023C/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v1/70000/61280236-03a6-4cf3-8008-6eca1d7236d0.root', version = 'v0ForHadronic', ifForHardronic = True,   ifTest = True):
+def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v2/60000/06d25571-df3e-4ceb-9e44-7452add3e004.root', version = 'v0ForHadronic', ifForHardronic = True,   ifTest = True):
     # inputNano = 'root://cmsxrootd.fnal.gov/' +'/store/data/Run2023C/Muon0/NANOAOD/PromptNanoAODv12_v3-v1/2820000/e55c38a4-5776-4b0f-8190-39da36d63bca.root' 
+
+
     # input_file = ROOT.TFile(inputNano, "READ")  #???not sure TFile not working
     # input_tree = input_file.Get("Events")
     chain = ROOT.TChain("Events")
@@ -18,10 +22,11 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023D/Muon0/NANOA
 
     # List of branch names to keep
     branches_to_keep = [
-                        # 'HLT_PFHT400_SixPFJet32_DoublePFBTagDeepJet_2p94',
-                        # 'HLT_PFHT450_SixPFJet36_PFBTagDeepJet_1p59',
-                        # 'HLT_PFHT450_SixPFJet36_PFBTagDeepCSV_1p59',
-                        # 'HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94',
+                        'HLT_PFHT450_SixPFJet36_PFBTagDeepCSV_1p59',
+                        'HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94',
+                        # 2023B and 2023C
+                        'HLT_PFHT400_SixPFJet32_DoublePFBTagDeepJet_2p94',
+                        'HLT_PFHT450_SixPFJet36_PFBTagDeepJet_1p59',
                         #2023D
                         'HLT_PFHT450_SixPFJet36_PNetBTag0p35',
                         'HLT_PFHT400_SixPFJet32_PNet2BTagMean0p50',
@@ -44,8 +49,10 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023D/Muon0/NANOA
 
     chain.SetBranchStatus('*', 0)
     for branch_name in branches_to_keep:
-        chain.SetBranchStatus(branch_name, 1)  # Enable the desired branch
-         
+        if chain.GetBranch(branch_name):
+            chain.SetBranchStatus(branch_name, 1)  # Enable the desired branch
+        else:
+            print('branch not exist: ', branch_name, '!!!\n')
     output_tree = chain.CloneTree(0)  # have to be after the chain.SetBranchStatus
    
     entries = chain.GetEntries()
@@ -53,12 +60,11 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023D/Muon0/NANOA
         entries =10000
     for entry in range(entries):
         chain.GetEntry(entry)
-        if not (chain.HLT_IsoMu27==1):
+        if not (chain.HLT_IsoMu27==1): #!!!add muon selection here
             continue
         if ifForHardronic:
             nj, HT=jetSel(chain)
-            # if not (chain.nJet>5 and chain.HLT_IsoMu27==1):
-            if not (nj>4 and chain.HLT_IsoMu27==1 and HT>300):
+            if not (nj>5 and HT>400):
                 continue 
         else:
             eleNum = getEleNum(chain)
@@ -74,7 +80,6 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023D/Muon0/NANOA
         outDir = './output/'
     if not os.path.exists(outDir):
         os.makedirs(outDir)
-    # output_file = ROOT.TFile("output.root", "RECREATE") 
     postFix = inputNano.rsplit("/", 1)[-1]
     output_file = ROOT.TFile(outDir+postFix, "RECREATE") 
     print('entries in new tree: ', output_tree.GetEntries())
