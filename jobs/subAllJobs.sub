@@ -1,0 +1,12 @@
+arguments               = $(Process)
+executable              = singJob.sh
+output                  = /afs/cern.ch/work/h/hhua/HLT_QDM/CMSSW_12_4_0_pre1/src/HLT-DQM-HTCondor/hua/jobs/logs/$(Process).out
+error                   = /afs/cern.ch/work/h/hhua/HLT_QDM/CMSSW_12_4_0_pre1/src/HLT-DQM-HTCondor/hua/jobs/logs/$(Process).err
+log                     = /afs/cern.ch/work/h/hhua/HLT_QDM/CMSSW_12_4_0_pre1/src/HLT-DQM-HTCondor/hua/jobs/logs/log.log
++JobFlavour             = "workday"
+use_x509userproxy = true
+x509userproxy = /afs/cern.ch/user/h/hhua/.x509up_117245
+should_transfer_files   = YES
+when_to_transfer_output = ON_EXIT
+#queue 56
+queue 354
