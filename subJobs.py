@@ -1,13 +1,15 @@
-
+import os
 
 def main():
     inputList = 'input/Muon2023B.txt'
     
-    inList = getListFromTxt(inputList)
-    print(inList)
+    inName = getListFromTxt(inputList)
+    print(inName)
+   
+    jobDir = getNameFromPath(inputList)
     
-    # for iList in inList:
-    #     writeJob(iList)
+    for iList in inList:
+        writeJob(iList, jobName)
    
     # subAllJobs()  
   
@@ -21,7 +23,16 @@ def getListFromTxt(inFile):
         # print(lines)
     return lines
     
+#generic functions that need to be grouped
+def getNameFromPath(inPath):
+    base_file_name = os.path.basename(file_path)
+    # Remove the '.txt' postfix
+    file_name_without_extension = os.path.splitext(base_file_name)[0]
+    return file_name_without_extension
     
+
+def writeJob(inFile):
+        
     
    
 def subSingleJob():
