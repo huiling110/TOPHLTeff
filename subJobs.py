@@ -6,20 +6,28 @@ def main():
     inputList = 'input/Muon2023B.txt'
     jobVersion = 'v1ForHardronic'
     
-    # inList = getListFromTxt(inputList)
+    inList = getListFromTxt(inputList)
     # print(inList)
+    nanoFileNum = len(inList)
+    print( 'fileNum=', nanoFileNum)
    
+    current_file_path = os.path.abspath(__file__)
+    current_directory = os.path.dirname(current_file_path)
     jobDir = getNameFromPath(inputList)
-    jobDir = 'jobs/'+jobDir + '/'
+    jobDir = current_directory+ '/jobs/'+jobDir + '/'
     uf.checkMakeDir(jobDir)
     print(jobDir)
     
     # for i, iList in enumerate(inList):
     #     jobName = jobDir + i + '.sh'
     writeJob( jobDir+'singleJob.sh', inputList, jobVersion)
+    writeSub(jobDir +'subList.sub', jobDir, nanoFileNum)
     
      
     # subAllJobs()  
+ 
+ 
+ 
   
 def getListFromTxt(inFile):
     # if not os.path.exists(file_path): 
@@ -44,12 +52,27 @@ def writeJob( jobName, inFile, jobVersion):
         '#!/bin/bash',
         'cd /afs/cern.ch/work/h/hhua/HLTStudy/TOPHLTeff/',
         'lines=(`cat /afs/cern.ch/work/h/hhua/HLTStudy/TOPHLTeff/{}`)'.format(inFile),
-        'echo \$\{lines[\$1]\}',
+        'echo ${lines[$1]}',
         # 'python3 skimNano.py root://cmsxrootd.fnal.gov/$\{lines[\$1]\} {} 1 0'.format(jobVersion), 
         'python3 skimNano.py root://cmsxrootd.fnal.gov/$\{lines[$1]\} ' + '{} 1 0'.format(jobVersion),
     ]
-    
     writeListToFile(lines, jobName)
+
+def writeSub(subName, jobDir, fileNum):
+    lines = [
+        'arguments               = $(Process)',
+        'executable              = {}singleJob.sh'.format(jobDir),
+        'output                  = {}/logs/$(Process).out'.format(jobDir),
+        'error                   = {}/logs/$(Process).err'.format(jobDir),
+        'log                     = {}/logs/log.log'.format(jobDir),
+        '+JobFlavour             = "workday"',
+        'use_x509userproxy = true',
+        'x509userproxy = /afs/cern.ch/user/h/hhua/.x509up_117245',
+        'should_transfer_files   = YES',
+        'when_to_transfer_output = ON_EXIT',
+        'queue {}  '.format(fileNum),
+    ]
+    writeListToFile(lines, subName)
         
 
 #!!!generic    
