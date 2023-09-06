@@ -16,6 +16,7 @@ def main():
     ]
     
     outList = 'Muon2023B'
+    # outList = 'Muon2023C'
    
     filesList = [] 
     for idataset in datasets: 
@@ -26,6 +27,14 @@ def main():
     
     outList = 'input/' + outList +'.txt'
     print(outList)
+    saveListToTxt(filesList, outList)
+    
+def saveListToTxt(inList, outFile):
+    with open(outFile, 'w') as file:
+    # Loop through the list and write each element to a separate line
+        for item in inList:
+            file.write("%s\n" % item)    
+    print('file saved here: ', outFile)
     
 def getFiles(dataset):
     command = 'dasgoclient --query=\"file dataset={}\"'.format( dataset)   
