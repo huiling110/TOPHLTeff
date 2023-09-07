@@ -1,6 +1,6 @@
-import ROOT
 import numpy as np
 import os
+import ROOT
 
 import skimNano as sn
 
@@ -8,9 +8,10 @@ def main():
     # isTest = True
     isTest =False
     # inputDir = '/eos/user/h/hhua/forTopHLT/v0Hardronic2023C/' 
-    inputDir = '/eos/user/h/hhua/forTopHLT/v0Hardronic2022G/' 
+    # inputDir = '/eos/user/h/hhua/forTopHLT/v0Hardronic2022G/' 
     # inputDir = '/eos/user/h/hhua/forTopHLT/v0Lep2023C/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/v0Lep2022G/'
+    inputDir = '/eos/user/h/hhua/forTopHLT/v1ForHardronic/'
     isHadronic = True
     # isHadronic = False
    
@@ -66,28 +67,56 @@ def makeHist_ele(chain, isTest):
 
 def makeHist_hard(chain, isTest):
     #!!!should switch to TEfficiency for efficiency calculation
-    binning =  np.array((0.,5.,10.,15.,20.,25.,30.,35.,40.,45.,50.,55.,60.,65.,70.,75.,80.,90.,100.,120.,140.,160.,200.))
-    h_de = ROOT.TH1D('de_2btag_jet_1pt', 'de_2btag_jet_1pt', len(binning)-1,binning)
-    h_nu = ROOT.TH1D('nu_2btag_jet_1pt', 'nu_2btag_jet_1pt', len(binning)-1,binning)
-    h_nu_1btag = ROOT.TH1D('nu_1btag_jet_1pt', 'nu_1btag_jet_1pt', len(binning)-1,binning)
+    de_jetNum = ROOT.TH1D('de_jetNum', 'de_jetNum', 6, 6, 12)
+    nu_jetNum_1btag =  ROOT.TH1D('nu_jetNum_1btag', 'nu_jetNum_1btag', 6, 6, 12)
+    nu_jetNum_2btag = ROOT.TH1D('nu_jetNum_2btag', 'nu_jetNum_2btaag', 6, 6, 12)
+    nu_jetNum_both = ROOT.TH1D('nu_jetNum_both', 'nu_jetNum_both', 6, 6, 12)
     
-    #preslection
+    de_bjetNum = ROOT.TH1D('de_bjetNum', 'de_bjetNum', 5, 1.5, 6.5)
+    nu_bjetNum_1btag =  ROOT.TH1D('nu_bjetNum_1btag', 'nu_bjetNum_1btag', 5, 1.5, 6.5)
+    nu_bjetNum_2btag = ROOT.TH1D('nu_bjetNum_2btag', 'nu_bjetNum_2btaag', 5, 1.5, 6.5)
+    nu_bjetNum_both = ROOT.TH1D('nu_bjetNum_both', 'nu_bjetNum_both', 5, 1.5, 6.5)
+    
+    binning = np.array((500., 550., 600., 650., 700., 800., 900., 1000., 1300., 2000)) 
+    de_HT = ROOT.TH1D('de_HT', 'de_HT', len(binning)-1, binning)
+    nu_HT_1btag =  ROOT.TH1D('nu_HT_1btag', 'nu_HT_1btag', len(binning)-1, binning)
+    nu_HT_2btag = ROOT.TH1D('nu_HT_2btag', 'nu_HT_2btaag', len(binning)-1, binning)
+    nu_HT_both = ROOT.TH1D('nu_HT_both', 'nu_HT_both', len(binning)-1, binning)
+    
     entries = chain.GetEntries()
     if isTest:
         entries = 10000
     for entry in range(entries):
         chain.GetEntry(entry)
         
-        ifPre = preSel(chain)
-        if not ifPre:
+    #preslection
+        jetNum, HT = jetSel(chain)
+        bjetNum, bHT = jetSel(chain, True)
+        if ( not (jetNum>5 and HT>500 and bjetNum>1)):
             continue
-        h_de.Fill(chain.Jet_pt[0])
         
-        if chain.HLT_PFHT400_SixPFJet32_DoublePFBTagDeepJet_2p94==1:
-            h_nu.Fill(chain.Jet_pt[0]) 
-        if chain.HLT_PFHT450_SixPFJet36_PFBTagDeepJet_1p59==1:
-            h_nu_1btag.Fill(chain.Jet_pt[0])
-    histList = [h_de, h_nu, h_nu_1btag]
+        de_jetNum.Fill(jetNum)
+        de_HT.Fill(HT)
+        de_bjetNum.Fill(bjetNum)
+      
+        #!!!change to era dependant
+        HLT_1btag = chain.HLT_PFHT450_SixPFJet36_PFBTagDeepJet_1p59
+        HLT_2btag = chain.HLT_PFHT400_SixPFJet32_DoublePFBTagDeepJet_2p94 
+        if HLT_1btag:
+            nu_jetNum_1btag.Fill(jetNum)
+            nu_bjetNum_1btag.Fill(bjetNum)
+            nu_HT_1btag.Fill(HT)
+        if HLT_2btag:
+            nu_jetNum_2btag.Fill(jetNum)
+            nu_bjetNum_2btag.Fill(bjetNum)
+            nu_HT_2btag.Fill(HT)
+        if HLT_2btag or HLT_1btag:
+            nu_jetNum_both.Fill(jetNum)
+            nu_bjetNum_both.Fill(bjetNum)
+            nu_HT_both.Fill(HT)
+            
+            
+    histList = [de_jetNum, nu_jetNum_1btag, nu_jetNum_2btag, nu_jetNum_both, de_bjetNum, nu_bjetNum_1btag, nu_bjetNum_2btag, nu_bjetNum_both, de_HT, nu_HT_1btag, nu_HT_2btag, nu_HT_both]
     return histList
         
     
@@ -103,30 +132,47 @@ def makeOutFile(inputDir, isTest):
     
       
 def preSel( chain) :
-    ht=0
-    nj=0
-    nb=0
-    for Jet in range(0,chain.nJet):
-        if abs(chain.Jet_eta[Jet])>2.4: 
-            continue
-        if chain.Jet_pt[Jet]<30: 
-            continue
-        # chain ht
-        if((chain.Jet_pt[Jet] > 30.) & (abs(chain.Jet_eta[Jet])<2.4)): 
-            ht = ht + chain.Jet_pt[Jet]
-        # nJets
-        if((chain.Jet_pt[Jet] > 40.) & (abs(chain.Jet_eta[Jet])<2.4) ):
-            nj = nj+1
-        # nbJets
-        if((chain.Jet_pt[Jet] > 40.) & (abs(chain.Jet_eta[Jet])<2.4) & (chain.Jet_btagDeepFlavB[Jet]>0.2770)):
-            nb = nb+1
+    # for Jet in range(0,chain.nJet):
+    #     if abs(chain.Jet_eta[Jet])>2.4: 
+    #         continue
+    #     if chain.Jet_pt[Jet]<30: 
+    #         continue
+    #     # chain ht
+    #     if((chain.Jet_pt[Jet] > 30.) & (abs(chain.Jet_eta[Jet])<2.4)): 
+    #         ht = ht + chain.Jet_pt[Jet]
+    #     # nJets
+    #     if((chain.Jet_pt[Jet] > 40.) & (abs(chain.Jet_eta[Jet])<2.4) ):
+    #         nj = nj+1
+    #     # nbJets
+    #     if((chain.Jet_pt[Jet] > 40.) & (abs(chain.Jet_eta[Jet])<2.4) & (chain.Jet_btagDeepFlavB[Jet]>0.2770)):
+    #         nb = nb+1
         # if((chain.Jet_pt[Jet] > 40.) & (abs(chain.Jet_eta[Jet])<2.4) & (chain.Jet_btagdeepb[Jet]>0.4941)):##!!!
         # if((chain.Jet_pt[Jet] > 40.) & (abs(chain.Jet_eta[Jet])<2.4) & (chain.Jet_btagPNetB[Jet]>0.4941)):##!!!
         
-    ifPass = (nj > 5)  & (nb>1) & (ht>500) & (chain.HLT_IsoMu27==1)
+    jetNum, HT = jetSel(chain)
+    bjetNum, bHT = jetSel(chain, True)
+        
+    # ifPass = (nj > 5)  & (nb>1) & (ht>500) & (chain.HLT_IsoMu27==1)
+    # ifPass = jetNum>5 and HT>500 and bjetNum>1 and chain.HLT_IsoMu27==1
+    ifPass = jetNum>5 and HT>500 and bjetNum>0 and chain.HLT_IsoMu27==1
     return ifPass
 
-
+def jetSel(chain, isB=False):
+    jetNum = 0
+    HT = 0
+    for i in range(0, chain.nJet):
+        if( not (chain.Jet_pt[i] > 30.) and (abs(chain.Jet_eta[i])<2.4)) :
+            continue
+        if isB:
+            # DeepJet 0.351; PNet: 0.387
+        #!!!change to era dependant
+            if( not (chain.Jet_btagDeepFlavB[i]>0.351)):
+                continue
+        jetNum+=1
+        HT = HT+ chain.Jet_pt[i] 
+        # print(HT, chain.Jet_pt[i])
+    return jetNum, HT 
+    
            
     
 

@@ -17,6 +17,7 @@ def main():
     current_file_path = os.path.abspath(__file__)
     current_directory = os.path.dirname(current_file_path)
     jobDir = getNameFromPath(inputList)
+    print('jobVersion: ', jobDir + jobVersion)
     jobDir = current_directory+ '/jobs/'+jobDir + '/'
     logDir = jobDir + 'logs/'
     uf.checkMakeDir(jobDir)
