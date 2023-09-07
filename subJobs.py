@@ -3,8 +3,12 @@ import os
 import usefulFunc as uf
 
 def main():
-    inputList = 'input/Muon2023B.txt'
-    era = '2023B'
+    # inputList = 'input/Muon2023B.txt'
+    # era = '2023B'
+    # inputList = 'input/Muon2023C.txt'
+    # era = '2023C'
+    inputList = 'input/Muon2023D.txt'
+    era = '2023D'
     
     jobVersion = 'v1ForHardronic'
     

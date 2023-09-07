@@ -111,12 +111,15 @@ def jetSel(chain):
 def process_arguments():
     # Create an ArgumentParser object
     parser = argparse.ArgumentParser(description='Description of your script.')
-
+ 
+ 
+    input = '/store/data/Run2023B/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v2/60000/06d25571-df3e-4ceb-9e44-7452add3e004.root'
+ 
     # Add arguments
-    parser.add_argument('arg1', type=str, help='Description of argument 1.')
-    parser.add_argument('arg2', type=str, help='Description of argument 2.')
-    parser.add_argument('arg3', type=bool, help='Description of argument 2.')
-    parser.add_argument('arg4', type=bool, help='Description of argument 2.')
+    parser.add_argument('--arg1', type=str, default='root://cmsxrootd.fnal.gov//'+input)
+    parser.add_argument('--arg2', type=str, default='./output/')
+    parser.add_argument('--arg3', type=bool, default=True)
+    parser.add_argument('--arg4', type=bool, default=True)
 
     # Parse the command-line arguments
     args = parser.parse_args()
@@ -138,12 +141,10 @@ def process_arguments():
     return arguments
 
 
-
-
 if __name__=='__main__':
     args = process_arguments()
     # if len(argz)>0:
-    main(args['arg1'], args['arg2'], True, False)
+    main(args['arg1'], args['arg2'], args['arg3'], args['arg4'])
     # main(args['arg1'], args['arg2'], False, False)
     # else:
     # main()
