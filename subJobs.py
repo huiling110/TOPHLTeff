@@ -5,6 +5,8 @@ import usefulFunc as uf
 def main():
     inputList = 'input/Muon2023B.txt'
     jobVersion = 'v1ForHardronic'
+   
+   
     
     inList = getListFromTxt(inputList)
     # print(inList)
@@ -15,16 +17,22 @@ def main():
     current_directory = os.path.dirname(current_file_path)
     jobDir = getNameFromPath(inputList)
     jobDir = current_directory+ '/jobs/'+jobDir + '/'
+    logDir = jobDir + 'logs/'
     uf.checkMakeDir(jobDir)
+    uf.checkMakeDir(logDir)
     print(jobDir)
     
-    # for i, iList in enumerate(inList):
-    #     jobName = jobDir + i + '.sh'
     writeJob( jobDir+'singleJob.sh', inputList, jobVersion)
     writeSub(jobDir +'subList.sub', jobDir, nanoFileNum)
     
-     
-    # subAllJobs()  
+    subHTCondor(jobDir+'subList.sub')  
+    
+    
+def subHTCondor(subScript):
+    #https://batchdocs.web.cern.ch/local/quick.html
+    command = 'condor_submit {}'.format(subScript)
+    uf.runCommand(command)
+      
  
  
  
@@ -54,7 +62,7 @@ def writeJob( jobName, inFile, jobVersion):
         'lines=(`cat /afs/cern.ch/work/h/hhua/HLTStudy/TOPHLTeff/{}`)'.format(inFile),
         'echo ${lines[$1]}',
         # 'python3 skimNano.py root://cmsxrootd.fnal.gov/$\{lines[\$1]\} {} 1 0'.format(jobVersion), 
-        'python3 skimNano.py root://cmsxrootd.fnal.gov/$\{lines[$1]\} ' + '{} 1 0'.format(jobVersion),
+        'python3 skimNano.py root://cmsxrootd.fnal.gov/${lines[$1]} ' + '{} 1 0'.format(jobVersion),
     ]
     writeListToFile(lines, jobName)
 
