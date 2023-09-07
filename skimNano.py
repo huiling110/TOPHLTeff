@@ -102,7 +102,8 @@ def jetSel(chain):
     jetNum=0
     HT = 0
     for Jet in range(0,chain.nJet):
-        if((chain.Jet_pt[Jet] > 30.) and (abs(chain.Jet_eta[Jet])<2.4) and chain.Jet_jetId[Jet]>0):
+        # if((chain.Jet_pt[Jet] > 30.) and (abs(chain.Jet_eta[Jet])<2.4) and chain.Jet_jetId[Jet]>0):
+        if((chain.Jet_pt[Jet] > 30.) and (abs(chain.Jet_eta[Jet])<2.4)) :
             jetNum+=1
             HT=HT+chain.Jet_pt[Jet] 
     return jetNum, HT    
@@ -140,7 +141,9 @@ def process_arguments():
 
 
 if __name__=='__main__':
-    args = process_arguments()
-    main(args['arg1'], args['arg2'], True, False)
-    # main(args['arg1'], args['arg2'], False, False)
-    # main()
+    # args = process_arguments()
+    # if len(argz)>0:
+    #     main(args['arg1'], args['arg2'], True, False)
+    # # main(args['arg1'], args['arg2'], False, False)
+    # else:
+    main()
