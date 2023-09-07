@@ -65,6 +65,7 @@ def makeHist_ele(chain, isTest):
     
 
 def makeHist_hard(chain, isTest):
+    #!!!should switch to TEfficiency for efficiency calculation
     binning =  np.array((0.,5.,10.,15.,20.,25.,30.,35.,40.,45.,50.,55.,60.,65.,70.,75.,80.,90.,100.,120.,140.,160.,200.))
     h_de = ROOT.TH1D('de_2btag_jet_1pt', 'de_2btag_jet_1pt', len(binning)-1,binning)
     h_nu = ROOT.TH1D('nu_2btag_jet_1pt', 'nu_2btag_jet_1pt', len(binning)-1,binning)

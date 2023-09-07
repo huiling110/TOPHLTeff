@@ -143,7 +143,7 @@ def process_arguments():
 if __name__=='__main__':
     # args = process_arguments()
     # if len(argz)>0:
-    #     main(args['arg1'], args['arg2'], True, False)
-    # # main(args['arg1'], args['arg2'], False, False)
+    main(args['arg1'], args['arg2'], True, False)
+    # main(args['arg1'], args['arg2'], False, False)
     # else:
-    main()
+    # main()
