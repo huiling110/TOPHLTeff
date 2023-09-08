@@ -190,7 +190,7 @@ def jetSel(chain, isB=False, btag=0):
                 if( not (chain.Jet_btagDeepFlavB[i]>0.351)):
                     continue
             if btag==1:
-                if( not (chain.Jet_btagPNetB[i]>0.351)):
+                if( not (chain.Jet_btagPNetB[i]>0.351)): #!!!bug
                     continue
                 
         jetNum+=1
