@@ -26,7 +26,7 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANO
     branches_to_keep = [
                         'HLT_PFHT450_SixPFJet36_PFBTagDeepCSV_1p59',
                         'HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94',
-                        # 2023B and 2023C
+                        # 2023B and 2023C and 2022B
                         'HLT_PFHT400_SixPFJet32_DoublePFBTagDeepJet_2p94',
                         'HLT_PFHT450_SixPFJet36_PFBTagDeepJet_1p59',
                         #2023D
@@ -115,8 +115,8 @@ def process_arguments():
     parser = argparse.ArgumentParser(description='Description of your script.')
  
  
-    input = '/store/data/Run2023B/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v2/60000/06d25571-df3e-4ceb-9e44-7452add3e004.root'
- 
+    # input = '/store/data/Run2023B/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v2/60000/06d25571-df3e-4ceb-9e44-7452add3e004.root'
+    input = '/store/data/Run2022C/Muon/NANOAOD/PromptNanoAODv10-v1/40000/d4484006-7e4b-424e-86a4-346d17d862f8.root'
     # Add arguments
     # parser.add_argument('--arg1', type=str, default='root://cmsxrootd.fnal.gov//'+input)
     parser.add_argument('--arg1', type=str, default=input)
@@ -150,3 +150,4 @@ if __name__=='__main__':
     # main(args['arg1'], args['arg2'], args['arg3'], args['arg4'])
     # main(args['arg1'], args['arg2'], False, False)
     main(args['arg1'], args['arg2'], True, False)
+    # main(args['arg1'], args['arg2'], True, True) #test
