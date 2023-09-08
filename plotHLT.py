@@ -13,9 +13,10 @@ def main():
     # inputDir = '/eos/user/h/hhua/forTopHLT/v0Lep2023C/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/v0Lep2022G/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/v1ForHardronic/'
-    # inputDir = '/eos/user/h/hhua/forTopHLT/2023B/v1ForHardronic/'
+    inputDir = '/eos/user/h/hhua/forTopHLT/2023B/v1ForHardronic/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/2023C/v1ForHardronic/'
-    inputDir = '/eos/user/h/hhua/forTopHLT/2023D/v1ForHardronic/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2023D/v1ForHardronic/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2022/v1ForHardronic/'
     isHadronic = True
     # isHadronic = False
    
@@ -73,21 +74,21 @@ def makeHist_ele(chain, isTest):
 
 def makeHist_hard(chain, isTest, era):
     #!!!should switch to TEfficiency for efficiency calculation
-    de_jetNum = ROOT.TH1D('de_jetNum', 'de_jetNum', 6, 6, 12)
-    nu_jetNum_1btag =  ROOT.TH1D('nu_jetNum_1btag', 'nu_jetNum_1btag', 6, 6, 12)
-    nu_jetNum_2btag = ROOT.TH1D('nu_jetNum_2btag', 'nu_jetNum_2btaag', 6, 6, 12)
-    nu_jetNum_both = ROOT.TH1D('nu_jetNum_both', 'nu_jetNum_both', 6, 6, 12)
+    de_jetNum = ROOT.TH1D('de_jetNum', 'n^{jet}', 6, 6, 12)
+    nu_jetNum_1btag =  ROOT.TH1D('nu_jetNum_1btag', 'n^{jet}', 6, 6, 12)
+    nu_jetNum_2btag = ROOT.TH1D('nu_jetNum_2btag', 'n^{jet}', 6, 6, 12)
+    nu_jetNum_both = ROOT.TH1D('nu_jetNum_both', 'n^{jet}', 6, 6, 12)
     
-    de_bjetNum = ROOT.TH1D('de_bjetNum', 'de_bjetNum', 5, 1.5, 6.5)
-    nu_bjetNum_1btag =  ROOT.TH1D('nu_bjetNum_1btag', 'nu_bjetNum_1btag', 5, 1.5, 6.5)
-    nu_bjetNum_2btag = ROOT.TH1D('nu_bjetNum_2btag', 'nu_bjetNum_2btaag', 5, 1.5, 6.5)
-    nu_bjetNum_both = ROOT.TH1D('nu_bjetNum_both', 'nu_bjetNum_both', 5, 1.5, 6.5)
+    de_bjetNum = ROOT.TH1D('de_bjetNum', 'n^{b-jet}', 5, 1.5, 6.5)
+    nu_bjetNum_1btag =  ROOT.TH1D('nu_bjetNum_1btag', 'n^{b-jet}', 5, 1.5, 6.5)
+    nu_bjetNum_2btag = ROOT.TH1D('nu_bjetNum_2btag', 'n^{b-jet}', 5, 1.5, 6.5)
+    nu_bjetNum_both = ROOT.TH1D('nu_bjetNum_both', 'n^{b-jet}', 5, 1.5, 6.5)
     
     binning = np.array((500., 550., 600., 650., 700., 800., 900., 1000., 1300., 2000)) 
-    de_HT = ROOT.TH1D('de_HT', 'de_HT', len(binning)-1, binning)
-    nu_HT_1btag =  ROOT.TH1D('nu_HT_1btag', 'nu_HT_1btag', len(binning)-1, binning)
-    nu_HT_2btag = ROOT.TH1D('nu_HT_2btag', 'nu_HT_2btaag', len(binning)-1, binning)
-    nu_HT_both = ROOT.TH1D('nu_HT_both', 'nu_HT_both', len(binning)-1, binning)
+    de_HT = ROOT.TH1D('de_HT', 'HT(GeV)', len(binning)-1, binning)
+    nu_HT_1btag =  ROOT.TH1D('nu_HT_1btag', 'HT(GeV)', len(binning)-1, binning)
+    nu_HT_2btag = ROOT.TH1D('nu_HT_2btag', 'HT(GeV)', len(binning)-1, binning)
+    nu_HT_both = ROOT.TH1D('nu_HT_both', 'HT(GeV)', len(binning)-1, binning)
     
     entries = chain.GetEntries()
     if isTest:
