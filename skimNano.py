@@ -147,6 +147,7 @@ def process_arguments():
 
 if __name__=='__main__':
     args = process_arguments()
+    #!!!need to update so that test and subjob is easy
     # main(args['arg1'], args['arg2'], args['arg3'], args['arg4'])
     main(args['arg1'], args['arg2'], False, False) #ele
     # main(args['arg1'], args['arg2'], True, False)

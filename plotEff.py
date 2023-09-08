@@ -15,22 +15,8 @@ def main():
     in2023D = '/eos/user/h/hhua/forTopHLT/2023D/v1ForHardronic/result/eff.root' 
     in2022 = '/eos/user/h/hhua/forTopHLT/2022/v1ForHardronic/result/eff.root' 
     
-    # eff_2023C = getEff(inputFile, 'de_2btag_jet_1pt', 'nu_2btag_jet_1pt')
-    # eff_2023C = getEff(inputFile, 'de_2btag_jet_1pt', 'nu_2btag_jet_1pt')
-    # eff_2023C = getEff(inputFile, 'de_eleJet_ele_1pt', 'nu_eleJet_ele_1pt')
-    # eff_2022G = getEff(inputFile2022, 'de_eleJet_ele_1pt', 'nu_eleJet_ele_1pt')
-    # eff_2023C = getEff(inputFile, 'de_eleHT_ele_1pt', 'nu_eleHT_ele_1pt')
-    # eff_2022G = getEff(inputFile2022, 'de_eleHT_ele_1pt', 'nu_eleHT_ele_1pt')
-    # eff_2023C = getEff(inputFile, 'de_2btag_jet_1pt', 'nu_1btag_jet_1pt')
-    # eff_2022G = getEff(inputFile2022, 'de_2btag_jet_1pt', 'nu_1btag_jet_1pt')
-    # eff_2023C = getEff(inputFile, 'de_2btag_jet_1pt', 'nu_2btag_jet_1pt')
-    # eff_2022G = getEff(inputFile2022, 'de_2btag_jet_1pt', 'nu_2btag_jet_1pt')
-   
-    # outDir = getOutDir(inputFile) 
-    # plotOverLay(eff_2022G, eff_2023C, outDir, 'leading jet pt')
     
     # era = uf.getEra(in2023B)
-    
     plotOverLayHard(in2023B, in2023C, in2023D, in2022) 
     
     
@@ -65,6 +51,7 @@ def plotEffOverlay(in2023B, in2023C, in2023D, in2022, trigger='1btag', var = 'je
    
 
  
+#deprecated!!!
 def plotOverLay(h_2022, h_2023, outDir, axis = 'leading electron pt'):
     can = ROOT.TCanvas('efficiency', 'efficiency', 800, 800)
     ROOT.gStyle.SetOptStat(ROOT.kFALSE)
@@ -99,6 +86,7 @@ def plotOverLay(h_2022, h_2023, outDir, axis = 'leading electron pt'):
 
     
    
+#deprecated!!!
 def addCMSTextToCan(canvas, x1=0.23, x2=0.35, y=0.96, era = '2016'):
     can = canvas
      
@@ -143,7 +131,7 @@ def getOutDir(inputFile):
     return outDir
      
     
-
+#deprecated!!!
 def getEff(inputFile, deName, nuName):
     inputDir = inputFile.rsplit('/', 1)[0] +'/'
     inRoot = ROOT.TFile(inputFile, 'READ')
