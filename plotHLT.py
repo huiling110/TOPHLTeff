@@ -3,6 +3,7 @@ import os
 import ROOT
 
 import skimNano as sn
+import usefulFunc as uf
 
 def main():
     # isTest = True
@@ -12,9 +13,13 @@ def main():
     # inputDir = '/eos/user/h/hhua/forTopHLT/v0Lep2023C/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/v0Lep2022G/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/v1ForHardronic/'
-    inputDir = '/eos/user/h/hhua/forTopHLT/2023B/v1ForHardronic/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2023B/v1ForHardronic/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2023C/v1ForHardronic/'
+    inputDir = '/eos/user/h/hhua/forTopHLT/2023D/v1ForHardronic/'
     isHadronic = True
     # isHadronic = False
+   
+    era = uf.getEra(inputDir) 
    
     outFile = makeOutFile(inputDir, isTest) 
     
@@ -26,7 +31,7 @@ def main():
     print('entries: ', entries)
   
     if isHadronic:
-        histList = makeHist_hard(chain, isTest) 
+        histList = makeHist_hard(chain, isTest, era) 
     else:
         histList = makeHist_ele(chain, isTest)
   
@@ -66,7 +71,7 @@ def makeHist_ele(chain, isTest):
     return histList    
     
 
-def makeHist_hard(chain, isTest):
+def makeHist_hard(chain, isTest, era):
     #!!!should switch to TEfficiency for efficiency calculation
     de_jetNum = ROOT.TH1D('de_jetNum', 'de_jetNum', 6, 6, 12)
     nu_jetNum_1btag =  ROOT.TH1D('nu_jetNum_1btag', 'nu_jetNum_1btag', 6, 6, 12)
@@ -90,9 +95,19 @@ def makeHist_hard(chain, isTest):
     for entry in range(entries):
         chain.GetEntry(entry)
         
+        #!!!change to era dependant
+        if era =='2023C' or era =='2023B' or era=='2022':
+            HLT_1btag = chain.HLT_PFHT450_SixPFJet36_PFBTagDeepJet_1p59
+            HLT_2btag = chain.HLT_PFHT400_SixPFJet32_DoublePFBTagDeepJet_2p94 
+            btag = 0
+        else: 
+            HLT_1btag = chain.HLT_PFHT450_SixPFJet36_PNetBTag0p35
+            HLT_2btag = chain.HLT_PFHT400_SixPFJet32_PNet2BTagMean0p50
+            btag =1
+        
     #preslection
         jetNum, HT = jetSel(chain)
-        bjetNum, bHT = jetSel(chain, True)
+        bjetNum, bHT = jetSel(chain, True, btag)
         if ( not (jetNum>5 and HT>500 and bjetNum>1)):
             continue
         
@@ -100,9 +115,9 @@ def makeHist_hard(chain, isTest):
         de_HT.Fill(HT)
         de_bjetNum.Fill(bjetNum)
       
-        #!!!change to era dependant
-        HLT_1btag = chain.HLT_PFHT450_SixPFJet36_PFBTagDeepJet_1p59
-        HLT_2btag = chain.HLT_PFHT400_SixPFJet32_DoublePFBTagDeepJet_2p94 
+            
+            
+            
         if HLT_1btag:
             nu_jetNum_1btag.Fill(jetNum)
             nu_bjetNum_1btag.Fill(bjetNum)
@@ -158,7 +173,7 @@ def preSel( chain) :
     ifPass = jetNum>5 and HT>500 and bjetNum>0 and chain.HLT_IsoMu27==1
     return ifPass
 
-def jetSel(chain, isB=False):
+def jetSel(chain, isB=False, btag=0):
     jetNum = 0
     HT = 0
     for i in range(0, chain.nJet):
@@ -167,8 +182,13 @@ def jetSel(chain, isB=False):
         if isB:
             # DeepJet 0.351; PNet: 0.387
         #!!!change to era dependant
-            if( not (chain.Jet_btagDeepFlavB[i]>0.351)):
-                continue
+            if btag == 0:
+                if( not (chain.Jet_btagDeepFlavB[i]>0.351)):
+                    continue
+            if btag==1:
+                if( not (chain.Jet_btagPNetB[i]>0.351)):
+                    continue
+                
         jetNum+=1
         HT = HT+ chain.Jet_pt[i] 
         # print(HT, chain.Jet_pt[i])

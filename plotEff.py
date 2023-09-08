@@ -1,14 +1,21 @@
 import os
 import ROOT
+import plotHelper as ph
+import usefulFunc as uf
+
 
 def main():
     
     
     # inputFile = '/afs/cern.ch/work/h/hhua/HLT_QDM/CMSSW_12_4_0_pre1/src/HLT-DQM-HTCondor/hua/output/eff.root'
-    inputFile = '/eos/user/h/hhua/forTopHLT/v0Hardronic2023C/result/eff.root'
-    inputFile2022 = '/eos/user/h/hhua/forTopHLT/v0Hardronic2022G/result/eff.root'
+    # inputFile = '/eos/user/h/hhua/forTopHLT/v0Hardronic2023C/result/eff.root'
+    # inputFile2022 = '/eos/user/h/hhua/forTopHLT/v0Hardronic2022G/result/eff.root'
     # inputFile = '/eos/user/h/hhua/forTopHLT/v0Lep2023C/result/eff.root'
     # inputFile2022 = '/eos/user/h/hhua/forTopHLT/v0Lep2022G/result/eff.root'
+    in2023B = '/eos/user/h/hhua/forTopHLT/2023B/v1ForHardronic/result/eff.root' 
+    in2023C = '/eos/user/h/hhua/forTopHLT/2023C/v1ForHardronic/result/eff.root' 
+    in2023D = '/eos/user/h/hhua/forTopHLT/2023D/v1ForHardronic/result/eff.root' 
+    
     # eff_2023C = getEff(inputFile, 'de_2btag_jet_1pt', 'nu_2btag_jet_1pt')
     # eff_2023C = getEff(inputFile, 'de_2btag_jet_1pt', 'nu_2btag_jet_1pt')
     # eff_2023C = getEff(inputFile, 'de_eleJet_ele_1pt', 'nu_eleJet_ele_1pt')
@@ -17,12 +24,25 @@ def main():
     # eff_2022G = getEff(inputFile2022, 'de_eleHT_ele_1pt', 'nu_eleHT_ele_1pt')
     # eff_2023C = getEff(inputFile, 'de_2btag_jet_1pt', 'nu_1btag_jet_1pt')
     # eff_2022G = getEff(inputFile2022, 'de_2btag_jet_1pt', 'nu_1btag_jet_1pt')
-    eff_2023C = getEff(inputFile, 'de_2btag_jet_1pt', 'nu_2btag_jet_1pt')
-    eff_2022G = getEff(inputFile2022, 'de_2btag_jet_1pt', 'nu_2btag_jet_1pt')
+    # eff_2023C = getEff(inputFile, 'de_2btag_jet_1pt', 'nu_2btag_jet_1pt')
+    # eff_2022G = getEff(inputFile2022, 'de_2btag_jet_1pt', 'nu_2btag_jet_1pt')
    
-    outDir = getOutDir(inputFile) 
-    plotOverLay(eff_2022G, eff_2023C, outDir, 'leading jet pt')
+    # outDir = getOutDir(inputFile) 
+    # plotOverLay(eff_2022G, eff_2023C, outDir, 'leading jet pt')
+    
+    # era = uf.getEra(in2023B)
+    
+    eff_2023B = ph.getEffFromFile(in2023B, ['de_jetNum', 'nu_jetNum_1btag'])
+    eff_2023C = ph.getEffFromFile(in2023C, ['de_jetNum', 'nu_jetNum_1btag'])
+    eff_2023D = ph.getEffFromFile(in2023D, ['de_jetNum', 'nu_jetNum_1btag'])
+    
+    histList = [eff_2023B, eff_2023C, eff_2023D]
+    legendList = ['2023B', '2023C', '2023D']
+    outDir = getOutDir(in2023B) 
+    plotName = outDir + 'HLTEff_jetNum_1btag.png'
+    ph.plotOverlay(histList, legendList, '2023', 'HLT efficiency', plotName, [0, 1.])
    
+
  
 def plotOverLay(h_2022, h_2023, outDir, axis = 'leading electron pt'):
     can = ROOT.TCanvas('efficiency', 'efficiency', 800, 800)
