@@ -123,7 +123,7 @@ def process_arguments():
     parser.add_argument('--arg2', type=str, default='./output/')
     parser.add_argument('--arg3', type=bool, default=True)
     # parser.add_argument('--arg4', type=bool, default=True)
-    parser.add_argument('--arg4', type=bool, default=False)
+    parser.add_argument('--arg4', type=bool, default=True)
 
     # Parse the command-line arguments
     args = parser.parse_args()
@@ -147,5 +147,6 @@ def process_arguments():
 
 if __name__=='__main__':
     args = process_arguments()
-    main(args['arg1'], args['arg2'], args['arg3'], args['arg4'])
+    # main(args['arg1'], args['arg2'], args['arg3'], args['arg4'])
     # main(args['arg1'], args['arg2'], False, False)
+    main(args['arg1'], args['arg2'], True, False)

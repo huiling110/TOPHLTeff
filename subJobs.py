@@ -3,12 +3,12 @@ import os
 import usefulFunc as uf
 
 def main():
-    inputList = 'input/Muon2023B.txt'
-    era = '2023B'
+    # inputList = 'input/Muon2023B.txt'
+    # era = '2023B'
     # inputList = 'input/Muon2023C.txt'
     # era = '2023C'
-    # inputList = 'input/Muon2023D.txt'
-    # era = '2023D'
+    inputList = 'input/Muon2023D.txt'
+    era = '2023D'
     
     jobVersion = 'v1ForHardronic'
     
@@ -76,7 +76,7 @@ def writeJob( jobName, inFile, jobDir):
         'cd /afs/cern.ch/work/h/hhua/HLTStudy/TOPHLTeff/',
         'lines=(`cat /afs/cern.ch/work/h/hhua/HLTStudy/TOPHLTeff/{}`)'.format(inFile),
         'echo ${lines[$1]}',
-        'python3 skimNano.py --arg1 ${lines[$1]} ' + ' --arg2 {}  --arg3 True --arg3 False'.format(jobDir),
+        'python3 skimNano.py --arg1 ${lines[$1]} ' + ' --arg2 {}  --arg3 True '.format(jobDir),
 
     ]
     writeListToFile(lines, jobName)
