@@ -16,9 +16,11 @@ def main():
     # inputDir = '/eos/user/h/hhua/forTopHLT/2023B/v1ForHardronic/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/2023C/v1ForHardronic/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/2023D/v1ForHardronic/'
-    inputDir = '/eos/user/h/hhua/forTopHLT/2022/v1ForHardronic/'
-    isHadronic = True
-    # isHadronic = False
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2022/v1ForHardronic/'
+    # isHadronic = True
+    
+    inputDir = '/eos/user/h/hhua/forTopHLT/2023B/v1forEle/'
+    isHadronic = False
    
     era = uf.getEra(inputDir) 
    
@@ -27,7 +29,6 @@ def main():
     print('inputDir: ', inputDir)
     chain = ROOT.TChain('Events')
     chain.Add(inputDir+'*.root')
-    # chain.Add(inputDir+'e61eefa9-42c0-4d5d-9d6a-93258ede52ec.root')
     entries = chain.GetEntries()
     print('entries: ', entries)
   
@@ -46,11 +47,11 @@ def main():
     outFile.Close()
 
 def makeHist_ele(chain, isTest):
-    binning_e = np.array((0.,25.,30.,32.5,35.,40.,45.,50.,60.,80.,120.,200.,400.))
-    de_eleJet = ROOT.TH1D('de_eleJet_ele_1pt', 'de_eleJet_ele_1pt', len(binning_e)-1,binning_e)
-    nu_eleJet = ROOT.TH1D('nu_eleJet_ele_1pt', 'nu_eleJet_ele_1pt', len(binning_e)-1,binning_e)
-    de_eleHT = ROOT.TH1D('de_eleHT_ele_1pt', 'de_eleHT_ele_1pt', len(binning_e)-1,binning_e)
-    nu_eleHT = ROOT.TH1D('nu_eleHT_ele_1pt', 'nu_eleHT_ele_1pt', len(binning_e)-1,binning_e)
+    binning_e = np.array((0.,25., 30., 35.,40.,45.,50.,60.,80.,120.,200.,400.))
+    de_eleJet = ROOT.TH1D('de_ele1pt_eleJet', 'p_{T}^{1st e}(GeV)', len(binning_e)-1,binning_e)
+    nu_eleJet = ROOT.TH1D('nu_ele1pt_eleJet', 'p_{T}^{1st e}(GeV)', len(binning_e)-1,binning_e)
+    de_eleHT = ROOT.TH1D('de_ele1pt_eleHT', 'p_{T}^{1st e}(GeV)', len(binning_e)-1,binning_e)
+    nu_eleHT = ROOT.TH1D('nu_ele1pt_eleHT', 'p_{T}^{1st e}(GeV)', len(binning_e)-1,binning_e)
     
     entries = chain.GetEntries()
     if isTest:

@@ -31,24 +31,36 @@ def main():
     
     # era = uf.getEra(in2023B)
     
-    # plotEffOverlay(in2023B, in2023C, in2023D, in2022, trigger='1btag')
-    # plotEffOverlay(in2023B, in2023C, in2023D, in2022, trigger='2btag')
+    plotOverLayHard(in2023B, in2023C, in2023D, in2022) 
+    
+    
+def plotOverLayHard(in2023B, in2023C, in2023D, in2022): 
+    plotEffOverlay(in2023B, in2023C, in2023D, in2022, trigger='1btag')
+    plotEffOverlay(in2023B, in2023C, in2023D, in2022, trigger='2btag')
     plotEffOverlay(in2023B, in2023C, in2023D, in2022, trigger='both')
     
+    plotEffOverlay(in2023B, in2023C, in2023D, in2022, '1btag', 'bjetNum')
+    plotEffOverlay(in2023B, in2023C, in2023D, in2022, '2btag', 'bjetNum')
+    plotEffOverlay(in2023B, in2023C, in2023D, in2022, 'both', 'bjetNum')
+    
+    plotEffOverlay(in2023B, in2023C, in2023D, in2022, '1btag', 'HT')
+    plotEffOverlay(in2023B, in2023C, in2023D, in2022, '2btag', 'HT')
+    plotEffOverlay(in2023B, in2023C, in2023D, in2022, 'both', 'HT')
     
     
     
-def plotEffOverlay(in2023B, in2023C, in2023D, in2022, trigger='1btag'):    
+    
+def plotEffOverlay(in2023B, in2023C, in2023D, in2022, trigger='1btag', var = 'jetNum'):    
      
-    eff_2023B = ph.getEffFromFile(in2023B, ['de_jetNum', 'nu_jetNum_'+trigger])
-    eff_2023C = ph.getEffFromFile(in2023C, ['de_jetNum', 'nu_jetNum_'+trigger])
-    eff_2023D = ph.getEffFromFile(in2023D, ['de_jetNum', 'nu_jetNum_'+trigger])
-    eff_2022 = ph.getEffFromFile(in2022, ['de_jetNum', 'nu_jetNum_'+trigger])
+    eff_2023B = ph.getEffFromFile(in2023B, ['de_'+var, 'nu_'+var+'_'+trigger])
+    eff_2023C = ph.getEffFromFile(in2023C, ['de_'+var, 'nu_'+var+'_'+trigger])
+    eff_2023D = ph.getEffFromFile(in2023D, ['de_'+var, 'nu_'+var+'_'+trigger])
+    eff_2022 = ph.getEffFromFile(in2022, ['de_'+var, 'nu_'+var+'_'+trigger])
     
     histList = [eff_2023B, eff_2023C, eff_2023D, eff_2022]
     legendList = ['2023B', '2023C', '2023D', '2022']
     outDir = getOutDir(in2023B) 
-    plotName = outDir + 'HLTEff_jetNum_'+trigger+'.png'
+    plotName = outDir + 'HLTEff_'+var+'_'+trigger+'.png'
     ph.plotOverlay(histList, legendList, '2023', 'HLT efficiency', plotName, [0, 1.1])
    
 
