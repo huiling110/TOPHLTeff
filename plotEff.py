@@ -15,6 +15,7 @@ def main():
     in2023B = '/eos/user/h/hhua/forTopHLT/2023B/v1ForHardronic/result/eff.root' 
     in2023C = '/eos/user/h/hhua/forTopHLT/2023C/v1ForHardronic/result/eff.root' 
     in2023D = '/eos/user/h/hhua/forTopHLT/2023D/v1ForHardronic/result/eff.root' 
+    in2022 = '/eos/user/h/hhua/forTopHLT/2022/v1ForHardronic/result/eff.root' 
     
     # eff_2023C = getEff(inputFile, 'de_2btag_jet_1pt', 'nu_2btag_jet_1pt')
     # eff_2023C = getEff(inputFile, 'de_2btag_jet_1pt', 'nu_2btag_jet_1pt')
@@ -35,9 +36,10 @@ def main():
     eff_2023B = ph.getEffFromFile(in2023B, ['de_jetNum', 'nu_jetNum_1btag'])
     eff_2023C = ph.getEffFromFile(in2023C, ['de_jetNum', 'nu_jetNum_1btag'])
     eff_2023D = ph.getEffFromFile(in2023D, ['de_jetNum', 'nu_jetNum_1btag'])
+    eff_2022 = ph.getEffFromFile(in2022, ['de_jetNum', 'nu_jetNum_1btag'])
     
-    histList = [eff_2023B, eff_2023C, eff_2023D]
-    legendList = ['2023B', '2023C', '2023D']
+    histList = [eff_2023B, eff_2023C, eff_2023D, eff_2022]
+    legendList = ['2023B', '2023C', '2023D', '2022']
     outDir = getOutDir(in2023B) 
     plotName = outDir + 'HLTEff_jetNum_1btag.png'
     ph.plotOverlay(histList, legendList, '2023', 'HLT efficiency', plotName, [0, 1.])
