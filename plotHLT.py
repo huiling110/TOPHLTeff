@@ -15,8 +15,8 @@ def main():
     # inputDir = '/eos/user/h/hhua/forTopHLT/v1ForHardronic/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/2023B/v1ForHardronic/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/2023C/v1ForHardronic/'
-    inputDir = '/eos/user/h/hhua/forTopHLT/2023D/v1ForHardronic/'
-    # inputDir = '/eos/user/h/hhua/forTopHLT/2022/v1ForHardronic/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2023D/v1ForHardronic/'
+    inputDir = '/eos/user/h/hhua/forTopHLT/2022/v1ForHardronic/'
     isHadronic = True
     # isHadronic = False
    
