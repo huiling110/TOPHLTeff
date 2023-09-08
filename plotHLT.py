@@ -20,10 +20,12 @@ def main():
     # isHadronic = True
     
     inputDir = '/eos/user/h/hhua/forTopHLT/2023B/v1forEle/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2023C/v1forEle/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2023D/v1forEle/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2022/v1forEle/'
     isHadronic = False
    
     era = uf.getEra(inputDir) 
-   
     outFile = makeOutFile(inputDir, isTest) 
     
     print('inputDir: ', inputDir)
