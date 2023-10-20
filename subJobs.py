@@ -3,17 +3,17 @@ import os
 import usefulFunc as uf
 
 def main():
-    # inputList = 'input/Muon2023B.txt'
-    # era = '2023B'
+    inputList = 'input/Muon2023B.txt'
+    era = '2023B'
     # inputList = 'input/Muon2023C.txt'
     # era = '2023C'
     # inputList = 'input/Muon2023D.txt'
     # era = '2023D'
-    inputList = 'input/Moun2022.txt'
-    era = '2022'
+    # inputList = 'input/Muon2022.txt'
+    # era = '2022'
     
-    # jobVersion = 'v1ForHardronic'
-    jobVersion = 'v1forEle'
+    jobVersion = 'v1ForHardronicv2'
+    # jobVersion = 'v1forEle'
     #!!!add parameter here to contral 
    
     outDir = makeOutDir(era, jobVersion)
@@ -27,7 +27,7 @@ def main():
     current_directory = os.path.dirname(current_file_path)
     jobDir = getNameFromPath(inputList)
     print('jobVersion: ', jobDir + jobVersion)
-    jobDir = current_directory+ '/jobs/'+jobDir + '/'
+    jobDir = current_directory+ '/jobs/'+jobDir + '/' + jobVersion + '/'
     logDir = jobDir + 'logs/'
     uf.checkMakeDir(jobDir)
     uf.checkMakeDir(logDir)
@@ -39,7 +39,8 @@ def main():
     subHTCondor(jobDir+'subList.sub')  
     
 def makeOutDir(era, jobVersion):
-    outBase = '/eos/user/h/hhua/forTopHLT/'
+    #outBase = '/eos/user/h/hhua/forTopHLT/'
+    outBase = '/eos/user/v/vshang/forTopHLT/'
     outDir = outBase + era +'/'
     uf.checkMakeDir(outDir)
     outDir = outDir + jobVersion + '/'
@@ -76,8 +77,8 @@ def getNameFromPath(file_path):
 def writeJob( jobName, inFile, jobDir):
     lines = [
         '#!/bin/bash',
-        'cd /afs/cern.ch/work/h/hhua/HLTStudy/TOPHLTeff/',
-        'lines=(`cat /afs/cern.ch/work/h/hhua/HLTStudy/TOPHLTeff/{}`)'.format(inFile),
+        'cd /afs/cern.ch/user/v/vshang/public/TOPHLTeff/',
+        'lines=(`cat /afs/cern.ch/user/v/vshang/public/TOPHLTeff/{}`)'.format(inFile),
         'echo ${lines[$1]}',
         'python3 skimNano.py --arg1 ${lines[$1]} ' + ' --arg2 {}  --arg3 True '.format(jobDir),
 
@@ -92,8 +93,8 @@ def writeSub(subName, jobDir, fileNum):
         'error                   = {}/logs/$(Process).err'.format(jobDir),
         'log                     = {}/logs/log.log'.format(jobDir),
         '+JobFlavour             = "workday"',
-        'use_x509userproxy = true',
-        'x509userproxy = /afs/cern.ch/user/h/hhua/.x509up_117245',
+        'x509userproxy = /afs/cern.ch/user/v/vshang/x509up_u120824',
+        'use_x509userproxy = True',
         'should_transfer_files   = YES',
         'when_to_transfer_output = ON_EXIT',
         'queue {}  '.format(fileNum),

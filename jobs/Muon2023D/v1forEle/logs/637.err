@@ -1,0 +1,272 @@
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+Error in <TNetXNGFile::Open>: [FATAL] Redirect limit has been reached
+ *** Break *** segmentation violation
+
+
+
+===========================================================
+There was a crash.
+This is the entire stack trace of all threads:
+===========================================================
+    gdb.printing.register_pretty_printer(gdb.current_objfile(),
+    gdb.printing.register_pretty_printer(gdb.current_objfile(),
+
+Thread 16 (Thread 0x2b58adde4700 (LWP 119)):
+#0  0x00002b58930c4de2 in pthread_cond_timedwait
+
+GLIBC_2.3.2 () from /lib64/libpthread.so.0
+#1  0x00002b5892cd75f8 in take_gil () from /lib64/libpython3.6m.so.1.0
+#2  0x00002b5892cd7739 in PyEval_RestoreThread () from /lib64/libpython3.6m.so.1.0
+#3  0x00002b5892d2de35 in time_sleep () from /lib64/libpython3.6m.so.1.0
+#4  0x00002b5892c780fe in _PyCFunction_FastCallDict () from /lib64/libpython3.6m.so.1.0
+#5  0x00002b5892ce345f in call_function () from /lib64/libpython3.6m.so.1.0
+#6  0x00002b5892cd7d97 in _PyEval_EvalFrameDefault () from /lib64/libpython3.6m.so.1.0
+#7  0x00002b5892ce391f in PyEval_EvalCodeEx () from /lib64/libpython3.6m.so.1.0
+#8  0x00002b5892c52a92 in function_call () from /lib64/libpython3.6m.so.1.0
+#9  0x00002b5892c3a833 in PyObject_Call () from /lib64/libpython3.6m.so.1.0
+#10 0x00002b5892cd9a47 in _PyEval_EvalFrameDefault () from /lib64/libpython3.6m.so.1.0
+#11 0x00002b5892ce324a in fast_function () from /lib64/libpython3.6m.so.1.0
+#12 0x00002b5892ce3583 in call_function () from /lib64/libpython3.6m.so.1.0
+#13 0x00002b5892cd7d97 in _PyEval_EvalFrameDefault () from /lib64/libpython3.6m.so.1.0
+#14 0x00002b5892ce324a in fast_function () from /lib64/libpython3.6m.so.1.0
+#15 0x00002b5892ce3583 in call_function () from /lib64/libpython3.6m.so.1.0
+#16 0x00002b5892cd7d97 in _PyEval_EvalFrameDefault () from /lib64/libpython3.6m.so.1.0
+#17 0x00002b5892ce458a in _PyFunction_FastCallDict () from /lib64/libpython3.6m.so.1.0
+#18 0x00002b5892c3aaae in _PyObject_FastCallDict () from /lib64/libpython3.6m.so.1.0
+#19 0x00002b5892c3abc1 in _PyObject_Call_Prepend () from /lib64/libpython3.6m.so.1.0
+#20 0x00002b5892c3a833 in PyObject_Call () from /lib64/libpython3.6m.so.1.0
+#21 0x00002b5892d742b2 in t_bootstrap () from /lib64/libpython3.6m.so.1.0
+#22 0x00002b5892d71764 in pythread_wrapper () from /lib64/libpython3.6m.so.1.0
+#23 0x00002b58930c0ea5 in start_thread () from /lib64/libpthread.so.0
+#24 0x00002b5893adcb0d in clone () from /lib64/libc.so.6
+
+Thread 15 (Thread 0x2b58b4c44700 (LWP 135)):
+#0  0x00002b5893add0e3 in epoll_wait () from /lib64/libc.so.6
+#1  0x00002b58ae0a31b2 in XrdSys::IOEvents::PollE::Begin(XrdSysSemaphore*, int&, char const**) () from /lib64/libXrdUtils.so.3
+#2  0x00002b58ae09f76d in XrdSys::IOEvents::BootStrap::Start(void*) () from /lib64/libXrdUtils.so.3
+#3  0x00002b58ae0a8a37 in XrdSysThread_Xeq () from /lib64/libXrdUtils.so.3
+#4  0x00002b58930c0ea5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00002b5893adcb0d in clone () from /lib64/libc.so.6
+
+Thread 14 (Thread 0x2b58b4e45700 (LWP 136)):
+#0  0x00002b5893add0e3 in epoll_wait () from /lib64/libc.so.6
+#1  0x00002b58ae0a31b2 in XrdSys::IOEvents::PollE::Begin(XrdSysSemaphore*, int&, char const**) () from /lib64/libXrdUtils.so.3
+#2  0x00002b58ae09f76d in XrdSys::IOEvents::BootStrap::Start(void*) () from /lib64/libXrdUtils.so.3
+#3  0x00002b58ae0a8a37 in XrdSysThread_Xeq () from /lib64/libXrdUtils.so.3
+#4  0x00002b58930c0ea5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00002b5893adcb0d in clone () from /lib64/libc.so.6
+
+Thread 13 (Thread 0x2b58b5046700 (LWP 137)):
+#0  0x00002b5893add0e3 in epoll_wait () from /lib64/libc.so.6
+#1  0x00002b58ae0a31b2 in XrdSys::IOEvents::PollE::Begin(XrdSysSemaphore*, int&, char const**) () from /lib64/libXrdUtils.so.3
+#2  0x00002b58ae09f76d in XrdSys::IOEvents::BootStrap::Start(void*) () from /lib64/libXrdUtils.so.3
+#3  0x00002b58ae0a8a37 in XrdSysThread_Xeq () from /lib64/libXrdUtils.so.3
+#4  0x00002b58930c0ea5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00002b5893adcb0d in clone () from /lib64/libc.so.6
+
+Thread 12 (Thread 0x2b58b5247700 (LWP 138)):
+#0  0x00002b5893add0e3 in epoll_wait () from /lib64/libc.so.6
+#1  0x00002b58ae0a31b2 in XrdSys::IOEvents::PollE::Begin(XrdSysSemaphore*, int&, char const**) () from /lib64/libXrdUtils.so.3
+#2  0x00002b58ae09f76d in XrdSys::IOEvents::BootStrap::Start(void*) () from /lib64/libXrdUtils.so.3
+#3  0x00002b58ae0a8a37 in XrdSysThread_Xeq () from /lib64/libXrdUtils.so.3
+#4  0x00002b58930c0ea5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00002b5893adcb0d in clone () from /lib64/libc.so.6
+
+Thread 11 (Thread 0x2b58b5448700 (LWP 139)):
+#0  0x00002b5893add0e3 in epoll_wait () from /lib64/libc.so.6
+#1  0x00002b58ae0a31b2 in XrdSys::IOEvents::PollE::Begin(XrdSysSemaphore*, int&, char const**) () from /lib64/libXrdUtils.so.3
+#2  0x00002b58ae09f76d in XrdSys::IOEvents::BootStrap::Start(void*) () from /lib64/libXrdUtils.so.3
+#3  0x00002b58ae0a8a37 in XrdSysThread_Xeq () from /lib64/libXrdUtils.so.3
+#4  0x00002b58930c0ea5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00002b5893adcb0d in clone () from /lib64/libc.so.6
+
+Thread 10 (Thread 0x2b58b5649700 (LWP 140)):
+#0  0x00002b5893add0e3 in epoll_wait () from /lib64/libc.so.6
+#1  0x00002b58ae0a31b2 in XrdSys::IOEvents::PollE::Begin(XrdSysSemaphore*, int&, char const**) () from /lib64/libXrdUtils.so.3
+#2  0x00002b58ae09f76d in XrdSys::IOEvents::BootStrap::Start(void*) () from /lib64/libXrdUtils.so.3
+#3  0x00002b58ae0a8a37 in XrdSysThread_Xeq () from /lib64/libXrdUtils.so.3
+#4  0x00002b58930c0ea5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00002b5893adcb0d in clone () from /lib64/libc.so.6
+
+Thread 9 (Thread 0x2b58b584a700 (LWP 141)):
+#0  0x00002b5893add0e3 in epoll_wait () from /lib64/libc.so.6
+#1  0x00002b58ae0a31b2 in XrdSys::IOEvents::PollE::Begin(XrdSysSemaphore*, int&, char const**) () from /lib64/libXrdUtils.so.3
+#2  0x00002b58ae09f76d in XrdSys::IOEvents::BootStrap::Start(void*) () from /lib64/libXrdUtils.so.3
+#3  0x00002b58ae0a8a37 in XrdSysThread_Xeq () from /lib64/libXrdUtils.so.3
+#4  0x00002b58930c0ea5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00002b5893adcb0d in clone () from /lib64/libc.so.6
+
+Thread 8 (Thread 0x2b58b5a4b700 (LWP 142)):
+#0  0x00002b5893add0e3 in epoll_wait () from /lib64/libc.so.6
+#1  0x00002b58ae0a31b2 in XrdSys::IOEvents::PollE::Begin(XrdSysSemaphore*, int&, char const**) () from /lib64/libXrdUtils.so.3
+#2  0x00002b58ae09f76d in XrdSys::IOEvents::BootStrap::Start(void*) () from /lib64/libXrdUtils.so.3
+#3  0x00002b58ae0a8a37 in XrdSysThread_Xeq () from /lib64/libXrdUtils.so.3
+#4  0x00002b58930c0ea5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00002b5893adcb0d in clone () from /lib64/libc.so.6
+
+Thread 7 (Thread 0x2b58b5c4c700 (LWP 143)):
+#0  0x00002b5893add0e3 in epoll_wait () from /lib64/libc.so.6
+#1  0x00002b58ae0a31b2 in XrdSys::IOEvents::PollE::Begin(XrdSysSemaphore*, int&, char const**) () from /lib64/libXrdUtils.so.3
+#2  0x00002b58ae09f76d in XrdSys::IOEvents::BootStrap::Start(void*) () from /lib64/libXrdUtils.so.3
+#3  0x00002b58ae0a8a37 in XrdSysThread_Xeq () from /lib64/libXrdUtils.so.3
+#4  0x00002b58930c0ea5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00002b5893adcb0d in clone () from /lib64/libc.so.6
+
+Thread 6 (Thread 0x2b58b5e4d700 (LWP 144)):
+#0  0x00002b5893add0e3 in epoll_wait () from /lib64/libc.so.6
+#1  0x00002b58ae0a31b2 in XrdSys::IOEvents::PollE::Begin(XrdSysSemaphore*, int&, char const**) () from /lib64/libXrdUtils.so.3
+#2  0x00002b58ae09f76d in XrdSys::IOEvents::BootStrap::Start(void*) () from /lib64/libXrdUtils.so.3
+#3  0x00002b58ae0a8a37 in XrdSysThread_Xeq () from /lib64/libXrdUtils.so.3
+#4  0x00002b58930c0ea5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00002b5893adcb0d in clone () from /lib64/libc.so.6
+
+Thread 5 (Thread 0x2b58b604e700 (LWP 145)):
+#0  0x00002b58930c7e9d in nanosleep () from /lib64/libpthread.so.0
+#1  0x00002b58ae0a94e8 in XrdSysTimer::Wait(int) () from /lib64/libXrdUtils.so.3
+#2  0x00002b58ae4a21c5 in XrdCl::TaskManager::RunTasks() () from /lib64/libXrdCl.so.3
+#3  0x00002b58ae4a2349 in RunRunnerThread () from /lib64/libXrdCl.so.3
+#4  0x00002b58930c0ea5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00002b5893adcb0d in clone () from /lib64/libc.so.6
+
+Thread 4 (Thread 0x2b58b6651700 (LWP 146)):
+#0  0x00002b58930c6b3b in do_futex_wait.constprop.1 () from /lib64/libpthread.so.0
+#1  0x00002b58930c6bcf in __new_sem_wait_slow.constprop.0 () from /lib64/libpthread.so.0
+#2  0x00002b58930c6c6b in sem_wait
+
+GLIBC_2.2.5 () from /lib64/libpthread.so.0
+#3  0x00002b58ae525f96 in XrdCl::JobManager::RunJobs() () from /lib64/libXrdCl.so.3
+#4  0x00002b58ae526069 in RunRunnerThread () from /lib64/libXrdCl.so.3
+#5  0x00002b58930c0ea5 in start_thread () from /lib64/libpthread.so.0
+#6  0x00002b5893adcb0d in clone () from /lib64/libc.so.6
+
+Thread 3 (Thread 0x2b58b6450700 (LWP 147)):
+#0  0x00002b58930c6b3b in do_futex_wait.constprop.1 () from /lib64/libpthread.so.0
+#1  0x00002b58930c6bcf in __new_sem_wait_slow.constprop.0 () from /lib64/libpthread.so.0
+#2  0x00002b58930c6c6b in sem_wait
+
+GLIBC_2.2.5 () from /lib64/libpthread.so.0
+#3  0x00002b58ae525f96 in XrdCl::JobManager::RunJobs() () from /lib64/libXrdCl.so.3
+#4  0x00002b58ae526069 in RunRunnerThread () from /lib64/libXrdCl.so.3
+#5  0x00002b58930c0ea5 in start_thread () from /lib64/libpthread.so.0
+#6  0x00002b5893adcb0d in clone () from /lib64/libc.so.6
+
+Thread 2 (Thread 0x2b58b624f700 (LWP 148)):
+#0  0x00002b58930c6b3b in do_futex_wait.constprop.1 () from /lib64/libpthread.so.0
+#1  0x00002b58930c6bcf in __new_sem_wait_slow.constprop.0 () from /lib64/libpthread.so.0
+#2  0x00002b58930c6c6b in sem_wait
+
+GLIBC_2.2.5 () from /lib64/libpthread.so.0
+#3  0x00002b58ae525f96 in XrdCl::JobManager::RunJobs() () from /lib64/libXrdCl.so.3
+#4  0x00002b58ae526069 in RunRunnerThread () from /lib64/libXrdCl.so.3
+#5  0x00002b58930c0ea5 in start_thread () from /lib64/libpthread.so.0
+#6  0x00002b5893adcb0d in clone () from /lib64/libc.so.6
+
+Thread 1 (Thread 0x2b58929b5940 (LWP 96)):
+#0  0x00002b5893aa3659 in waitpid () from /lib64/libc.so.6
+#1  0x00002b5893a20f62 in do_system () from /lib64/libc.so.6
+#2  0x00002b5893a21311 in system () from /lib64/libc.so.6
+#3  0x00002b589bb6e3fc in TUnixSystem::StackTrace() () from /usr/lib64/root/libCore.so
+#4  0x00002b589d44d5ef in (anonymous namespace)::TExceptionHandlerImp::HandleException(int) () from /usr/lib64/root/libcppyy_backend3_6.so.6.24
+#5  0x00002b589bb7024b in TUnixSystem::DispatchSignals(ESignals) () from /usr/lib64/root/libCore.so
+#6  <signal handler called>
+#7  0x00002b58abb09412 in TTree::CloneTree(long long, char const*) () from /usr/lib64/root/libTree.so.6.24
+#8  0x00002b5892b760e9 in ?? ()
+#9  0x0000000005e4d030 in ?? ()
+#10 0x0000000005e4a3a0 in ?? ()
+#11 0x0000000005e4d070 in ?? ()
+#12 0x00007ffe829ddf90 in ?? ()
+#13 0x00002b5892b77000 in ?? ()
+#14 0x00000000059d56b0 in ?? ()
+#15 0x00002b589bebbac0 in gErrorAbortLevel () from /usr/lib64/root/libCore.so
+#16 0x00002b589e6b80b8 in TCling::CallFunc_Delete(CallFunc_t*) const () from /usr/lib64/root/libCling.so
+#17 0x00002b589d44d821 in WrapperCall(long, unsigned long, void*, void*, void*) () from /usr/lib64/root/libcppyy_backend3_6.so.6.24
+#18 0x00002b589d44e7e0 in Cppyy::CallR(long, void*, unsigned long, void*) () from /usr/lib64/root/libcppyy_backend3_6.so.6.24
+#19 0x00002b589d1eb43c in CPyCppyy::(anonymous namespace)::InstancePtrExecutor::Execute(long, void*, CPyCppyy::CallContext*) () from /usr/lib64/python3.6/site-packages/libcppyy3_6.cpython-36m-x86_64-linux-gnu.so
+#20 0x00002b589d1d8bc9 in CPyCppyy::CPPMethod::ExecuteProtected(void*, long, CPyCppyy::CallContext*) () from /usr/lib64/python3.6/site-packages/libcppyy3_6.cpython-36m-x86_64-linux-gnu.so
+#21 0x00002b589d1d61f1 in CPyCppyy::CPPMethod::Execute(void*, long, CPyCppyy::CallContext*) () from /usr/lib64/python3.6/site-packages/libcppyy3_6.cpython-36m-x86_64-linux-gnu.so
+#22 0x00002b589d1d6d18 in CPyCppyy::CPPMethod::Call(CPyCppyy::CPPInstance*&, _object*, _object*, CPyCppyy::CallContext*) () from /usr/lib64/python3.6/site-packages/libcppyy3_6.cpython-36m-x86_64-linux-gnu.so
+#23 0x00002b589d1db789 in CPyCppyy::(anonymous namespace)::mp_call(CPyCppyy::CPPOverload*, _object*, _object*) () from /usr/lib64/python3.6/site-packages/libcppyy3_6.cpython-36m-x86_64-linux-gnu.so
+#24 0x00002b5892c3aa30 in _PyObject_FastCallDict () from /lib64/libpython3.6m.so.1.0
+#25 0x00002b5892ce360c in call_function () from /lib64/libpython3.6m.so.1.0
+#26 0x00002b5892cd7d97 in _PyEval_EvalFrameDefault () from /lib64/libpython3.6m.so.1.0
+#27 0x00002b5892ce2617 in _PyEval_EvalCodeWithName () from /lib64/libpython3.6m.so.1.0
+#28 0x00002b5892ce32fa in fast_function () from /lib64/libpython3.6m.so.1.0
+#29 0x00002b5892ce3583 in call_function () from /lib64/libpython3.6m.so.1.0
+#30 0x00002b5892cd7d97 in _PyEval_EvalFrameDefault () from /lib64/libpython3.6m.so.1.0
+#31 0x00002b5892ce391f in PyEval_EvalCodeEx () from /lib64/libpython3.6m.so.1.0
+#32 0x00002b5892ce442b in PyEval_EvalCode () from /lib64/libpython3.6m.so.1.0
+#33 0x00002b5892d6cd2e in run_mod () from /lib64/libpython3.6m.so.1.0
+#34 0x00002b5892c1980b in PyRun_FileExFlags () from /lib64/libpython3.6m.so.1.0
+#35 0x00002b5892c19bdd in PyRun_SimpleFileExFlags () from /lib64/libpython3.6m.so.1.0
+#36 0x00002b5892d73232 in Py_Main () from /lib64/libpython3.6m.so.1.0
+#37 0x0000000000400ab9 in main ()
+===========================================================
+
+
+The lines below might hint at the cause of the crash.
+You may get help by asking at the ROOT forum https://root.cern.ch/forum
+Only if you are really convinced it is a bug in ROOT then please submit a
+report at https://root.cern.ch/bugs Please post the ENTIRE stack trace
+from above as an attachment in addition to anything else
+that might help us fixing this issue.
+===========================================================
+#7  0x00002b58abb09412 in TTree::CloneTree(long long, char const*) () from /usr/lib64/root/libTree.so.6.24
+#8  0x00002b5892b760e9 in ?? ()
+#9  0x0000000005e4d030 in ?? ()
+#10 0x0000000005e4a3a0 in ?? ()
+#11 0x0000000005e4d070 in ?? ()
+#12 0x00007ffe829ddf90 in ?? ()
+#13 0x00002b5892b77000 in ?? ()
+#14 0x00000000059d56b0 in ?? ()
+#15 0x00002b589bebbac0 in gErrorAbortLevel () from /usr/lib64/root/libCore.so
+#16 0x00002b589e6b80b8 in TCling::CallFunc_Delete(CallFunc_t*) const () from /usr/lib64/root/libCling.so
+#17 0x00002b589d44d821 in WrapperCall(long, unsigned long, void*, void*, void*) () from /usr/lib64/root/libcppyy_backend3_6.so.6.24
+#18 0x00002b589d44e7e0 in Cppyy::CallR(long, void*, unsigned long, void*) () from /usr/lib64/root/libcppyy_backend3_6.so.6.24
+#19 0x00002b589d1eb43c in CPyCppyy::(anonymous namespace)::InstancePtrExecutor::Execute(long, void*, CPyCppyy::CallContext*) () from /usr/lib64/python3.6/site-packages/libcppyy3_6.cpython-36m-x86_64-linux-gnu.so
+#20 0x00002b589d1d8bc9 in CPyCppyy::CPPMethod::ExecuteProtected(void*, long, CPyCppyy::CallContext*) () from /usr/lib64/python3.6/site-packages/libcppyy3_6.cpython-36m-x86_64-linux-gnu.so
+#21 0x00002b589d1d61f1 in CPyCppyy::CPPMethod::Execute(void*, long, CPyCppyy::CallContext*) () from /usr/lib64/python3.6/site-packages/libcppyy3_6.cpython-36m-x86_64-linux-gnu.so
+#22 0x00002b589d1d6d18 in CPyCppyy::CPPMethod::Call(CPyCppyy::CPPInstance*&, _object*, _object*, CPyCppyy::CallContext*) () from /usr/lib64/python3.6/site-packages/libcppyy3_6.cpython-36m-x86_64-linux-gnu.so
+#23 0x00002b589d1db789 in CPyCppyy::(anonymous namespace)::mp_call(CPyCppyy::CPPOverload*, _object*, _object*) () from /usr/lib64/python3.6/site-packages/libcppyy3_6.cpython-36m-x86_64-linux-gnu.so
+#24 0x00002b5892c3aa30 in _PyObject_FastCallDict () from /lib64/libpython3.6m.so.1.0
+#25 0x00002b5892ce360c in call_function () from /lib64/libpython3.6m.so.1.0
+#26 0x00002b5892cd7d97 in _PyEval_EvalFrameDefault () from /lib64/libpython3.6m.so.1.0
+#27 0x00002b5892ce2617 in _PyEval_EvalCodeWithName () from /lib64/libpython3.6m.so.1.0
+#28 0x00002b5892ce32fa in fast_function () from /lib64/libpython3.6m.so.1.0
+#29 0x00002b5892ce3583 in call_function () from /lib64/libpython3.6m.so.1.0
+#30 0x00002b5892cd7d97 in _PyEval_EvalFrameDefault () from /lib64/libpython3.6m.so.1.0
+#31 0x00002b5892ce391f in PyEval_EvalCodeEx () from /lib64/libpython3.6m.so.1.0
+#32 0x00002b5892ce442b in PyEval_EvalCode () from /lib64/libpython3.6m.so.1.0
+#33 0x00002b5892d6cd2e in run_mod () from /lib64/libpython3.6m.so.1.0
+#34 0x00002b5892c1980b in PyRun_FileExFlags () from /lib64/libpython3.6m.so.1.0
+#35 0x00002b5892c19bdd in PyRun_SimpleFileExFlags () from /lib64/libpython3.6m.so.1.0
+#36 0x00002b5892d73232 in Py_Main () from /lib64/libpython3.6m.so.1.0
+#37 0x0000000000400ab9 in main ()
+===========================================================
+
+
+Traceback (most recent call last):
+  File "skimNano.py", line 152, in <module>
+    main(args['arg1'], args['arg2'], False, False) #ele
+  File "skimNano.py", line 58, in main
+    output_tree = chain.CloneTree(0)  # have to be after the chain.SetBranchStatus
+cppyy.ll.SegmentationViolation: TTree* TTree::CloneTree(Long64_t nentries = -1, const char* option = "") =>
+    SegmentationViolation: segfault in C++; program state was reset

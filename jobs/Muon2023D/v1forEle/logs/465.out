@@ -1,0 +1,14 @@
+/store/data/Run2023D/Muon1/NANOAOD/PromptReco-v1/000/370/175/00000/406daede-5e0f-4923-877f-57b19add4f67.root
+input:  root://cmsxrootd.fnal.gov//store/data/Run2023D/Muon1/NANOAOD/PromptReco-v1/000/370/175/00000/406daede-5e0f-4923-877f-57b19add4f67.root
+entries in old tree:  282031
+ifTest= False   ifForHardronic= False
+branch not exist:  HLT_PFHT450_SixPFJet36_PFBTagDeepCSV_1p59 !!!
+
+branch not exist:  HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94 !!!
+
+branch not exist:  HLT_PFHT400_SixPFJet32_DoublePFBTagDeepJet_2p94 !!!
+
+branch not exist:  HLT_PFHT450_SixPFJet36_PFBTagDeepJet_1p59 !!!
+
+entries in new tree:  122
+output file here:  /eos/user/v/vshang/forTopHLT/2023D/v1forEle/406daede-5e0f-4923-877f-57b19add4f67.root

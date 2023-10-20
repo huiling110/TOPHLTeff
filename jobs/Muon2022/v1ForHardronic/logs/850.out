@@ -1,0 +1,12 @@
+/store/data/Run2022F/Muon/NANOAOD/PromptNanoAODv11_v1-v2/40000/aca76a4e-7d5c-4534-be4d-f6ca5f3f1152.root
+input:  root://cmsxrootd.fnal.gov//store/data/Run2022F/Muon/NANOAOD/PromptNanoAODv11_v1-v2/40000/aca76a4e-7d5c-4534-be4d-f6ca5f3f1152.root
+entries in old tree:  1073650
+ifTest= False   ifForHardronic= True
+branch not exist:  HLT_PFHT450_SixPFJet36_PNetBTag0p35 !!!
+
+branch not exist:  HLT_PFHT400_SixPFJet32_PNet2BTagMean0p50 !!!
+
+branch not exist:  Jet_btagPNetB !!!
+
+entries in new tree:  753
+output file here:  /eos/user/v/vshang/forTopHLT/2022/v1ForHardronic/aca76a4e-7d5c-4534-be4d-f6ca5f3f1152.root

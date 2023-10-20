@@ -15,15 +15,15 @@ def getEff(de, nu) :
     #!!! use maybe TEfficiency later to calculate efficiency
     de_d = de.Clone()
     nu_d = nu.Clone()
-    de.Print()
+    # de.Print()
     de_d.Sumw2()
     nu_d.Sumw2()
     eff = de_d.Clone()
     # eff.Print()
     eff.Reset()
-    eff.Print()
+    # eff.Print()
     eff.Divide(nu_d, de_d)
-    eff.Print()
+    # eff.Print()
     return eff
 
 def getHistFromFile(fileName, histNames):
@@ -62,7 +62,8 @@ def plotOverlay(histList, legenList, era, yTitle, plotName, yRange=[]):
     ROOT.gROOT.SetBatch(True)
     can = ROOT.TCanvas('overlay', 'overlay', 1000, 800)
     
-    legend = ROOT.TLegend(0.65, 0.8, 0.9, 0.93)  # Create a legend to label the histograms
+    # legend = ROOT.TLegend(0.65, 0.8, 0.9, 0.93)  # Create a legend to label the histograms
+    legend = ROOT.TLegend(0.7, 0.2, 0.9, 0.53)  # Create a legend to label the histograms
     
     yMax = getYmax(histList)
     #plot style
@@ -102,7 +103,7 @@ def plotOverlay(histList, legenList, era, yTitle, plotName, yRange=[]):
         legend.AddEntry(histogram, legenList[i], "l")  # Add an entry to the legend
         legend.Draw() 
         
-    st.addCMSTextToCan(can, 0.22, 0.4, 0.9, 0.94, era, True)
+    st.addCMSTextToCan(can, 0.22, 0.34, 0.9, 0.94, era, True)
         
     can.SaveAs(plotName)
     print('Done overlay plotting\n\n')

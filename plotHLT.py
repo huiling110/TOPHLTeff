@@ -8,22 +8,21 @@ import usefulFunc as uf
 def main():
     # isTest = True
     isTest =False
-    # inputDir = '/eos/user/h/hhua/forTopHLT/v0Hardronic2023C/' 
-    # inputDir = '/eos/user/h/hhua/forTopHLT/v0Hardronic2022G/' 
-    # inputDir = '/eos/user/h/hhua/forTopHLT/v0Lep2023C/'
-    # inputDir = '/eos/user/h/hhua/forTopHLT/v0Lep2022G/'
-    # inputDir = '/eos/user/h/hhua/forTopHLT/v1ForHardronic/'
-    # inputDir = '/eos/user/h/hhua/forTopHLT/2023B/v1ForHardronic/'
-    # inputDir = '/eos/user/h/hhua/forTopHLT/2023C/v1ForHardronic/'
-    # inputDir = '/eos/user/h/hhua/forTopHLT/2023D/v1ForHardronic/'
-    # inputDir = '/eos/user/h/hhua/forTopHLT/2022/v1ForHardronic/'
-    # isHadronic = True
+    # inputDir = '/eos/user/v/vshang/forTopHLT/2023B/v1ForHardronic/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT/2023C/v1ForHardronic/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT/2023D/v1ForHardronic/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT/2022/v1ForHardronic/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT/2023B/v1ForHardronicv2/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT/2023C/v1ForHardronicv2/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT/2023D/v1ForHardronicv2/'
+    inputDir = '/eos/user/v/vshang/forTopHLT/2022/v1ForHardronicv2/'
+    isHadronic = True
     
-    inputDir = '/eos/user/h/hhua/forTopHLT/2023B/v1forEle/'
-    # inputDir = '/eos/user/h/hhua/forTopHLT/2023C/v1forEle/'
-    # inputDir = '/eos/user/h/hhua/forTopHLT/2023D/v1forEle/'
-    # inputDir = '/eos/user/h/hhua/forTopHLT/2022/v1forEle/'
-    isHadronic = False
+    # inputDir = '/eos/user/v/vshang/forTopHLT/2023B/v1forEle/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT/2023C/v1forEle/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT/2023D/v1forEle/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT/2022/v1forEle/'
+    # isHadronic = False
    
     era = uf.getEra(inputDir) 
     outFile = makeOutFile(inputDir, isTest) 
@@ -102,12 +101,20 @@ def makeHist_hard(chain, isTest, era):
         #!!!change to era dependant
         if era =='2023C' or era =='2023B' or era=='2022':
             HLT_1btag = chain.HLT_PFHT450_SixPFJet36_PFBTagDeepJet_1p59
-            HLT_2btag = chain.HLT_PFHT400_SixPFJet32_DoublePFBTagDeepJet_2p94 
+            HLT_2btag = chain.HLT_PFHT400_SixPFJet32_DoublePFBTagDeepJet_2p94
             btag = 0
         else: 
             HLT_1btag = chain.HLT_PFHT450_SixPFJet36_PNetBTag0p35
             HLT_2btag = chain.HLT_PFHT400_SixPFJet32_PNet2BTagMean0p50
             btag =1
+
+        #QuadPFJet triggers for checking combined 1btag OR 2btag efficiency
+        HLT_4jet1 = False
+        HLT_4jet2 = False
+        if chain.GetBranch("HLT_QuadPFJet70_50_40_35_PNet2BTagMean0p65"):
+            HLT_4jet1 = chain.HLT_QuadPFJet70_50_40_35_PNet2BTagMean0p65
+        if chain.GetBranch("HLT_PFHT280_QuadPFJet30_PNet2BTagMean0p55"):
+            HLT_4jet2 = chain.HLT_PFHT280_QuadPFJet30_PNet2BTagMean0p55
         
     #preslection
         jetNum, HT = jetSel(chain)
@@ -122,15 +129,15 @@ def makeHist_hard(chain, isTest, era):
             
             
             
-        if HLT_1btag:
+        if HLT_1btag:# and not HLT_2btag:
             nu_jetNum_1btag.Fill(jetNum)
             nu_bjetNum_1btag.Fill(bjetNum)
             nu_HT_1btag.Fill(HT)
-        if HLT_2btag:
+        if HLT_2btag:# and not HLT_1btag:
             nu_jetNum_2btag.Fill(jetNum)
             nu_bjetNum_2btag.Fill(bjetNum)
             nu_HT_2btag.Fill(HT)
-        if HLT_2btag or HLT_1btag:
+        if HLT_2btag or HLT_1btag or HLT_4jet1 or HLT_4jet2:
             nu_jetNum_both.Fill(jetNum)
             nu_bjetNum_both.Fill(bjetNum)
             nu_HT_both.Fill(HT)

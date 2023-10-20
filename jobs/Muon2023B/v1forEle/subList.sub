@@ -1,0 +1,11 @@
+arguments               = $(Process)
+executable              = /afs/cern.ch/user/v/vshang/public/TOPHLTeff/jobs/Muon2023B/v1forEle/singleJob.sh
+output                  = /afs/cern.ch/user/v/vshang/public/TOPHLTeff/jobs/Muon2023B/v1forEle//logs/$(Process).out
+error                   = /afs/cern.ch/user/v/vshang/public/TOPHLTeff/jobs/Muon2023B/v1forEle//logs/$(Process).err
+log                     = /afs/cern.ch/user/v/vshang/public/TOPHLTeff/jobs/Muon2023B/v1forEle//logs/log.log
++JobFlavour             = "workday"
+x509userproxy = /afs/cern.ch/user/v/vshang/x509up_u120824
+use_x509userproxy = True
+should_transfer_files   = YES
+when_to_transfer_output = ON_EXIT
+queue 34  

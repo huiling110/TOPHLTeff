@@ -107,7 +107,7 @@ def addCMSTextToCan(canvas, x1=0.23, x2=0.35,x3=0.7, y=0.96, era = '2016', isRun
     cmsTextFont = 61
     extraTextFont = 52
     cmsText = "CMS"
-    extraText = "Preliminary " + era
+    extraText = "Preliminary "# + era
     
     latex = ROOT.TLatex()
     latex.SetNDC()
@@ -120,11 +120,13 @@ def addCMSTextToCan(canvas, x1=0.23, x2=0.35,x3=0.7, y=0.96, era = '2016', isRun
     latex.DrawLatex(x2, y , extraText )
   
     lumiText = lumiMap[era] /1000
-    lumiText_s = '{0:.1f}'.format(lumiText)
+    #lumiText_s = '{0:.1f}'.format(lumiText)
+    lumiText_s = '2022-2023D'
     energy = '13'
     if isRun3:
         energy = '13.6'
-    lumiText_s = lumiText_s + ' fb^{-1}('+ energy +'TeV)'
+    #lumiText_s = lumiText_s + ' fb^{-1}('+ energy +'TeV)'
+    lumiText_s = lumiText_s + ' ('+ energy +'TeV)'
     # print(lumiText)
     latex2 = ROOT.TLatex()
     latex2.SetNDC()

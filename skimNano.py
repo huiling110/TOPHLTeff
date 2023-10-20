@@ -33,6 +33,9 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANO
                         'HLT_PFHT450_SixPFJet36_PNetBTag0p35',
                         'HLT_PFHT400_SixPFJet32_PNet2BTagMean0p50',
                         'HLT_PFHT330PT30_QuadPFJet_75_60_45_40',
+                        #Additional triggers for DeepJet vs ParticleNet comparison
+                        'HLT_QuadPFJet70_50_40_35_PNet2BTagMean0p65',
+                        'HLT_PFHT280_QuadPFJet30_PNet2BTagMean0p55',
                         
                         "HLT_IsoMu27", 
                         'HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned',
@@ -149,7 +152,7 @@ if __name__=='__main__':
     args = process_arguments()
     #!!!need to update so that test and subjob is easy
     # main(args['arg1'], args['arg2'], args['arg3'], args['arg4'])
-    main(args['arg1'], args['arg2'], False, False) #ele
-    # main(args['arg1'], args['arg2'], True, False)
+    # main(args['arg1'], args['arg2'], False, False) #ele
+    main(args['arg1'], args['arg2'], True, False) #hadronic
     # main(args['arg1'], args['arg2'], True, True) #test
     # main(args['arg1'], args['arg2'], False, True) #test
