@@ -9,17 +9,17 @@ def main():
     # in2023C = '/eos/user/v/vshang/forTopHLT/2023C/v1ForHardronic/result/eff.root' 
     # in2023D = '/eos/user/v/vshang/forTopHLT/2023D/v1ForHardronic/result/eff.root' 
     # in2022 = '/eos/user/v/vshang/forTopHLT/2022/v1ForHardronic/result/eff.root' 
-    in2023B = '/eos/user/v/vshang/forTopHLT/2023B/v1ForHardronicv2/result/eff.root' 
-    in2023C = '/eos/user/v/vshang/forTopHLT/2023C/v1ForHardronicv2/result/eff.root' 
-    in2023D = '/eos/user/v/vshang/forTopHLT/2023D/v1ForHardronicv2/result/eff.root' 
-    in2022 = '/eos/user/v/vshang/forTopHLT/2022/v1ForHardronicv2/result/eff.root' 
-    ifHadronic =True
+    # in2023B = '/eos/user/v/vshang/forTopHLT/2023B/v1ForHardronicv2/result/eff.root' 
+    # in2023C = '/eos/user/v/vshang/forTopHLT/2023C/v1ForHardronicv2/result/eff.root' 
+    # in2023D = '/eos/user/v/vshang/forTopHLT/2023D/v1ForHardronicv2/result/eff.root' 
+    # in2022 = '/eos/user/v/vshang/forTopHLT/2022/v1ForHardronicv2/result/eff.root' 
+    # ifHadronic =True
     
-    # in2023B = '/eos/user/v/vshang/forTopHLT/2023B/v1forEle/result/eff.root' 
-    # in2023C = '/eos/user/v/vshang/forTopHLT/2023C/v1forEle/result/eff.root' 
-    # in2023D = '/eos/user/v/vshang/forTopHLT/2023D/v1forEle/result/eff.root' 
-    # in2022 = '/eos/user/v/vshang/forTopHLT/2022/v1forEle/result/eff.root' 
-    # ifHadronic = False
+    in2023B = '/eos/user/v/vshang/forTopHLT/2023B/v1forEle/result/eff.root' 
+    in2023C = '/eos/user/v/vshang/forTopHLT/2023C/v1forEle/result/eff.root' 
+    in2023D = '/eos/user/v/vshang/forTopHLT/2023D/v1forEle/result/eff.root' 
+    in2022 = '/eos/user/v/vshang/forTopHLT/2022/v1forEle/result/eff.root' 
+    ifHadronic = False
     
     # era = uf.getEra(in2023B)
     if ifHadronic:

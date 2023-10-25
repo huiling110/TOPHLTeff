@@ -6,11 +6,12 @@ import setTDRStyle as st
 def getEffFromFile(inputDirFile, Histlist):   
     b_eta1List= getHistFromFile( inputDirFile, Histlist) 
     #    print(b_eta1List)
-    eff_b_eta1 = getEff( b_eta1List[0], b_eta1List[1] )
+    eff_b_eta1 = ROOT.TEfficiency( b_eta1List[1], b_eta1List[0] ) #num = b_eta1List[1], denom = b_eta1List[0]
     eff_b_eta1.Print() 
     return eff_b_eta1
  
- 
+
+#Deprecated
 def getEff(de, nu) :
     #!!! use maybe TEfficiency later to calculate efficiency
     de_d = de.Clone()
@@ -25,6 +26,7 @@ def getEff(de, nu) :
     eff.Divide(nu_d, de_d)
     # eff.Print()
     return eff
+
 
 def getHistFromFile(fileName, histNames):
     file = ROOT.TFile.Open(fileName)
@@ -65,7 +67,7 @@ def plotOverlay(histList, legenList, era, yTitle, plotName, yRange=[]):
     # legend = ROOT.TLegend(0.65, 0.8, 0.9, 0.93)  # Create a legend to label the histograms
     legend = ROOT.TLegend(0.7, 0.2, 0.9, 0.53)  # Create a legend to label the histograms
     
-    yMax = getYmax(histList)
+    #yMax = getYmax(histList)
     #plot style
     LineColorDic={
         # 0: ROOT.TColor.GetColor("#fdae61"),
@@ -91,14 +93,21 @@ def plotOverlay(histList, legenList, era, yTitle, plotName, yRange=[]):
         histogram.SetMarkerSize(1.5)
         # histogram.SetMarkerStyle(45)
         histogram.SetMarkerStyle(64)
-        histogram.GetXaxis().SetTitle(histogram.GetTitle())  # Set X-axis title (modify as needed)
-        histogram.GetYaxis().SetTitle(yTitle)  # Set Y-axis title (modify as needed)
-        histogram.GetXaxis().SetTitleSize(0.05)
-        histogram.GetYaxis().SetTitleSize(0.05)
-        if len(yRange)>1:
-            histList[i].GetYaxis().SetRangeUser(yRange[0], yRange[1])
-        else:
-            histList[i].GetYaxis().SetRangeUser(0, yMax*1.3)
+        # histogram.GetXaxis().SetTitle(histogram.GetTitle())  # Set X-axis title (modify as needed)
+        # histogram.GetYaxis().SetTitle(yTitle)  # Set Y-axis title (modify as needed)
+        # histogram.GetXaxis().SetTitleSize(0.05)
+        # histogram.GetYaxis().SetTitleSize(0.05)
+        xTitle = histogram.GetCopyTotalHisto().GetTitle()
+        histogram.SetTitle(";"+xTitle+";"+yTitle)
+        ROOT.gPad.Update()
+        histogram.GetPaintedGraph().GetXaxis().SetTitleSize(0.05)
+        histogram.GetPaintedGraph().GetYaxis().SetTitleSize(0.05)
+        # if len(yRange)>1:
+        #     histList[i].GetYaxis().SetRangeUser(yRange[0], yRange[1])
+        # else:
+        #     histList[i].GetYaxis().SetRangeUser(0, yMax*1.3)
+        histogram.GetPaintedGraph().SetMinimum(yRange[0])
+        histogram.GetPaintedGraph().SetMaximum(yRange[1])
 
         legend.AddEntry(histogram, legenList[i], "l")  # Add an entry to the legend
         legend.Draw() 
