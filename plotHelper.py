@@ -7,8 +7,15 @@ def getEffFromFile(inputDirFile, Histlist):
     b_eta1List= getHistFromFile( inputDirFile, Histlist) 
     #    print(b_eta1List)
     eff_b_eta1 = ROOT.TEfficiency( b_eta1List[1], b_eta1List[0] ) #num = b_eta1List[1], denom = b_eta1List[0]
-    eff_b_eta1.Print() 
+    eff_b_eta1.Print()
     return eff_b_eta1
+
+def getXrangeFromFile(inputDirFile, Histlist):
+    b_eta1List= getHistFromFile( inputDirFile, Histlist)
+    xmin = b_eta1List[0].GetXaxis().GetXmin()
+    xmax = b_eta1List[0].GetXaxis().GetXmax()
+    print("xmin = ", int(xmin), ", xmax = ", int(xmax))
+    return int(xmin), int(xmax)
  
 
 #Deprecated
@@ -57,7 +64,7 @@ def getHistFromFile(fileName, histNames):
     
 
 
-def plotOverlay(histList, legenList, era, yTitle, plotName, yRange=[]):
+def plotOverlay(histList, legenList, era, yTitle, plotName, xmin, xmax, yRange=[]):
     print('start to plot overlay plot')
     mySty =  st.setMyStyle()
     mySty.cd()
@@ -108,7 +115,8 @@ def plotOverlay(histList, legenList, era, yTitle, plotName, yRange=[]):
         #     histList[i].GetYaxis().SetRangeUser(0, yMax*1.3)
         histogram.GetPaintedGraph().SetMinimum(yRange[0])
         histogram.GetPaintedGraph().SetMaximum(yRange[1])
-
+        histogram.GetPaintedGraph().GetXaxis().SetLimits(xmin, xmax)
+        
         legend.AddEntry(histogram, legenList[i], "l")  # Add an entry to the legend
         legend.Draw() 
         

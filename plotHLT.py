@@ -8,20 +8,16 @@ import usefulFunc as uf
 def main():
     # isTest = True
     isTest =False
-    # inputDir = '/eos/user/v/vshang/forTopHLT/2023B/v1ForHardronic/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT/2023C/v1ForHardronic/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT/2023D/v1ForHardronic/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT/2022/v1ForHardronic/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT/2023B/v1ForHardronicv2/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT/2023C/v1ForHardronicv2/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT/2023D/v1ForHardronicv2/'
-    inputDir = '/eos/user/v/vshang/forTopHLT/2022/v1ForHardronicv2/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023B/v1ForHadronic/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023C/v1ForHadronic/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023D/v1ForHadronic/'
+    inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2022/v1ForHadronic/'
     isHadronic = True
     
-    # inputDir = '/eos/user/v/vshang/forTopHLT/2023B/v1forEle/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT/2023C/v1forEle/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT/2023D/v1forEle/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT/2022/v1forEle/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023B/v1ForEle/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023C/v1ForEle/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023D/v1ForEle/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2022/v1ForEle/'
     # isHadronic = False
    
     era = uf.getEra(inputDir) 
@@ -66,7 +62,7 @@ def makeHist_ele(chain, isTest):
             if(chain.HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned==1):
                 nu_eleJet.Fill(chain.Electron_pt[0])
         
-        if((nj_ele > 1) & (ne>0) & (HT>100.) ):
+        if((nj_ele > 1) & (ne>0) & (HT>200.) ):
             de_eleHT.Fill(chain.Electron_pt[0])
             if(chain.HLT_Ele28_eta2p1_WPTight_Gsf_HT150==1):
                 nu_eleHT.Fill(chain.Electron_pt[0])
@@ -80,13 +76,15 @@ def makeHist_hard(chain, isTest, era):
     nu_jetNum_1btag =  ROOT.TH1D('nu_jetNum_1btag', 'n^{jet}', 6, 6, 12)
     nu_jetNum_2btag = ROOT.TH1D('nu_jetNum_2btag', 'n^{jet}', 6, 6, 12)
     nu_jetNum_both = ROOT.TH1D('nu_jetNum_both', 'n^{jet}', 6, 6, 12)
+
+    binning = np.array((2., 3., 4., 5., 7.))
+    de_bjetNum = ROOT.TH1D('de_bjetNum', 'n^{b-jet}', len(binning)-1, binning)
+    nu_bjetNum_1btag =  ROOT.TH1D('nu_bjetNum_1btag', 'n^{b-jet}', len(binning)-1, binning)
+    nu_bjetNum_2btag = ROOT.TH1D('nu_bjetNum_2btag', 'n^{b-jet}', len(binning)-1, binning)
+    nu_bjetNum_both = ROOT.TH1D('nu_bjetNum_both', 'n^{b-jet}', len(binning)-1, binning)
     
-    de_bjetNum = ROOT.TH1D('de_bjetNum', 'n^{b-jet}', 5, 1.5, 6.5)
-    nu_bjetNum_1btag =  ROOT.TH1D('nu_bjetNum_1btag', 'n^{b-jet}', 5, 1.5, 6.5)
-    nu_bjetNum_2btag = ROOT.TH1D('nu_bjetNum_2btag', 'n^{b-jet}', 5, 1.5, 6.5)
-    nu_bjetNum_both = ROOT.TH1D('nu_bjetNum_both', 'n^{b-jet}', 5, 1.5, 6.5)
-    
-    binning = np.array((500., 550., 600., 650., 700., 800., 900., 1000., 1300., 2000)) 
+    #binning = np.array((500., 550., 600., 650., 700., 800., 900., 1000., 1300., 2000)) 
+    binning = np.array((550., 600., 650., 700., 800., 900., 1000., 1300., 2000)) 
     de_HT = ROOT.TH1D('de_HT', 'HT(GeV)', len(binning)-1, binning)
     nu_HT_1btag =  ROOT.TH1D('nu_HT_1btag', 'HT(GeV)', len(binning)-1, binning)
     nu_HT_2btag = ROOT.TH1D('nu_HT_2btag', 'HT(GeV)', len(binning)-1, binning)
@@ -109,8 +107,11 @@ def makeHist_hard(chain, isTest, era):
             btag =1
 
         #QuadPFJet triggers for checking combined 1btag OR 2btag efficiency
+        HLT_4jet = False
         HLT_4jet1 = False
         HLT_4jet2 = False
+        if chain.GetBranch("HLT_QuadPFJet70_50_40_35_PFBTagParticleNet_2BTagSum0p65"):
+            HLT_4jet = chain.HLT_QuadPFJet70_50_40_35_PFBTagParticleNet_2BTagSum0p65
         if chain.GetBranch("HLT_QuadPFJet70_50_40_35_PNet2BTagMean0p65"):
             HLT_4jet1 = chain.HLT_QuadPFJet70_50_40_35_PNet2BTagMean0p65
         if chain.GetBranch("HLT_PFHT280_QuadPFJet30_PNet2BTagMean0p55"):
@@ -119,7 +120,7 @@ def makeHist_hard(chain, isTest, era):
     #preslection
         jetNum, HT = jetSel(chain)
         bjetNum, bHT = jetSel(chain, True, btag)
-        if ( not (jetNum>5 and HT>500 and bjetNum>1)):
+        if ( not (jetNum>5 and HT>550 and bjetNum>1)):
             continue
         
         de_jetNum.Fill(jetNum)
@@ -137,10 +138,16 @@ def makeHist_hard(chain, isTest, era):
             nu_jetNum_2btag.Fill(jetNum)
             nu_bjetNum_2btag.Fill(bjetNum)
             nu_HT_2btag.Fill(HT)
-        if HLT_2btag or HLT_1btag or HLT_4jet1 or HLT_4jet2:
-            nu_jetNum_both.Fill(jetNum)
-            nu_bjetNum_both.Fill(bjetNum)
-            nu_HT_both.Fill(HT)
+        if era=='2022':
+            if HLT_2btag or HLT_1btag or HLT_4jet:
+                nu_jetNum_both.Fill(jetNum)
+                nu_bjetNum_both.Fill(bjetNum)
+                nu_HT_both.Fill(HT)
+        else:
+            if HLT_2btag or HLT_1btag or HLT_4jet1 or HLT_4jet2:
+                nu_jetNum_both.Fill(jetNum)
+                nu_bjetNum_both.Fill(bjetNum)
+                nu_HT_both.Fill(HT)
             
             
     histList = [de_jetNum, nu_jetNum_1btag, nu_jetNum_2btag, nu_jetNum_both, de_bjetNum, nu_bjetNum_1btag, nu_bjetNum_2btag, nu_bjetNum_both, de_HT, nu_HT_1btag, nu_HT_2btag, nu_HT_both]
@@ -179,16 +186,16 @@ def preSel( chain) :
     jetNum, HT = jetSel(chain)
     bjetNum, bHT = jetSel(chain, True)
         
-    # ifPass = (nj > 5)  & (nb>1) & (ht>500) & (chain.HLT_IsoMu27==1)
-    # ifPass = jetNum>5 and HT>500 and bjetNum>1 and chain.HLT_IsoMu27==1
-    ifPass = jetNum>5 and HT>500 and bjetNum>0 and chain.HLT_IsoMu27==1
+    # ifPass = (nj > 5)  & (nb>1) & (ht>500) & (chain.HLT_IsoMu24==1)
+    # ifPass = jetNum>5 and HT>500 and bjetNum>1 and chain.HLT_IsoMu24==1
+    ifPass = jetNum>5 and HT>500 and bjetNum>0 and chain.HLT_IsoMu24==1
     return ifPass
 
 def jetSel(chain, isB=False, btag=0):
     jetNum = 0
     HT = 0
     for i in range(0, chain.nJet):
-        if( not (chain.Jet_pt[i] > 30.) and (abs(chain.Jet_eta[i])<2.4)) :
+        if( not (chain.Jet_pt[i] > 40.) and (abs(chain.Jet_eta[i])<2.4)) :
             continue
         if isB:
             # DeepJet 0.351; PNet: 0.387

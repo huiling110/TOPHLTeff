@@ -120,8 +120,8 @@ def addCMSTextToCan(canvas, x1=0.23, x2=0.35,x3=0.7, y=0.96, era = '2016', isRun
     latex.DrawLatex(x2, y , extraText )
   
     lumiText = lumiMap[era] /1000
-    #lumiText_s = '{0:.1f}'.format(lumiText)
-    lumiText_s = '2022-2023D'
+    lumiText_s = '35.2 fb^{-1}, 2022 + 27.2 fb^{-1}, 2023'
+    #lumiText_s = '2022-2023D'
     energy = '13'
     if isRun3:
         energy = '13.6'

@@ -5,21 +5,17 @@ import usefulFunc as uf
 
 
 def main():
-    # in2023B = '/eos/user/v/vshang/forTopHLT/2023B/v1ForHardronic/result/eff.root' 
-    # in2023C = '/eos/user/v/vshang/forTopHLT/2023C/v1ForHardronic/result/eff.root' 
-    # in2023D = '/eos/user/v/vshang/forTopHLT/2023D/v1ForHardronic/result/eff.root' 
-    # in2022 = '/eos/user/v/vshang/forTopHLT/2022/v1ForHardronic/result/eff.root' 
-    # in2023B = '/eos/user/v/vshang/forTopHLT/2023B/v1ForHardronicv2/result/eff.root' 
-    # in2023C = '/eos/user/v/vshang/forTopHLT/2023C/v1ForHardronicv2/result/eff.root' 
-    # in2023D = '/eos/user/v/vshang/forTopHLT/2023D/v1ForHardronicv2/result/eff.root' 
-    # in2022 = '/eos/user/v/vshang/forTopHLT/2022/v1ForHardronicv2/result/eff.root' 
-    # ifHadronic =True
+    in2023B = '/eos/user/v/vshang/forTopHLT_11052023/2023B/v1ForHadronic/result/eff.root' 
+    in2023C = '/eos/user/v/vshang/forTopHLT_11052023/2023C/v1ForHadronic/result/eff.root' 
+    in2023D = '/eos/user/v/vshang/forTopHLT_11052023/2023D/v1ForHadronic/result/eff.root' 
+    in2022 = '/eos/user/v/vshang/forTopHLT_11052023/2022/v1ForHadronic/result/eff.root' 
+    ifHadronic =True
     
-    in2023B = '/eos/user/v/vshang/forTopHLT/2023B/v1forEle/result/eff.root' 
-    in2023C = '/eos/user/v/vshang/forTopHLT/2023C/v1forEle/result/eff.root' 
-    in2023D = '/eos/user/v/vshang/forTopHLT/2023D/v1forEle/result/eff.root' 
-    in2022 = '/eos/user/v/vshang/forTopHLT/2022/v1forEle/result/eff.root' 
-    ifHadronic = False
+    # in2023B = '/eos/user/v/vshang/forTopHLT_11052023/2023B/v1ForEle/result/eff.root' 
+    # in2023C = '/eos/user/v/vshang/forTopHLT_11052023/2023C/v1ForEle/result/eff.root' 
+    # in2023D = '/eos/user/v/vshang/forTopHLT_11052023/2023D/v1ForEle/result/eff.root' 
+    # in2022 = '/eos/user/v/vshang/forTopHLT_11052023/2022/v1ForEle/result/eff.root' 
+    # ifHadronic = False
     
     # era = uf.getEra(in2023B)
     if ifHadronic:
@@ -56,17 +52,19 @@ def plotEffOverlay(in2023B, in2023C, in2023D, in2022, trigger='1btag', var = 'je
         eff_2023C = ph.getEffFromFile(in2023C, ['de_'+var, 'nu_'+var+'_'+trigger])
         eff_2023D = ph.getEffFromFile(in2023D, ['de_'+var, 'nu_'+var+'_'+trigger])
         eff_2022 = ph.getEffFromFile(in2022, ['de_'+var, 'nu_'+var+'_'+trigger])
+        xmin, xmax = ph.getXrangeFromFile(in2022, ['de_'+var, 'nu_'+var+'_'+trigger])
     else:
         eff_2023B = ph.getEffFromFile(in2023B, ['de_'+var+'_'+trigger, 'nu_'+var+'_'+trigger])
         eff_2023C = ph.getEffFromFile(in2023C, ['de_'+var+'_'+trigger, 'nu_'+var+'_'+trigger])
         eff_2023D = ph.getEffFromFile(in2023D, ['de_'+var+'_'+trigger, 'nu_'+var+'_'+trigger])
         eff_2022 = ph.getEffFromFile(in2022, ['de_'+var+'_'+trigger, 'nu_'+var+'_'+trigger])
-    
+        xmin, xmax = ph.getXrangeFromFile(in2022, ['de_'+var+'_'+trigger, 'nu_'+var+'_'+trigger])
+        
     histList = [eff_2023B, eff_2023C, eff_2023D, eff_2022]
     legendList = ['2023B', '2023C', '2023D', '2022']
     outDir = getOutDir(in2023B) 
     plotName = outDir + 'HLTEff_'+var+'_'+trigger+'.png'
-    ph.plotOverlay(histList, legendList, '2023', 'HLT efficiency', plotName, [0, 1.1])
+    ph.plotOverlay(histList, legendList, '2023', 'HLT efficiency', plotName, xmin, xmax, [0, 1.1])
    
 
  

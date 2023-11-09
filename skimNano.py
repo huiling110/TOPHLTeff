@@ -4,10 +4,10 @@ import argparse
 
 
 #!!!Maybe try rDataFrame in the future
-# def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023C/Muon0/NANOAOD/PromptNanoAODv12_v4-v1/60000/fdd8324d-a4f8-4286-945f-5528e7ae46e9.root', version = 'v0ForHadronic', ifForHardronic = True,   ifTest = False):
-# def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023D/Muon0/NANOAOD/PromptReco-v1/000/369/901/00000/3bdb0fca-4c12-4394-9812-509cb1d05cb7.root', version = 'v0ForHadronic', ifForHardronic = True,   ifTest = True):
-# def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023C/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v1/70000/61280236-03a6-4cf3-8008-6eca1d7236d0.root', version = 'v0ForHadronic', ifForHardronic = True,   ifTest = True):
-def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v2/60000/06d25571-df3e-4ceb-9e44-7452add3e004.root', outDir = './output/', ifForHardronic = True,   ifTest = True):
+# def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023C/Muon0/NANOAOD/PromptNanoAODv12_v4-v1/60000/fdd8324d-a4f8-4286-945f-5528e7ae46e9.root', version = 'v0ForHadronic', ifForHadronic = True,   ifTest = False):
+# def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023D/Muon0/NANOAOD/PromptReco-v1/000/369/901/00000/3bdb0fca-4c12-4394-9812-509cb1d05cb7.root', version = 'v0ForHadronic', ifForHadronic = True,   ifTest = True):
+# def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023C/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v1/70000/61280236-03a6-4cf3-8008-6eca1d7236d0.root', version = 'v0ForHadronic', ifForHadronic = True,   ifTest = True):
+def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v2/60000/06d25571-df3e-4ceb-9e44-7452add3e004.root', outDir = './output/', ifForHadronic = True,   ifTest = True):
     # inputNano = 'root://cmsxrootd.fnal.gov/' +'/store/data/Run2023C/Muon0/NANOAOD/PromptNanoAODv12_v3-v1/2820000/e55c38a4-5776-4b0f-8190-39da36d63bca.root' 
 
 
@@ -20,7 +20,7 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANO
     
     print('entries in old tree: ', chain.GetEntries())
    
-    print('ifTest=', ifTest, '  ifForHardronic=', ifForHardronic) 
+    print('ifTest=', ifTest, '  ifForHadronic=', ifForHadronic) 
 
     # List of branch names to keep
     branches_to_keep = [
@@ -34,10 +34,11 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANO
                         'HLT_PFHT400_SixPFJet32_PNet2BTagMean0p50',
                         'HLT_PFHT330PT30_QuadPFJet_75_60_45_40',
                         #Additional triggers for DeepJet vs ParticleNet comparison
+                        'HLT_QuadPFJet70_50_40_35_PFBTagParticleNet_2BTagSum0p65',
                         'HLT_QuadPFJet70_50_40_35_PNet2BTagMean0p65',
                         'HLT_PFHT280_QuadPFJet30_PNet2BTagMean0p55',
                         
-                        "HLT_IsoMu27", 
+                        'HLT_IsoMu24',
                         'HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned',
                         'HLT_Ele28_eta2p1_WPTight_Gsf_HT150',
                         "run",
@@ -65,15 +66,15 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANO
         entries =10000
     for entry in range(entries):
         chain.GetEntry(entry)
-        if not (chain.HLT_IsoMu27==1): #!!!add muon selection here
+        if not (chain.HLT_IsoMu24==1): #!!!add muon selection here
             continue
-        if ifForHardronic:
+        if ifForHadronic:
             nj, HT=jetSel(chain)
             if not (nj>5 and HT>400):
                 continue 
         else:
             eleNum = getEleNum(chain)
-            if not (chain.HLT_IsoMu27==1 and eleNum>=1 ):
+            if not (chain.HLT_IsoMu24==1 and eleNum>=1 ):
                 continue
                 
         output_tree.Fill()
@@ -108,7 +109,7 @@ def jetSel(chain):
     HT = 0
     for Jet in range(0,chain.nJet):
         # if((chain.Jet_pt[Jet] > 30.) and (abs(chain.Jet_eta[Jet])<2.4) and chain.Jet_jetId[Jet]>0):
-        if((chain.Jet_pt[Jet] > 30.) and (abs(chain.Jet_eta[Jet])<2.4)) :
+        if((chain.Jet_pt[Jet] > 40.) and (abs(chain.Jet_eta[Jet])<2.4)) :
             jetNum+=1
             HT=HT+chain.Jet_pt[Jet] 
     return jetNum, HT    
@@ -152,7 +153,7 @@ if __name__=='__main__':
     args = process_arguments()
     #!!!need to update so that test and subjob is easy
     # main(args['arg1'], args['arg2'], args['arg3'], args['arg4'])
-    # main(args['arg1'], args['arg2'], False, False) #ele
-    main(args['arg1'], args['arg2'], True, False) #hadronic
+    main(args['arg1'], args['arg2'], False, False) #ele
+    # main(args['arg1'], args['arg2'], True, False) #hadronic
     # main(args['arg1'], args['arg2'], True, True) #test
     # main(args['arg1'], args['arg2'], False, True) #test

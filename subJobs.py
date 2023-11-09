@@ -12,8 +12,8 @@ def main():
     # inputList = 'input/Muon2022.txt'
     # era = '2022'
     
-    jobVersion = 'v1ForHardronicv2'
-    # jobVersion = 'v1forEle'
+    # jobVersion = 'v1ForHadronic'
+    jobVersion = 'v1ForEle'
     #!!!add parameter here to contral 
    
     outDir = makeOutDir(era, jobVersion)
@@ -40,7 +40,7 @@ def main():
     
 def makeOutDir(era, jobVersion):
     #outBase = '/eos/user/h/hhua/forTopHLT/'
-    outBase = '/eos/user/v/vshang/forTopHLT/'
+    outBase = '/eos/user/v/vshang/forTopHLT_11052023/'
     outDir = outBase + era +'/'
     uf.checkMakeDir(outDir)
     outDir = outDir + jobVersion + '/'
