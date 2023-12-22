@@ -41,15 +41,18 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANO
                         'HLT_IsoMu24',
                         'HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned',
                         'HLT_Ele28_eta2p1_WPTight_Gsf_HT150',
+                        'HLT_Ele30_WPTight_Gsf',
                         "run",
                         "nJet", 
                         'Jet_pt',
                         'Jet_eta',
+                        'Jet_phi',
                         'Jet_btagDeepFlavB', 
                         'Jet_btagPNetB', #2023D
                         'nElectron',
                         'Electron_pt',
                         'Electron_eta',
+                        'Electron_phi',
                         'Electron_cutBased'
                         ]
 
@@ -101,6 +104,8 @@ def getEleNum(chain):
     for electron in range(0,chain.nElectron):
         # nElectrons
         if((chain.Electron_pt[electron] > 25.) & (abs(chain.Electron_eta[electron])<2.1) & (chain.Electron_cutBased[electron]>=4)):
+        # if((chain.Electron_pt[electron] > 25.) & (abs(chain.Electron_eta[electron])<2.1) & (chain.Electron_cutBased[electron]>=4) & ((chain.Electron_eta[electron]<-1.8) or (chain.Electron_eta[electron]>0.6)) & ((chain.Electron_phi[electron]>-0.5) or (chain.Electron_phi[electron]<-1.5))): #For checking BPix issue in Run 2023D
+        # if((chain.Electron_pt[electron] > 25.) & (abs(chain.Electron_eta[electron])<2.1) & (chain.Electron_cutBased[electron]>=4) & (chain.run<367765)): #For checking HCAL scale update in Run 2023C
             ne = ne+1
     return ne
 
@@ -110,6 +115,8 @@ def jetSel(chain):
     for Jet in range(0,chain.nJet):
         # if((chain.Jet_pt[Jet] > 30.) and (abs(chain.Jet_eta[Jet])<2.4) and chain.Jet_jetId[Jet]>0):
         if((chain.Jet_pt[Jet] > 40.) and (abs(chain.Jet_eta[Jet])<2.4)) :
+        # if((chain.Jet_pt[Jet] > 40.) and (abs(chain.Jet_eta[Jet])<2.4) and ((chain.Jet_eta[Jet]<-1.8) or (chain.Jet_eta[Jet]>0.6)) and ((chain.Jet_phi[Jet]>-0.5) or (chain.Jet_phi[Jet]<-1.5))) : #For checking BPix issue in Run 2023D
+        # if((chain.Jet_pt[Jet] > 40.) and (abs(chain.Jet_eta[Jet])<2.4) and (chain.run<367765)) : #For checking HCAL scale update in Run 2023C
             jetNum+=1
             HT=HT+chain.Jet_pt[Jet] 
     return jetNum, HT    

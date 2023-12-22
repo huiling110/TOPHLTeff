@@ -11,14 +11,18 @@ def main():
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023B/v1ForHadronic/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023C/v1ForHadronic/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023D/v1ForHadronic/'
-    inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2022/v1ForHadronic/'
-    isHadronic = True
+    # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2022/v1ForHadronic/'
+    # isHadronic = True
     
+    # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023B/v1ForEle/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023C/v1ForEle/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023D/v1ForEle/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2022/v1ForEle/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023B/v1ForEle/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023C/v1ForEle/'
+    inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023C/v1ForEle/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023D/v1ForEle/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2022/v1ForEle/'
-    # isHadronic = False
+    isHadronic = False
    
     era = uf.getEra(inputDir) 
     outFile = makeOutFile(inputDir, isTest) 
@@ -49,6 +53,12 @@ def makeHist_ele(chain, isTest):
     nu_eleJet = ROOT.TH1D('nu_ele1pt_eleJet', 'p_{T}^{1st e}(GeV)', len(binning_e)-1,binning_e)
     de_eleHT = ROOT.TH1D('de_ele1pt_eleHT', 'p_{T}^{1st e}(GeV)', len(binning_e)-1,binning_e)
     nu_eleHT = ROOT.TH1D('nu_ele1pt_eleHT', 'p_{T}^{1st e}(GeV)', len(binning_e)-1,binning_e)
+
+    # de_singleEleJet = ROOT.TH1D('de_ele1pt_eleJet', 'p_{T}^{1st e}(GeV)', len(binning_e)-1,binning_e)
+    # nu_singleEleJet = ROOT.TH1D('nu_ele1pt_eleJet', 'p_{T}^{1st e}(GeV)', len(binning_e)-1,binning_e)
+    # de_singleEleHT = ROOT.TH1D('de_ele1pt_eleHT', 'p_{T}^{1st e}(GeV)', len(binning_e)-1,binning_e)
+    # nu_singleEleHT = ROOT.TH1D('nu_ele1pt_eleHT', 'p_{T}^{1st e}(GeV)', len(binning_e)-1,binning_e)
+    
     
     entries = chain.GetEntries()
     if isTest:
@@ -59,14 +69,20 @@ def makeHist_ele(chain, isTest):
         ne = sn.getEleNum(chain)
         if((nj_ele > 0) & (ne>0)):
             de_eleJet.Fill(chain.Electron_pt[0])
+            # de_singleEleJet.Fill(chain.Electron_pt[0])
             if(chain.HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned==1):
                 nu_eleJet.Fill(chain.Electron_pt[0])
+            # if(chain.HLT_Ele30_WPTight_Gsf==1):
+            #     nu_singleEleJet.Fill(chain.Electron_pt[0])
         
         if((nj_ele > 1) & (ne>0) & (HT>200.) ):
             de_eleHT.Fill(chain.Electron_pt[0])
+            # de_singleEleHT.Fill(chain.Electron_pt[0])
             if(chain.HLT_Ele28_eta2p1_WPTight_Gsf_HT150==1):
                 nu_eleHT.Fill(chain.Electron_pt[0])
-    histList = [de_eleHT, nu_eleHT, de_eleJet, nu_eleJet]
+            # if(chain.HLT_Ele30_WPTight_Gsf==1):
+            #     nu_singleEleHT.Fill(chain.Electron_pt[0])
+    histList = [de_eleHT, nu_eleHT, de_eleJet, nu_eleJet]#, de_singleEleHT, nu_singleEleHT, de_singleEleJet, nu_singleEleJet,]
     return histList    
     
 
@@ -157,6 +173,7 @@ def makeHist_hard(chain, isTest, era):
     
 def makeOutFile(inputDir, isTest):
     outDir = inputDir+ 'result/'
+    #outDir = inputDir+ 'resultBPix/'
     if isTest:
         outDir = 'output/'
     if not os.path.exists(outDir):
@@ -195,16 +212,17 @@ def jetSel(chain, isB=False, btag=0):
     jetNum = 0
     HT = 0
     for i in range(0, chain.nJet):
-        if( not (chain.Jet_pt[i] > 40.) and (abs(chain.Jet_eta[i])<2.4)) :
+        if( not ((chain.Jet_pt[i] > 40.) and (abs(chain.Jet_eta[i])<2.4))) :
+        #if( not ((chain.Jet_pt[i] > 40.) and (abs(chain.Jet_eta[i])<2.4) and (chain.Jet_eta[i]<-1.8 or chain.Jet_eta[i]>0.6))) :
             continue
         if isB:
-            # DeepJet 0.351; PNet: 0.387
+            # DeepJet 0.355; PNet: 0.387
         #!!!change to era dependant
             if btag == 0:
-                if( not (chain.Jet_btagDeepFlavB[i]>0.351)):
+                if( not (chain.Jet_btagDeepFlavB[i]>0.355)):
                     continue
             if btag==1:
-                if( not (chain.Jet_btagPNetB[i]>0.351)): #!!!bug
+                if( not (chain.Jet_btagPNetB[i]>0.387)):
                     continue
                 
         jetNum+=1

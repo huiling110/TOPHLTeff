@@ -3,14 +3,14 @@ import os
 import usefulFunc as uf
 
 def main():
-    inputList = 'input/Muon2023B.txt'
-    era = '2023B'
+    # inputList = 'input/Muon2023B.txt'
+    # era = '2023B'
     # inputList = 'input/Muon2023C.txt'
     # era = '2023C'
     # inputList = 'input/Muon2023D.txt'
     # era = '2023D'
-    # inputList = 'input/Muon2022.txt'
-    # era = '2022'
+    inputList = 'input/Muon2022.txt'
+    era = '2022'
     
     # jobVersion = 'v1ForHadronic'
     jobVersion = 'v1ForEle'
@@ -40,7 +40,7 @@ def main():
     
 def makeOutDir(era, jobVersion):
     #outBase = '/eos/user/h/hhua/forTopHLT/'
-    outBase = '/eos/user/v/vshang/forTopHLT_11052023/'
+    outBase = '/eos/user/v/vshang/forTopHLT_11162023BPix/'
     outDir = outBase + era +'/'
     uf.checkMakeDir(outDir)
     outDir = outDir + jobVersion + '/'
