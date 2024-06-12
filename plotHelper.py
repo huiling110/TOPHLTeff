@@ -78,12 +78,12 @@ def plotOverlay(histList, legenList, era, yTitle, plotName, xmin, xmax, yRange=[
     #plot style
     LineColorDic={
         # 0: ROOT.TColor.GetColor("#fdae61"),
-        0: ROOT.TColor.GetColor("#fd8d3c"),
-        1: ROOT.TColor.GetColor("#f03b20"),
-        2: ROOT.TColor.GetColor("#2ca25f"),
-        3: ROOT.TColor.GetColor("#d01c8b"),
-        # 0: ROOT.TColor.GetColor("#f03b20"),
-        # 1: ROOT.TColor.GetColor("#2ca25f"),
+        # 0: ROOT.TColor.GetColor("#fd8d3c"),
+        # 1: ROOT.TColor.GetColor("#f03b20"),
+        # 2: ROOT.TColor.GetColor("#2ca25f"),
+        # 3: ROOT.TColor.GetColor("#d01c8b"),
+        0: ROOT.TColor.GetColor("#fdae61"),
+        1: ROOT.TColor.GetColor("#d01c8b"),
         #2ca25f green
         #d01c8b purple
         ##fdae61 fc9272" orange
@@ -124,8 +124,8 @@ def plotOverlay(histList, legenList, era, yTitle, plotName, xmin, xmax, yRange=[
         
     #st.addCMSTextToCan(can, 0.22, 0.34, 0.9, 0.94, era, True)
     st.addCMSTextToCan(can, 0.24, 0.39, 0.9, 0.94, era, True)
-    #st.addTriggerInfo(ifHadronic=True)
-    st.addTriggerInfo(ifHadronic=False)
+    st.addTriggerInfo(ifHadronic=True)
+    #st.addTriggerInfo(ifHadronic=False)
     
     can.SaveAs(plotName)
     print('Done overlay plotting\n\n')

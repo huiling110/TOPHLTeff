@@ -8,12 +8,16 @@ def main():
     # inputList = 'input/Muon2023C.txt'
     # era = '2023C'
     # inputList = 'input/Muon2023D.txt'
-    # era = '2023D'
-    inputList = 'input/Muon2022.txt'
-    era = '2022'
+    era = '2023D'
+    # inputList = 'input/Muon2022.txt'
+    # era = '2022'
+    # inputList = 'input/Muon2024C.txt'
+    # era = '2024C'
+    inputList = 'input/Muon2024D.txt'
+    era = '2024DpreCalib'
     
-    # jobVersion = 'v1ForHadronic'
-    jobVersion = 'v1ForEle'
+    jobVersion = 'v1ForHadronic'
+    # jobVersion = 'v1ForEle'
     #!!!add parameter here to contral 
    
     outDir = makeOutDir(era, jobVersion)
@@ -40,7 +44,7 @@ def main():
     
 def makeOutDir(era, jobVersion):
     #outBase = '/eos/user/h/hhua/forTopHLT/'
-    outBase = '/eos/user/v/vshang/forTopHLT_11162023BPix/'
+    outBase = '/eos/user/v/vshang/forTopHLT_05072024/'
     outDir = outBase + era +'/'
     uf.checkMakeDir(outDir)
     outDir = outDir + jobVersion + '/'

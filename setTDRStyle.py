@@ -122,13 +122,16 @@ def addCMSTextToCan(canvas, x1=0.23, x2=0.35,x3=0.7, y=0.96, era = '2016', isRun
     latex.DrawLatex(x2, y , extraText )
   
     lumiText = lumiMap[era] /1000
-    lumiText_s = '35.2 fb^{-1}, 2022 + 27.2 fb^{-1}, 2023'
+    #lumiText_s = '35.2 fb^{-1}, 2022 + 27.2 fb^{-1}, 2023'
+    lumiText_s = '9.5 fb^{-1}, 2023D + 6.7 fb^{-1}, 2024C'
     #lumiText_s = '2022-2023D'
     energy = '13'
     if isRun3:
         energy = '13.6'
     #lumiText_s = lumiText_s + ' fb^{-1}('+ energy +'TeV)'
-    lumiText_s = lumiText_s + ' ('+ energy +' TeV)'
+    #lumiText_s = lumiText_s + ' ('+ energy +' TeV)'
+    lumiText_s = energy + ' TeV'
+    #lumiText_s = energy + ' TeV'
     # print(lumiText)
     latex2 = ROOT.TLatex()
     latex2.SetNDC()
@@ -141,13 +144,13 @@ def addCMSTextToCan(canvas, x1=0.23, x2=0.35,x3=0.7, y=0.96, era = '2016', isRun
 
 def addTriggerInfo(ifHadronic=True):
     if ifHadronic:
-        #triggerText = '#splitline{Online requirements:}{#splitline{Six jets with p_{T} > 36 GeV,}{#splitline{1 b-tagged jet,}{and H_T > 450 GeV}}}'
-        #triggerText = '#splitline{Online requirements:}{#splitline{Six jets with p_{T} > 32 GeV,}{#splitline{2 b-tagged jets,}{and H_T > 400 GeV}}}'
-        triggerText = '#splitline{Online requirements:}{#splitline{Six jets with p_{T} > 32 GeV,}{#splitline{1 or 2 b-tagged jets,}{and H_T > 400 GeV}}}'
+        #triggerText = '#splitline{Online requirements:}{#splitline{Six jets with p_{T} > 36 GeV,}{#splitline{1 b-tagged jet,}{and HT > 450 GeV}}}'
+        #triggerText = '#splitline{Online requirements:}{#splitline{Six jets with p_{T} > 32 GeV,}{#splitline{2 b-tagged jets,}{and HT > 400 GeV}}}'
+        triggerText = '#splitline{Online requirements:}{#splitline{Six jets with p_{T} > 32 GeV,}{#splitline{1 or 2 b-tagged jets,}{and HT > 400 GeV}}}'
     else:
-        #triggerText = '#splitline{Online requirements:}{#splitline{Electron with p_{T} > 28 GeV}{and H_T > 150 GeV}}'
+        #triggerText = '#splitline{Online requirements:}{#splitline{Electron with p_{T} > 28 GeV}{and HT > 150 GeV}}'
         #triggerText = '#splitline{Online requirements:}{#splitline{Electron with p_{T} > 30 GeV}{and jet with p_{T} > 35 GeV}}'
-        #triggerText = '#splitline{Online requirements:}{#splitline{Electron with p_{T} > 28 GeV}{#splitline{and H_T > 150 GeV}{#splitline{(excluding BPix region with}{-1.8 < #eta < 0.6 and -1.5 < #phi < -0.5)}}}}'
+        #triggerText = '#splitline{Online requirements:}{#splitline{Electron with p_{T} > 28 GeV}{#splitline{and HT > 150 GeV}{#splitline{(excluding BPix region with}{-1.8 < #eta < 0.6 and -1.5 < #phi < -0.5)}}}}'
         triggerText = '#splitline{Online requirements:}{#splitline{Electron with p_{T} > 30 GeV}{#splitline{and jet with p_{T} > 35 GeV}{#splitline{(excluding BPix region with}{-1.8 < #eta < 0.6 and -1.5 < #phi < -0.5)}}}}'
 
     latex = ROOT.TLatex()

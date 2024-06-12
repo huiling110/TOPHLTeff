@@ -10,19 +10,22 @@ def main():
     isTest =False
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023B/v1ForHadronic/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023C/v1ForHadronic/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023D/v1ForHadronic/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2022/v1ForHadronic/'
-    # isHadronic = True
+    # inputDir = '/eos/user/v/vshang/forTopHLT_05072024/2023D/v1ForHadronic/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT_05072024/2024C/v1ForHadronic/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT_05072024/2024DpreCalib/v1ForHadronic/'
+    inputDir = '/eos/user/v/vshang/forTopHLT_05072024/2024DpostCalib/v1ForHadronic/'
+    isHadronic = True
     
     # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023B/v1ForEle/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023C/v1ForEle/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023D/v1ForEle/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2022/v1ForEle/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023B/v1ForEle/'
-    inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023C/v1ForEle/'
+    # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023C/v1ForEle/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023D/v1ForEle/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2022/v1ForEle/'
-    isHadronic = False
+    # isHadronic = False
    
     era = uf.getEra(inputDir) 
     outFile = makeOutFile(inputDir, isTest) 
@@ -120,7 +123,7 @@ def makeHist_hard(chain, isTest, era):
         else: 
             HLT_1btag = chain.HLT_PFHT450_SixPFJet36_PNetBTag0p35
             HLT_2btag = chain.HLT_PFHT400_SixPFJet32_PNet2BTagMean0p50
-            btag =1
+            btag = 1
 
         #QuadPFJet triggers for checking combined 1btag OR 2btag efficiency
         HLT_4jet = False
