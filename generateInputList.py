@@ -31,8 +31,12 @@ def main():
     # '/Muon0/Run2024C-PromptReco-v1/NANOAOD',
     # '/Muon1/Run2024C-PromptReco-v1/NANOAOD',    
 
-    '/Muon0/Run2024D-PromptReco-v1/NANOAOD',
-    '/Muon1/Run2024D-PromptReco-v1/NANOAOD',
+    # '/Muon0/Run2024D-PromptReco-v1/NANOAOD',
+    # '/Muon1/Run2024D-PromptReco-v1/NANOAOD',
+    '/Muon0/Run2024E-PromptReco-v1/NANOAOD',
+    '/Muon0/Run2024E-PromptReco-v2/NANOAOD'
+    '/Muon1/Run2024E-PromptReco-v1/NANOAOD',
+    '/Muon1/Run2024E-PromptReco-v2/NANOAOD',
     
     ]
     
@@ -41,7 +45,9 @@ def main():
     # outList = 'Muon2023D'
     # outList = 'Muon2022'
     # outList = 'Muon2024C'
-    outList = 'Muon2024D'
+    # outList = 'Muon2024D'
+    # outList = 'Muon2024D_all'
+    outList = 'Muon2024E'
   
   
   
