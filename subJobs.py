@@ -8,17 +8,22 @@ def main():
     # inputList = 'input/Muon2023C.txt'
     # era = '2023C'
     # inputList = 'input/Muon2023D.txt'
-    era = '2023D'
+    # era = '2023D'
     # inputList = 'input/Muon2022.txt'
     # era = '2022'
     # inputList = 'input/Muon2024C.txt'
     # era = '2024C'
-    inputList = 'input/Muon2024D.txt'
-    era = '2024DpreCalib'
+    # inputList = 'input/Muon2024D.txt'
+    inputList = 'input/Muon2024D_all.txt'
+    # era = '2024DpreCalib'
+    era = '2024D'
+    isVictor = False
     
     jobVersion = 'v1ForHadronic'
     # jobVersion = 'v1ForEle'
-    #!!!add parameter here to contral 
+  
+  
+  
    
     outDir = makeOutDir(era, jobVersion)
      
@@ -29,10 +34,13 @@ def main():
    
     current_file_path = os.path.abspath(__file__)
     current_directory = os.path.dirname(current_file_path)
-    jobDir = getNameFromPath(inputList)
-    print('jobVersion: ', jobDir + jobVersion)
-    jobDir = current_directory+ '/jobs/'+jobDir + '/' + jobVersion + '/'
+    name = getNameFromPath(inputList)
+    uf.checkMakeDir(current_directory+ '/jobs/')
+    print('jobVersion: ', name + jobVersion)
+    # jobDir = current_directory+ '/jobs/'+jobDir + '/' + jobVersion + '/'
+    jobDir = current_directory+ '/jobs/'+name + '/' + jobVersion + '/'
     logDir = jobDir + 'logs/'
+    uf.checkMakeDir(current_directory + '/jobs/' + name + '/')
     uf.checkMakeDir(jobDir)
     uf.checkMakeDir(logDir)
     print(jobDir)
@@ -42,9 +50,10 @@ def main():
     
     subHTCondor(jobDir+'subList.sub')  
     
-def makeOutDir(era, jobVersion):
+# def makeOutDir(era, jobVersion):
+def makeOutDir(era, jobVersion, isVictor=False):
     #outBase = '/eos/user/h/hhua/forTopHLT/'
-    outBase = '/eos/user/v/vshang/forTopHLT_05072024/'
+    outBase = '/eos/user/v/vshang/forTopHLT_05072024/' if isVictor else '/eos/user/h/hhua/forTopHLT/'
     outDir = outBase + era +'/'
     uf.checkMakeDir(outDir)
     outDir = outDir + jobVersion + '/'
@@ -79,17 +88,23 @@ def getNameFromPath(file_path):
     
 
 def writeJob( jobName, inFile, jobDir):
+    current_script_path = os.path.abspath(__file__)
+
+# Get the directory containing the current script
+    current_script_dir = os.path.dirname(current_script_path)
     lines = [
         '#!/bin/bash',
-        'cd /afs/cern.ch/user/v/vshang/public/TOPHLTeff/',
-        'lines=(`cat /afs/cern.ch/user/v/vshang/public/TOPHLTeff/{}`)'.format(inFile),
+        f'cd {current_script_dir}',
+        # 'lines=(`cat /afs/cern.ch/user/v/vshang/public/TOPHLTeff/{}`)'.format(inFile),
+        f'lines=(`cat {current_script_dir}/{inFile}`)',
         'echo ${lines[$1]}',
         'python3 skimNano.py --arg1 ${lines[$1]} ' + ' --arg2 {}  --arg3 True '.format(jobDir),
 
     ]
     writeListToFile(lines, jobName)
 
-def writeSub(subName, jobDir, fileNum):
+def writeSub(subName, jobDir, fileNum, isVictor=False):
+    proxyDir = 'h/hhua' if not isVictor else 'v/vshang'
     lines = [
         'arguments               = $(Process)',
         'executable              = {}singleJob.sh'.format(jobDir),
@@ -97,7 +112,8 @@ def writeSub(subName, jobDir, fileNum):
         'error                   = {}/logs/$(Process).err'.format(jobDir),
         'log                     = {}/logs/log.log'.format(jobDir),
         '+JobFlavour             = "workday"',
-        'x509userproxy = /afs/cern.ch/user/v/vshang/x509up_u120824',
+        # f'x509userproxy = /afs/cern.ch/user/{proxyDir}/.x509up_u120824',
+        f'x509userproxy = /afs/cern.ch/user/{proxyDir}/.x509up_117245',
         'use_x509userproxy = True',
         'should_transfer_files   = YES',
         'when_to_transfer_output = ON_EXIT',

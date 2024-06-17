@@ -74,7 +74,6 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANO
         if ifForHadronic:
             nj, HT=jetSel(chain)
             if not (nj>5 and HT>400):
-            #if not (nj>5):
                 continue 
         else:
             eleNum = getEleNum(chain)
@@ -132,7 +131,8 @@ def process_arguments():
  
  
     # input = '/store/data/Run2023B/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v2/60000/06d25571-df3e-4ceb-9e44-7452add3e004.root'
-    input = '/store/data/Run2022C/Muon/NANOAOD/PromptNanoAODv10-v1/40000/d4484006-7e4b-424e-86a4-346d17d862f8.root'
+    # input = '/store/data/Run2022C/Muon/NANOAOD/PromptNanoAODv10-v1/40000/d4484006-7e4b-424e-86a4-346d17d862f8.root'
+    input = '/store/data/Run2024E/Muon0/NANOAOD/PromptReco-v1/000/380/956/00000/8413549d-588b-46ff-9c53-b98b34faa7e7.root'
     # Add arguments
     # parser.add_argument('--arg1', type=str, default='root://cmsxrootd.fnal.gov//'+input)
     parser.add_argument('--arg1', type=str, default=input)
