@@ -1,6 +1,6 @@
 # Set up enviroment
 - ``` bash setEnv.sh ```
-- ```voms```
+- ```voms-proxy-init --voms cms```
 
 
 
@@ -22,6 +22,5 @@
 
 
 # To do
-[ ]  Switch to TEfficiency for efficiency calculation
 - [] Intergate nanoAOD tool data format for object selection
 - [] Check the btag change during data taking

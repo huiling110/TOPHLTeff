@@ -3,38 +3,45 @@ import subprocess
 def main():
     #dasgoclient --query="dataset=/Muon*/Run2023*-PromptNanoAODv*/NANOAOD"  for getting datasets
     datasets = [
-    '/Muon0/Run2023B-PromptNanoAODv11p9_v1-v2/NANOAOD',
-    '/Muon1/Run2023B-PromptNanoAODv11p9_v1-v2/NANOAOD',
-    '/Muon0/Run2023C-PromptNanoAODv11p9_v1-v1/NANOAOD',
-    '/Muon0/Run2023C-PromptNanoAODv12_v2-v2/NANOAOD',
-    '/Muon0/Run2023C-PromptNanoAODv12_v3-v1/NANOAOD',
-    '/Muon0/Run2023C-PromptNanoAODv12_v4-v1/NANOAOD',
-    '/Muon1/Run2023C-PromptNanoAODv11p9_v1-v1/NANOAOD',
-    '/Muon1/Run2023C-PromptNanoAODv12_v2-v2/NANOAOD',
-    '/Muon1/Run2023C-PromptNanoAODv12_v3-v1/NANOAOD',
-    '/Muon1/Run2023C-PromptNanoAODv12_v4-v1/NANOAOD',
-    '/Muon0/Run2023D-PromptReco-v1/NANOAOD',
-    '/Muon0/Run2023D-PromptReco-v2/NANOAOD',
-    '/Muon1/Run2023D-PromptReco-v1/NANOAOD',
-    '/Muon1/Run2023D-PromptReco-v2/NANOAOD ',
+    # '/Muon0/Run2023B-PromptNanoAODv11p9_v1-v2/NANOAOD',
+    # '/Muon1/Run2023B-PromptNanoAODv11p9_v1-v2/NANOAOD',
+    # '/Muon0/Run2023C-PromptNanoAODv11p9_v1-v1/NANOAOD',
+    # '/Muon0/Run2023C-PromptNanoAODv12_v2-v2/NANOAOD',
+    # '/Muon0/Run2023C-PromptNanoAODv12_v3-v1/NANOAOD',
+    # '/Muon0/Run2023C-PromptNanoAODv12_v4-v1/NANOAOD',
+    # '/Muon1/Run2023C-PromptNanoAODv11p9_v1-v1/NANOAOD',
+    # '/Muon1/Run2023C-PromptNanoAODv12_v2-v2/NANOAOD',
+    # '/Muon1/Run2023C-PromptNanoAODv12_v3-v1/NANOAOD',
+    # '/Muon1/Run2023C-PromptNanoAODv12_v4-v1/NANOAOD',
+    # '/Muon0/Run2023D-PromptReco-v1/NANOAOD',
+    # '/Muon0/Run2023D-PromptReco-v2/NANOAOD',
+    # '/Muon1/Run2023D-PromptReco-v1/NANOAOD',
+    # '/Muon1/Run2023D-PromptReco-v2/NANOAOD ',
    
-    '/Muon/Run2022C-PromptNanoAODv10-v1/NANOAOD',
-    '/Muon/Run2022C-PromptNanoAODv10_v1-v1/NANOAOD',
-    '/Muon/Run2022D-PromptNanoAODv10_v1-v1/NANOAOD',
-    '/Muon/Run2022D-PromptNanoAODv10_v2-v1/NANOAOD',
-    '/Muon/Run2022E-PromptNanoAODv10_v1-v3/NANOAOD',
-    '/Muon/Run2022F-PromptNanoAODv10_v1-v2/NANOAOD',
-    '/Muon/Run2022F-PromptNanoAODv11_v1-v2/NANOAOD',
-    '/Muon/Run2022G-PromptNanoAODv10_v1-v1/NANOAOD',
-    '/Muon/Run2022G-PromptNanoAODv11_v1-v2/NANOAOD',
-    
+    # '/Muon/Run2022C-PromptNanoAODv10-v1/NANOAOD',
+    # '/Muon/Run2022C-PromptNanoAODv10_v1-v1/NANOAOD',
+    # '/Muon/Run2022D-PromptNanoAODv10_v1-v1/NANOAOD',
+    # '/Muon/Run2022D-PromptNanoAODv10_v2-v1/NANOAOD',
+    # '/Muon/Run2022E-PromptNanoAODv10_v1-v3/NANOAOD',
+    # '/Muon/Run2022F-PromptNanoAODv10_v1-v2/NANOAOD',
+    # '/Muon/Run2022F-PromptNanoAODv11_v1-v2/NANOAOD',
+    # '/Muon/Run2022G-PromptNanoAODv10_v1-v1/NANOAOD',
+    # '/Muon/Run2022G-PromptNanoAODv11_v1-v2/NANOAOD',
+
+    # '/Muon0/Run2024C-PromptReco-v1/NANOAOD',
+    # '/Muon1/Run2024C-PromptReco-v1/NANOAOD',    
+
+    '/Muon0/Run2024D-PromptReco-v1/NANOAOD',
+    '/Muon1/Run2024D-PromptReco-v1/NANOAOD',
     
     ]
     
     # outList = 'Muon2023B'
     # outList = 'Muon2023C'
     # outList = 'Muon2023D'
-    outList = 'Moun2022'
+    # outList = 'Muon2022'
+    # outList = 'Muon2024C'
+    outList = 'Muon2024D'
   
   
   
