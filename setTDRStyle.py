@@ -107,29 +107,55 @@ def addCMSTextToCan(canvas, x1=0.23, x2=0.35,x3=0.7, y=0.96, era = '2016', isRun
     cmsTextFont = 61
     extraTextFont = 52
     cmsText = "CMS"
-    extraText = "Preliminary " + era
+    extraText = "Preliminary "# + era
     
     latex = ROOT.TLatex()
     latex.SetNDC()
     latex.SetTextAlign(31)
-    latex.SetTextSize(0.04)
+    #latex.SetTextSize(0.04)
+    latex.SetTextSize(0.05)
     latex.SetTextFont(cmsTextFont)
     latex.DrawLatex(x1, y, cmsText )
     latex.SetTextFont(extraTextFont)
-    latex.SetTextSize(0.04*0.76)
+    #latex.SetTextSize(0.04*0.76)
+    latex.SetTextSize(0.05*0.76)
     latex.DrawLatex(x2, y , extraText )
   
     lumiText = lumiMap[era] /1000
-    lumiText_s = '{0:.1f}'.format(lumiText)
+    #lumiText_s = '35.2 fb^{-1}, 2022 + 27.2 fb^{-1}, 2023'
+    lumiText_s = '9.5 fb^{-1}, 2023D + 6.7 fb^{-1}, 2024C'
+    #lumiText_s = '2022-2023D'
     energy = '13'
     if isRun3:
         energy = '13.6'
-    lumiText_s = lumiText_s + ' fb^{-1}('+ energy +'TeV)'
+    #lumiText_s = lumiText_s + ' fb^{-1}('+ energy +'TeV)'
+    #lumiText_s = lumiText_s + ' ('+ energy +' TeV)'
+    lumiText_s = energy + ' TeV'
+    #lumiText_s = energy + ' TeV'
     # print(lumiText)
     latex2 = ROOT.TLatex()
     latex2.SetNDC()
-    latex2.SetTextSize(0.04)
+    latex2.SetTextSize(0.038)
     latex2.SetTextAlign(31)
     latex2.SetTextFont(42)  
     # latex2.DrawLatex(x2+0.6, y, lumiText_s )
     latex2.DrawLatex( x3, y, lumiText_s )
+
+
+def addTriggerInfo(ifHadronic=True):
+    if ifHadronic:
+        #triggerText = '#splitline{Online requirements:}{#splitline{Six jets with p_{T} > 36 GeV,}{#splitline{1 b-tagged jet,}{and HT > 450 GeV}}}'
+        #triggerText = '#splitline{Online requirements:}{#splitline{Six jets with p_{T} > 32 GeV,}{#splitline{2 b-tagged jets,}{and HT > 400 GeV}}}'
+        triggerText = '#splitline{Online requirements:}{#splitline{Six jets with p_{T} > 32 GeV,}{#splitline{1 or 2 b-tagged jets,}{and HT > 400 GeV}}}'
+    else:
+        #triggerText = '#splitline{Online requirements:}{#splitline{Electron with p_{T} > 28 GeV}{and HT > 150 GeV}}'
+        #triggerText = '#splitline{Online requirements:}{#splitline{Electron with p_{T} > 30 GeV}{and jet with p_{T} > 35 GeV}}'
+        #triggerText = '#splitline{Online requirements:}{#splitline{Electron with p_{T} > 28 GeV}{#splitline{and HT > 150 GeV}{#splitline{(excluding BPix region with}{-1.8 < #eta < 0.6 and -1.5 < #phi < -0.5)}}}}'
+        triggerText = '#splitline{Online requirements:}{#splitline{Electron with p_{T} > 30 GeV}{#splitline{and jet with p_{T} > 35 GeV}{#splitline{(excluding BPix region with}{-1.8 < #eta < 0.6 and -1.5 < #phi < -0.5)}}}}'
+
+    latex = ROOT.TLatex()
+    latex.SetNDC()
+    latex.SetTextSize(0.04)
+    latex.SetTextAlign(31)
+    latex.SetTextFont(42)
+    latex.DrawLatex(0.65, 0.4, triggerText)

@@ -12,4 +12,6 @@
 *\/plots\/*
 *ACLiC*
 *.err
+*.err
+*.out
 *.log
