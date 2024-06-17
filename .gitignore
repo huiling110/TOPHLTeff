@@ -1,0 +1,15 @@
+*.d
+*.so
+*.pcm
+*.cpp_tmp*
+*.o
+*.out
+*dict_*
+*.sh
+*.pyc
+*.root
+*\/output\/*
+*\/plots\/*
+*ACLiC*
+*.err
+*.log
