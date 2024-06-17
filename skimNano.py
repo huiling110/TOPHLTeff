@@ -11,8 +11,6 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANO
     # inputNano = 'root://cmsxrootd.fnal.gov/' +'/store/data/Run2023C/Muon0/NANOAOD/PromptNanoAODv12_v3-v1/2820000/e55c38a4-5776-4b0f-8190-39da36d63bca.root' 
 
 
-    # input_file = ROOT.TFile(inputNano, "READ")  #???not sure TFile not working
-    # input_tree = input_file.Get("Events")
     inputNano = 'root://cmsxrootd.fnal.gov/'+ inputNano
     chain = ROOT.TChain("Events")
     chain.AddFile(inputNano)
@@ -112,6 +110,7 @@ def getEleNum(chain):
             ne = ne+1
     return ne
 
+#https://cms-nanoaod-integration.web.cern.ch/autoDoc/NanoAODv14/2024Prompt/doc_EGamma1_Run2024D-PromptReco-v1.html#Jet
 def jetSel(chain):
     jetNum=0
     HT = 0
@@ -121,7 +120,8 @@ def jetSel(chain):
         # if((chain.Jet_pt[Jet] > 40.) and (abs(chain.Jet_eta[Jet])<2.4) and ((chain.Jet_eta[Jet]<-1.8) or (chain.Jet_eta[Jet]>0.6)) and ((chain.Jet_phi[Jet]>-0.5) or (chain.Jet_phi[Jet]<-1.5))) : #For checking BPix issue in Run 2023D
         # if((chain.Jet_pt[Jet] > 40.) and (abs(chain.Jet_eta[Jet])<2.4) and (chain.run<367765)) : #For checking HCAL scale update in Run 2023C
         # if((chain.Jet_pt[Jet] > 40.) and (abs(chain.Jet_eta[Jet])<2.4) and (chain.run <= 380649) and (chain.run >= 380647)) : #For checking HCAL calib update in Run 2024D (fill 9618 postcalib)
-        if((chain.Jet_pt[Jet] > 40.) and (abs(chain.Jet_eta[Jet])<2.4) and (chain.run <= 380626) and (chain.run >= 380564)) : #For checking HCAL calib update in Run 2024D (fill 9611 + 9614 precalib)
+        # if((chain.Jet_pt[Jet] > 40.) and (abs(chain.Jet_eta[Jet])<2.4) and (chain.run <= 380626) and (chain.run >= 380564)) : #For checking HCAL calib update in Run 2024D (fill 9611 + 9614 precalib)
+        if(chain.Jet_pt[Jet] > 25. and abs(chain.Jet_eta[Jet])<2.4 and chain.Jet_jetId[Jet]& (1 << 2)!=0):# tight jetID, recommendation from JETPOG for 2022
             jetNum+=1
             HT=HT+chain.Jet_pt[Jet] 
     return jetNum, HT    
