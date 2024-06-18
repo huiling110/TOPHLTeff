@@ -16,7 +16,9 @@ def main():
     # inputDir = '/eos/user/v/vshang/forTopHLT_05072024/2024DpreCalib/v1ForHadronic/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_05072024/2024DpostCalib/v1ForHadronic/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v1ForHadronic/'
-    inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v2HadronicWithRdataframe/'
+    # inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v2HadronicWithRdataframe/'
+    inputDir = '/eos/home-h/hhua/forTopHLT/2024E/v2HadronicWithRdataframe/'
+
     isHadronic = True
     
     # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023B/v1ForEle/'
@@ -53,15 +55,15 @@ def HLTHistFill(inputDir, outFile, isHadronic, isTest, era):
     
     binning = np.array((500., 600., 650., 700., 800., 900., 1000., 1300., 2000)) 
     jet6ptBin = np.array((0., 25, 50, 75, 100.,  300., ))
-    de_HT, nu_HT = getDeAndNuHist(df, offline, HLT_all, "HT", binning)
-    de_jet6pt, nu_jet6pt = getDeAndNuHist(df, offline, HLT_all, "jet_6pt", jet6ptBin)
+    de_HT, nu_HT = getDeAndNuHist(df, offline, HLT_all, "HT", binning, 'HLTAll')
+    de_jet6pt, nu_jet6pt = getDeAndNuHist(df, offline, HLT_all, "jet_6pt", jet6ptBin, 'HLTAll')
     
-    de_HT_2b, nu_HT_2b = getDeAndNuHist(df, f"{offline} && nb==2", HLT_2btag, "HT", binning, '2b')
-    de_HT_3b, nu_HT_3b = getDeAndNuHist(df, f"{offline} && nb==3", HLT_3btag, "HT", binning, '3b')
-    de_HT_4b, nu_HT_4b = getDeAndNuHist(df, f"{offline} && nb>3", HLT_3btag, "HT", binning, '4b')
-    de_jet6pt_2b, nu_jet6pt_2b = getDeAndNuHist(df, f"{offline} && nb==2", HLT_2btag, "jet_6pt", jet6ptBin, '2b')
-    de_jet6pt_3b, nu_jet6pt_3b = getDeAndNuHist(df, f"{offline} && nb==3", HLT_3btag, "jet_6pt", jet6ptBin, '3b')
-    de_jet6pt_4b, nu_jet6pt_4b = getDeAndNuHist(df, f"{offline} && nb>3", HLT_3btag, "jet_6pt", jet6ptBin, '4b')
+    de_HT_2b, nu_HT_2b = getDeAndNuHist(df, f"{offline} && nb==2", HLT_2btag, "HT", binning, 'HLTAll_2b')
+    de_HT_3b, nu_HT_3b = getDeAndNuHist(df, f"{offline} && nb==3", HLT_3btag, "HT", binning, 'HLTAll_3b')
+    de_HT_4b, nu_HT_4b = getDeAndNuHist(df, f"{offline} && nb>3", HLT_3btag, "HT", binning, 'HLTAll_4b')
+    de_jet6pt_2b, nu_jet6pt_2b = getDeAndNuHist(df, f"{offline} && nb==2", HLT_2btag, "jet_6pt", jet6ptBin, 'HLTAll_2b')
+    de_jet6pt_3b, nu_jet6pt_3b = getDeAndNuHist(df, f"{offline} && nb==3", HLT_3btag, "jet_6pt", jet6ptBin, 'HLTAll_3b')
+    de_jet6pt_4b, nu_jet6pt_4b = getDeAndNuHist(df, f"{offline} && nb>3", HLT_3btag, "jet_6pt", jet6ptBin, 'HLTAll_4b')
     
     de_HT_HH, nu_HT_HH = getDeAndNuHist(df, offline, HLT_HH, "HT", binning, 'HH')
     

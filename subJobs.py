@@ -18,7 +18,8 @@ def main():
     inputList = 'input/Muon2024E.txt'
     # era = '2024DpreCalib'
     # era = '2024D'
-    era = '2024E'
+    # era = '2024E'
+    era = '2024C'
     isVictor = False
     # jobVersion = 'v1ForHadronic'
     # jobVersion = 'v1ForEle'
