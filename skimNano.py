@@ -22,19 +22,19 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANO
 
     # List of branch names to keep
     branches_to_keep = [
-                        'HLT_PFHT450_SixPFJet36_PFBTagDeepCSV_1p59',
-                        'HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94',
+                        # 'HLT_PFHT450_SixPFJet36_PFBTagDeepCSV_1p59',
+                        # 'HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94',
                         # 2023B and 2023C and 2022B
-                        'HLT_PFHT400_SixPFJet32_DoublePFBTagDeepJet_2p94',
-                        'HLT_PFHT450_SixPFJet36_PFBTagDeepJet_1p59',
+                        # 'HLT_PFHT400_SixPFJet32_DoublePFBTagDeepJet_2p94',#disabled
+                        # 'HLT_PFHT450_SixPFJet36_PFBTagDeepJet_1p59',#disabled
                         #2023D
                         'HLT_PFHT450_SixPFJet36_PNetBTag0p35',
                         'HLT_PFHT400_SixPFJet32_PNet2BTagMean0p50',
                         'HLT_PFHT330PT30_QuadPFJet_75_60_45_40',
                         #Additional triggers for DeepJet vs ParticleNet comparison
-                        'HLT_QuadPFJet70_50_40_35_PFBTagParticleNet_2BTagSum0p65',
-                        'HLT_QuadPFJet70_50_40_35_PNet2BTagMean0p65',
-                        'HLT_PFHT280_QuadPFJet30_PNet2BTagMean0p55',
+                        # 'HLT_QuadPFJet70_50_40_35_PFBTagParticleNet_2BTagSum0p65',
+                        # 'HLT_QuadPFJet70_50_40_35_PNet2BTagMean0p65',
+                        'HLT_PFHT280_QuadPFJet30_PNet2BTagMean0p55',#ParkingHH
                         
                         'HLT_IsoMu24',
                         'HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned',
@@ -120,6 +120,7 @@ def jetSel(chain):
         # if((chain.Jet_pt[Jet] > 40.) and (abs(chain.Jet_eta[Jet])<2.4) and (chain.run<367765)) : #For checking HCAL scale update in Run 2023C
         # if((chain.Jet_pt[Jet] > 40.) and (abs(chain.Jet_eta[Jet])<2.4) and (chain.run <= 380649) and (chain.run >= 380647)) : #For checking HCAL calib update in Run 2024D (fill 9618 postcalib)
         # if((chain.Jet_pt[Jet] > 40.) and (abs(chain.Jet_eta[Jet])<2.4) and (chain.run <= 380626) and (chain.run >= 380564)) : #For checking HCAL calib update in Run 2024D (fill 9611 + 9614 precalib)
+        print(chain.Jet_pt[Jet], chain.Jet_eta[Jet], chain.Jet_jetId[Jet])
         if(chain.Jet_pt[Jet] > 25. and abs(chain.Jet_eta[Jet])<2.4 and chain.Jet_jetId[Jet]& (1 << 2)!=0):# tight jetID, recommendation from JETPOG for 2022
             jetNum+=1
             HT=HT+chain.Jet_pt[Jet] 
