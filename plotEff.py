@@ -27,11 +27,23 @@ def main():
     # ifHadronic = False
     
     # era = uf.getEra(in2023B)
-    if ifHadronic:
-        plotOverLayHard(in2023D, in2024C) 
-    else:
-        plotEffOverLayEle(in2023B, in2023C, in2023D, in2022)
+    # if ifHadronic:
+    #     plotOverLayHard(in2023D, in2024C) 
+    # else:
+    #     plotEffOverLayEle(in2023B, in2023C, in2023D, in2022)
 
+    eff_2024D = ph.getEffFromFile(in2024D, ['de_HT_HLTAll', 'nu_HT_HLTAll'])
+    eff_2024E = ph.getEffFromFile(in2024E, ['de_HT_HLTAll', 'nu_HT_HLTAll']) 
+    xmin, xmax = ph.getXrangeFromFile(in2024D, ['de_HT_HLTAll', 'nu_HT_HLTAll'])
+    histList = [eff_2024D, eff_2024E]
+    legendList = ['2024D', '2024E']
+    outDir = getOutDir(in2024D)
+    plotName = outDir + 'HLTEff_HLTAll.png'
+    # ph.plotOverlay(histList, legendList, '2024', 'L1T+HLT efficiency', plotName, 0, 1000, [0, 1.1])
+    ph.plotOverlay(histList, legendList, '2024', 'L1T+HLT efficiency', plotName, xmin, xmax, [0, 1.1])
+    
+    
+    
 
 def plotEffOverLayEle(in2023B, in2023C, in2023D, in2022):
     plotEffOverlay(in2023B, in2023C, in2023D, in2022, 'eleJet', 'ele1pt')
@@ -51,8 +63,7 @@ def plotOverLayHard(in2023D, in2024C):
     
     # plotEffOverlay(in2023D, in2024C, '1btag', 'HT', ifHadronic=True)
     # plotEffOverlay(in2023D, in2024C, '2btag', 'HT', ifHadronic=True)
-    # plotEffOverlay(in2023D, in2024C, 'both', 'HT', ifHadronic=True)
-    
+    plotEffOverlay(in2023D, in2024C, 'both', 'HT', ifHadronic=True)
     
     
     
