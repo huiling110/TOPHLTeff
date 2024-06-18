@@ -123,7 +123,7 @@ def plotOverlay(histList, legenList, era, yTitle, plotName, xmin, xmax, yRange=[
         legend.Draw() 
         
     #st.addCMSTextToCan(can, 0.22, 0.34, 0.9, 0.94, era, True)
-    st.addCMSTextToCan(can, 0.24, 0.39, 0.9, 0.94, era, True)
+    # st.addCMSTextToCan(can, 0.24, 0.39, 0.9, 0.94, era, True)
     st.addTriggerInfo(ifHadronic=True)
     #st.addTriggerInfo(ifHadronic=False)
     
