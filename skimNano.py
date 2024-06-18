@@ -12,13 +12,9 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANO
 
 
     inputNano = 'root://cmsxrootd.fnal.gov/'+ inputNano
-    chain = ROOT.TChain("Events")
-    chain.AddFile(inputNano)
-    print('input: ', inputNano)
     
-    print('entries in old tree: ', chain.GetEntries())
-   
-    print('ifTest=', ifTest, '  ifForHadronic=', ifForHadronic) 
+    
+    
 
     # List of branch names to keep
     branches_to_keep = [
@@ -59,6 +55,17 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANO
                         'PV_npvs',
                         'PV_npvsGood'
                         ]
+    
+    selLoop(chain, branches_to_keep, outDir, ifForHadronic, ifTest)
+    
+def selLoop(chain, branches_to_keep, outDir, ifForHadronic, ifTest):
+    chain = ROOT.TChain("Events")
+    chain.AddFile(inputNano)
+    print('input: ', inputNano)
+    
+    print('entries in old tree: ', chain.GetEntries())
+   
+    print('ifTest=', ifTest, '  ifForHadronic=', ifForHadronic) 
 
     chain.SetBranchStatus('*', 0)
     for branch_name in branches_to_keep:

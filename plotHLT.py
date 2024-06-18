@@ -50,18 +50,25 @@ def HLTHistFill(inputDir, outFile, isHadronic, isTest, era):
     df = ROOT.RDataFrame('Events', inputDir+'*.root')
     
     ROOT.gInterpreter.Declare("""
-        auto jetSelNew = [](const ROOT::VecOps::RVec<float>& Jet_pt, const ROOT::VecOps::RVec<float>& Jet_eta) { 
+    include <vector>
+    include "Math/Vector4D.h"
+        auto jetSelNew = [](const ROOT::VecOps::RVec<float>& Jet_pt, const ROOT::VecOps::RVec<float>& Jet_eta, Bool_t isB=kFALSE, const ROOT::VecOps::RVec<float>& Jet_btagPNetB { 
             int nj = 0;
             for (int i = 0; i < Jet_pt.size(); i++) {
-                if (Jet_pt[i] > 40. && abs(Jet_eta[i]) < 2.4) nj++;
+                if (!(Jet_pt[i] > 25. && abs(Jet_eta[i]) < 2.4)) continue;
+                if (isB) {
+                    if (!(Jet_btagPNetB[i] > 0.387)) continue;
+                } 
+                nj++;
             }
             return nj;
         };
     """) 
     
     # df = df.Define("nj", jetSelNew, {"Jet_pt": "Jet_pt", "Jet_eta": "Jet_eta"})
-    df = df.Define("nj", "jetSelNew(Jet_pt, Jet_eta)")
-    df = df.Define("HT", "Sum(Jet_pt[Jet_pt > 30])") 
+    df = df.Define("nj", "jetSelNew(Jet_pt, Jet_eta, Jet_btagPNetB)")
+    df = df.Define("nb", "jetSelNew(Jet_pt, Jet_eta, true, Jet_btagPNetB)")
+    df = df.Define("HT", "Sum(Jet_pt[Jet_pt > 25])") 
     # df = df.Define("nj", "CountIf(Jet_pt > 25 && abs(Jet_eta) < 2.4)")
     # df = df.Define("nj", "Jet_pt[Jet_pt > 25 && abs(Jet_eta) < 2.4].size()")
     # df = df.Define("nb", "CountIf(Jet_pt > 25 && abs(Jet_eta) < 2.4 && Jet_btagPNetB > 0.387)")
