@@ -3,7 +3,6 @@ import os
 import argparse
 
 
-#!!!Maybe try rDataFrame in the future
 # def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023C/Muon0/NANOAOD/PromptNanoAODv12_v4-v1/60000/fdd8324d-a4f8-4286-945f-5528e7ae46e9.root', version = 'v0ForHadronic', ifForHadronic = True,   ifTest = False):
 # def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023D/Muon0/NANOAOD/PromptReco-v1/000/369/901/00000/3bdb0fca-4c12-4394-9812-509cb1d05cb7.root', version = 'v0ForHadronic', ifForHadronic = True,   ifTest = True):
 # def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023C/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v1/70000/61280236-03a6-4cf3-8008-6eca1d7236d0.root', version = 'v0ForHadronic', ifForHadronic = True,   ifTest = True):
@@ -64,15 +63,14 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
     df = df.Define("HT", "HTCal(selectedJets)")
 
     
-    # preSelect = 'nj>5 && HT>500. && nb>1'
-    # df = df.Filter(preSelect)
+    preSelect = 'nj>5 && HT>500. && nb>1'
+    df = df.Filter(preSelect)
     
     
     if ifTest:
         outDir = './output/'
     if not os.path.exists(outDir):
         os.makedirs(outDir)
-        
         
     # List of branch names to keep
     branches_to_keep = [
@@ -98,6 +96,10 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
     postFix = inputNano.rsplit("/", 1)[-1]
     df.Snapshot("Events", outDir+postFix, branches_to_keep)
     print('file saved here: ', outDir+postFix)
+   
+   
+   
+   
     
     
 def selLoop(chain, branches_to_keep, outDir, ifForHadronic, ifTest):
@@ -260,6 +262,6 @@ if __name__=='__main__':
     #!!!need to update so that test and subjob is easy
     # main(args['arg1'], args['arg2'], args['arg3'], args['arg4'])
     #main(args['arg1'], args['arg2'], False, False) #ele
-    # main(args['arg1'], args['arg2'], True, False) #hadronic
-    main(args['arg1'], args['arg2'], True, True) #test
+    main(args['arg1'], args['arg2'], True, False) #hadronic
+    # main(args['arg1'], args['arg2'], True, True) #test
     # main(args['arg1'], args['arg2'], False, True) #test

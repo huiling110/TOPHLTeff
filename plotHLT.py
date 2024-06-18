@@ -15,7 +15,8 @@ def main():
     # inputDir = '/eos/user/v/vshang/forTopHLT_05072024/2024C/v1ForHadronic/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_05072024/2024DpreCalib/v1ForHadronic/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_05072024/2024DpostCalib/v1ForHadronic/'
-    inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v1ForHadronic/'
+    # inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v1ForHadronic/'
+    inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v2HadronicWithRdataframe/'
     isHadronic = True
     
     # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023B/v1ForEle/'
@@ -31,7 +32,7 @@ def main():
     era = uf.getEra(inputDir) 
     outFile = makeOutFile(inputDir, isTest) 
   
-    HLTHistFill(inputDir, outFile, isHadronic, isTest, era)#using rDataframe for fasting processing
+    HLTHistFill(inputDir, outFile, isHadronic, isTest, era)#!using rDataframe for fasting processing
    
     # oldEventLoopSel(inputDir, outFile) # put old event loop here
     
@@ -48,48 +49,49 @@ def HLTHistFill(inputDir, outFile, isHadronic, isTest, era):
 
 
     df = ROOT.RDataFrame('Events', inputDir+'*.root')
+    print('inputDir: ', inputDir)
+    print('initial entries: ', df.Count().GetValue())
     
-    ROOT.gInterpreter.Declare("""
-    include <vector>
-    include "Math/Vector4D.h"
-        auto jetSelNew = [](const ROOT::VecOps::RVec<float>& Jet_pt, const ROOT::VecOps::RVec<float>& Jet_eta, Bool_t isB=kFALSE, const ROOT::VecOps::RVec<float>& Jet_btagPNetB { 
-            int nj = 0;
-            for (int i = 0; i < Jet_pt.size(); i++) {
-                if (!(Jet_pt[i] > 25. && abs(Jet_eta[i]) < 2.4)) continue;
-                if (isB) {
-                    if (!(Jet_btagPNetB[i] > 0.387)) continue;
-                } 
-                nj++;
-            }
-            return nj;
-        };
-    """) 
+    offline = "HT>500. && nj>5 && nb>1 && HLT_IsoMu24==1"
+    offline_df = df.Filter(offline) 
     
-    # df = df.Define("nj", jetSelNew, {"Jet_pt": "Jet_pt", "Jet_eta": "Jet_eta"})
-    df = df.Define("nj", "jetSelNew(Jet_pt, Jet_eta, Jet_btagPNetB)")
-    df = df.Define("nb", "jetSelNew(Jet_pt, Jet_eta, true, Jet_btagPNetB)")
-    df = df.Define("HT", "Sum(Jet_pt[Jet_pt > 25])") 
-    # df = df.Define("nj", "CountIf(Jet_pt > 25 && abs(Jet_eta) < 2.4)")
-    # df = df.Define("nj", "Jet_pt[Jet_pt > 25 && abs(Jet_eta) < 2.4].size()")
-    # df = df.Define("nb", "CountIf(Jet_pt > 25 && abs(Jet_eta) < 2.4 && Jet_btagPNetB > 0.387)")
-    
-    # offline = "HT>500. && nj>5 && nb>1 && HLT_IsoMu24==1"
-    # offline_df = df.Filter(offline) 
-    # HLT_1btag = "HLT_PFHT450_SixPFJet36_PNetBTag0p35"
-    # HLT_2btag = "HLT_PFHT400_SixPFJet32_PNet2BTagMean0p50"
-    # HLT_3btag = "HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3"
+    HLT_1btag = "HLT_PFHT450_SixPFJet36_PNetBTag0p35"
+    HLT_2btag = "HLT_PFHT400_SixPFJet32_PNet2BTagMean0p50"
+    HLT_3btag = "HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3"
+    df_HLT = df.Filter(f"{HLT_1btag}||{HLT_2btag}||{HLT_3btag}")
     
     binning = np.array((500., 600., 650., 700., 800., 900., 1000., 1300., 2000)) 
     # de_HT = offline_df.Histo1D(("de_HT", "HT(GeV)", len(binning)-1, binning), "HT") 
-    # nu_HT = offline_df.Filter(f"{HLT_1btag}||{HLT_2btag}||{HLT_3btag}").Histo1D(("nu_allHardro_HT", "HT(GeV)", len(binning)-1, binning), "HT")
+    # nu_HT = df_HLT.Histo1D(("nu_HT", "HT(GeV)", len(binning)-1, binning), "HT")
+    # de_jet6pt = offline_df.Histo1D(("de_jet6pt", "p_{T}^{6th jet}(GeV)", 20, 0, 700), "jet_6pt")
+    # nu_jet6pt = df_HLT.Histo1D(("nu_jet6pt", "p_{T}^{6th jet}(GeV)", 20, 0, 700), "jet_6pt")
+   
+    # de_HT_2b = offline_df.Filter("nb==2").Histo1D(("de_HT_2b", "HT(GeV)", len(binning)-1, binning), "HT")
+    # de_HT_3b = offline_df.Filter("nb==3").Histo1D(("de_HT_3b", "HT(GeV)", len(binning)-1, binning), "HT")
+    # de_HT_4b = offline_df.Filter("nb>3").Histo1D(("de_HT_4b", "HT(GeV)", len(binning)-1, binning), "HT")
+    # nu_HT_2b = df_HLT.Filter("nb==2").Histo1D(("nu_HT_2b", "HT(GeV)", len(binning)-1, binning), "HT")
+    # nu_HT_3b = df_HLT.Filter("nb==3").Histo1D(("nu_HT_3b", "HT(GeV)", len(binning)-1, binning), "HT")
+    # de_HT_2b = offline_df.Filter("nb==2").Histo1D(("de_HT_2b", "HT(GeV)", len(binning)-1, binning), "HT") 
     
-    # writeToFile([de_HT, nu_HT] ,outFile)                                                               
+    de_HT, nu_HT = getDeAndNuHist(df, offline, HLT_1btag, "HT", binning)
+    
+    
+    
+    # de_HT.Print()
+    writeToFile([de_HT, nu_HT] ,outFile)                                                               
+    
+def getDeAndNuHist(df, offline, HLT, variable, binning):
+    df = df.Filter(offline)
+    de = df.Histo1D(("de_"+variable, variable, len(binning)-1, binning), variable)
+    nu = df.Filter(HLT).Histo1D(("nu_"+variable, variable, len(binning)-1, binning), variable)
+    return de, nu
                                                                        
 def writeToFile(histList, outFile):
     for ih in histList:
         ih.Print()
         ih.SetDirectory(outFile)
     outFile.Write()
+    print('outFile here: ', outFile.GetName())
     outFile.Close()                                                               
     
     

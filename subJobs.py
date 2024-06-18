@@ -18,8 +18,9 @@ def main():
     # era = '2024DpreCalib'
     era = '2024D'
     isVictor = False
-    jobVersion = 'v1ForHadronic'
+    # jobVersion = 'v1ForHadronic'
     # jobVersion = 'v1ForEle'
+    jobVersion = 'v2HadronicWithRdataframe'
   
   
   
