@@ -15,11 +15,9 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANO
     
     
     
-
-   
-    preSel(inputNano,  outDir, ifForHadronic, ifTest)
+    preSel(inputNano,  outDir, ifForHadronic, ifTest)#faster run time with rDataFrame
     
-    # selLoop(chain, branches_to_keep, outDir, ifForHadronic, ifTest)
+    # selLoop(chain, branches_to_keep, outDir, ifForHadronic, ifTest)#!obsolete, keep it for now
     
 def preSel(inputNano,  outDir, ifForHadronic, ifTest):
     ROOT.gInterpreter.Declare("""
@@ -53,6 +51,24 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
     df = df.Define('nb', '(int)selectedBjets.size()')
     # df = df.Define('HT', 'std::accumulate(selectedJets.begin(), selectedJets.end(), 0., [](double sum, const ROOT::Math::PtEtaPhiMVector& jet) { return sum + jet.Pt(); })')
     df = df.Define('jet_6pt', 'nj>5 ? selectedJets[5].Pt() : -1')
+    # df = df.Define('HT', 'ROOT::VecOps::Sum(df.Take<float>("selectedJets.Pt()"))')
+    # df = df.Define("HT", """
+    #     ROOT::VecOps::Sum(selectedJets, [](const ROOT::Math::PtEtaPhiMVector& jet) { 
+    #         return jet.Pt(); 
+    #     })
+    # """)
+#     df = df.Define("HT", """
+#                    #include <vector>
+# #include "Math/Vector4D.h"
+#     [](const std::vector<ROOT::Math::PtEtaPhiMVector>& jets) {
+#         double ht = 0.0;
+#         for (const auto& jet : jets) {
+#             ht += jet.Pt();
+#         }
+#         return ht;
+#     }(selectedJets)
+#     """)
+
     
     # preSelect = 'nj>5 && HT>500. && nb>1'
     # df = df.Filter(preSelect)
