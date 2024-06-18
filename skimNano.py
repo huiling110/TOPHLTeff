@@ -16,6 +16,81 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANO
     
     
 
+   
+    preSel(inputNano,  outDir, ifForHadronic, ifTest)
+    
+    # selLoop(chain, branches_to_keep, outDir, ifForHadronic, ifTest)
+    
+def preSel(inputNano,  outDir, ifForHadronic, ifTest):
+    ROOT.gInterpreter.Declare("""
+    #include <vector>
+    #include "Math/Vector4D.h"
+        auto jetSelNew = [](const ROOT::VecOps::RVec<float>& Jet_pt, const ROOT::VecOps::RVec<float>& Jet_eta, 
+                    const ROOT::VecOps::RVec<float>& Jet_phi, const ROOT::VecOps::RVec<float>& Jet_mass, const ROOT::VecOps::RVec<float>& Jet_btagPNetB, Bool_t isB=kFALSE) { 
+            std::vector<ROOT::Math::PtEtaPhiMVector> selectedJets;
+            for (int i = 0; i < Jet_pt.size(); i++) {
+                if (!(Jet_pt[i] > 25. && abs(Jet_eta[i]) < 2.4)) continue;
+                if (isB) {
+                    if (!(Jet_btagPNetB[i] > 0.387)) continue;
+                } 
+                selectedJets.emplace_back(Jet_pt[i], Jet_eta[i], Jet_phi[i], Jet_mass[i]);
+            }
+            return selectedJets;
+        };
+    """) 
+    
+    print('input: ', inputNano) 
+    df = ROOT.RDataFrame("Events", inputNano)
+    # print(df.GetColumnNames())  
+    if ifTest:
+        df = df.Range(1000)
+   
+    df = df.Filter('HLT_IsoMu24==1')
+    
+    df = df.Define('selectedJets', 'jetSelNew(Jet_pt, Jet_eta, Jet_phi, Jet_mass,  Jet_btagPNetB, kFALSE )')
+    df = df.Define('selectedBjets', 'jetSelNew(Jet_pt, Jet_eta, Jet_phi, Jet_mass, Jet_btagPNetB, kTRUE )')
+    df = df.Define('nj', '(int)selectedJets.size()')
+    df = df.Define('nb', '(int)selectedBjets.size()')
+    # df = df.Define('HT', 'std::accumulate(selectedJets.begin(), selectedJets.end(), 0., [](double sum, const ROOT::Math::PtEtaPhiMVector& jet) { return sum + jet.Pt(); })')
+    df = df.Define('jet_6pt', 'nj>5 ? selectedJets[5].Pt() : -1')
+    
+    # preSelect = 'nj>5 && HT>500. && nb>1'
+    # df = df.Filter(preSelect)
+    
+    
+    if ifTest:
+        outDir = './output/'
+    if not os.path.exists(outDir):
+        os.makedirs(outDir)
+        
+        
+    # List of branch names to keep
+    branches_to_keep = [
+                        #2023D
+                        'HLT_PFHT450_SixPFJet36_PNetBTag0p35',
+                        'HLT_PFHT400_SixPFJet32_PNet2BTagMean0p50',
+                        'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3',
+                        # 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40',#!prescaled!
+                        'HLT_PFHT280_QuadPFJet30_PNet2BTagMean0p55',#!ParkingHH since 2023C run 367661
+                        'HLT_IsoMu24',
+                        'HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned',
+                        'HLT_Ele28_eta2p1_WPTight_Gsf_HT150',
+                        'HLT_Ele30_WPTight_Gsf',
+                        'HLT_Ele14_eta2p5_IsoVVVL_Gsf_PFHT200_PNetBTag0p53', #!added in 2024C after run 379613
+                        'HLT_Mu12_IsoVVL_PFHT150_PNetBTag0p53',#!added in 2024C after run 379613
+                        "run",
+                        ]
+        
+    branches_to_keep.append('nj')
+    branches_to_keep.append('nb')    
+    # branches_to_keep.append('HT')
+    # branches_to_keep.append('jet_6pt')
+    postFix = inputNano.rsplit("/", 1)[-1]
+    df.Snapshot("Events", outDir+postFix, branches_to_keep)
+    print('file saved here: ', outDir+postFix)
+    
+    
+def selLoop(chain, branches_to_keep, outDir, ifForHadronic, ifTest):
     # List of branch names to keep
     branches_to_keep = [
                         # 'HLT_PFHT450_SixPFJet36_PFBTagDeepCSV_1p59',
@@ -55,10 +130,6 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANO
                         'PV_npvs',
                         'PV_npvsGood'
                         ]
-    
-    selLoop(chain, branches_to_keep, outDir, ifForHadronic, ifTest)
-    
-def selLoop(chain, branches_to_keep, outDir, ifForHadronic, ifTest):
     chain = ROOT.TChain("Events")
     chain.AddFile(inputNano)
     print('input: ', inputNano)
@@ -179,6 +250,6 @@ if __name__=='__main__':
     #!!!need to update so that test and subjob is easy
     # main(args['arg1'], args['arg2'], args['arg3'], args['arg4'])
     #main(args['arg1'], args['arg2'], False, False) #ele
-    main(args['arg1'], args['arg2'], True, False) #hadronic
-    # main(args['arg1'], args['arg2'], True, True) #test
+    # main(args['arg1'], args['arg2'], True, False) #hadronic
+    main(args['arg1'], args['arg2'], True, True) #test
     # main(args['arg1'], args['arg2'], False, True) #test
