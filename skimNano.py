@@ -30,18 +30,19 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANO
                         #2023D
                         'HLT_PFHT450_SixPFJet36_PNetBTag0p35',
                         'HLT_PFHT400_SixPFJet32_PNet2BTagMean0p50',
-                        'HLT_PFHT330PT30_QuadPFJet_75_60_45_40',
+                        'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3',
+                        # 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40',#!prescaled!
                         #Additional triggers for DeepJet vs ParticleNet comparison
                         # 'HLT_QuadPFJet70_50_40_35_PFBTagParticleNet_2BTagSum0p65',
                         # 'HLT_QuadPFJet70_50_40_35_PNet2BTagMean0p65',
-                        'HLT_PFHT280_QuadPFJet30_PNet2BTagMean0p55',#ParkingHH
+                        'HLT_PFHT280_QuadPFJet30_PNet2BTagMean0p55',#!ParkingHH since 2023C run 367661
                         
                         'HLT_IsoMu24',
                         'HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned',
                         'HLT_Ele28_eta2p1_WPTight_Gsf_HT150',
                         'HLT_Ele30_WPTight_Gsf',
-                        'HLT_Ele14_eta2p5_IsoVVVL_Gsf_PFHT200_PNetBTag0p53', #added in 2024C after run 379613
-                        'HLT_Mu12_IsoVVL_PFHT150_PNetBTag0p53',#added in 2024C after run 379613
+                        'HLT_Ele14_eta2p5_IsoVVVL_Gsf_PFHT200_PNetBTag0p53', #!added in 2024C after run 379613
+                        'HLT_Mu12_IsoVVL_PFHT150_PNetBTag0p53',#!added in 2024C after run 379613
                         "run",
                         "nJet", 
                         'Jet_pt',
