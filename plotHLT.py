@@ -43,42 +43,33 @@ def HLTHistFill(inputDir, outFile, isHadronic, isTest, era):
     print('initial entries: ', df.Count().GetValue())
     
     offline = "HT>500. && nj>5 && nb>1 && HLT_IsoMu24==1"
-    offline_df = df.Filter(offline) 
+    # offline_df = df.Filter(offline) 
     
     HLT_1btag = "HLT_PFHT450_SixPFJet36_PNetBTag0p35"
     HLT_2btag = "HLT_PFHT400_SixPFJet32_PNet2BTagMean0p50"
     HLT_3btag = "HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3"
-    # df_HLT = df.Filter(f"{HLT_1btag}||{HLT_2btag}||{HLT_3btag}")
     HLT_all = f"{HLT_1btag}||{HLT_2btag}||{HLT_3btag}"
-    
-    # de_HT = offline_df.Histo1D(("de_HT", "HT(GeV)", len(binning)-1, binning), "HT") 
-    # nu_HT = df_HLT.Histo1D(("nu_HT", "HT(GeV)", len(binning)-1, binning), "HT")
-    # de_jet6pt = offline_df.Histo1D(("de_jet6pt", "p_{T}^{6th jet}(GeV)", 20, 0, 700), "jet_6pt")
-    # nu_jet6pt = df_HLT.Histo1D(("nu_jet6pt", "p_{T}^{6th jet}(GeV)", 20, 0, 700), "jet_6pt")
-   
-    # de_HT_2b = offline_df.Filter("nb==2").Histo1D(("de_HT_2b", "HT(GeV)", len(binning)-1, binning), "HT")
-    # de_HT_3b = offline_df.Filter("nb==3").Histo1D(("de_HT_3b", "HT(GeV)", len(binning)-1, binning), "HT")
-    # de_HT_4b = offline_df.Filter("nb>3").Histo1D(("de_HT_4b", "HT(GeV)", len(binning)-1, binning), "HT")
-    # nu_HT_2b = df_HLT.Filter("nb==2").Histo1D(("nu_HT_2b", "HT(GeV)", len(binning)-1, binning), "HT")
-    # nu_HT_3b = df_HLT.Filter("nb==3").Histo1D(("nu_HT_3b", "HT(GeV)", len(binning)-1, binning), "HT")
-    # de_HT_2b = offline_df.Filter("nb==2").Histo1D(("de_HT_2b", "HT(GeV)", len(binning)-1, binning), "HT") 
     
     binning = np.array((500., 600., 650., 700., 800., 900., 1000., 1300., 2000)) 
     jet6ptBin = np.array((0., 25, 50, 75, 100., 200., 300., 400., 500., 600., 700.))
     de_HT, nu_HT = getDeAndNuHist(df, offline, HLT_all, "HT", binning)
     de_jet6pt, nu_jet6pt = getDeAndNuHist(df, offline, HLT_all, "jet_6pt", jet6ptBin)
     
-    de_HT_2b, nu_HT_2b = getDeAndNuHist(df, f"{offline} && nb==2", HLT_2btag, "HT", binning)
+    de_HT_2b, nu_HT_2b = getDeAndNuHist(df, f"{offline} && nb==2", HLT_2btag, "HT", binning, '2b')
+    de_HT_3b, nu_HT_3b = getDeAndNuHist(df, f"{offline} && nb==3", HLT_3btag, "HT", binning, '3b')
+    de_HT_4b, nu_HT_4b = getDeAndNuHist(df, f"{offline} && nb>3", HLT_3btag, "HT", binning, '4b')
+    de_jet6pt_2b, nu_jet6pt_2b = getDeAndNuHist(df, f"{offline} && nb==2", HLT_2btag, "jet_6pt", jet6ptBin, '2b')
+    de_jet6pt_3b, nu_jet6pt_3b = getDeAndNuHist(df, f"{offline} && nb==3", HLT_3btag, "jet_6pt", jet6ptBin, '3b')
+    de_jet6pt_4b, nu_jet6pt_4b = getDeAndNuHist(df, f"{offline} && nb>3", HLT_3btag, "jet_6pt", jet6ptBin, '4b')
     
     
-    # de_HT.Print()
-    histList = [de_HT, nu_HT, de_jet6pt, nu_jet6pt, de_HT_2b, nu_HT_2b]
+    histList = [de_HT, nu_HT, de_jet6pt, nu_jet6pt, de_HT_2b, nu_HT_2b, de_HT_3b, nu_HT_3b, de_HT_4b, nu_HT_4b, de_jet6pt_2b, nu_jet6pt_2b, de_jet6pt_3b, nu_jet6pt_3b, de_jet6pt_4b, nu_jet6pt_4b]
     writeToFile(histList ,outFile)                                                               
     
-def getDeAndNuHist(df, offline, HLT, variable, binning):
+def getDeAndNuHist(df, offline, HLT, variable, binning, namePost=''):
     df = df.Filter(offline)
-    de = df.Histo1D(("de_"+variable, variable, len(binning)-1, binning), variable)
-    nu = df.Filter(HLT).Histo1D(("nu_"+variable, variable, len(binning)-1, binning), variable)
+    de = df.Histo1D((f"de_{variable}_{namePost}", variable, len(binning)-1, binning), variable)
+    nu = df.Filter(HLT).Histo1D((f"nu_{variable}_{namePost}", variable, len(binning)-1, binning), variable)
     return de, nu
                                                                        
 def writeToFile(histList, outFile):
