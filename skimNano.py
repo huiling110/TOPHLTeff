@@ -40,11 +40,14 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANO
                         'HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned',
                         'HLT_Ele28_eta2p1_WPTight_Gsf_HT150',
                         'HLT_Ele30_WPTight_Gsf',
+                        'HLT_Ele14_eta2p5_IsoVVVL_Gsf_PFHT200_PNetBTag0p53', #added in 2024C after run 379613
+                        'HLT_Mu12_IsoVVL_PFHT150_PNetBTag0p53',#added in 2024C after run 379613
                         "run",
                         "nJet", 
                         'Jet_pt',
                         'Jet_eta',
                         'Jet_phi',
+                        'Jet_jetId',
                         'Jet_btagDeepFlavB', 
                         'Jet_btagPNetB', #2023D
                         'nElectron',
@@ -120,8 +123,9 @@ def jetSel(chain):
         # if((chain.Jet_pt[Jet] > 40.) and (abs(chain.Jet_eta[Jet])<2.4) and (chain.run<367765)) : #For checking HCAL scale update in Run 2023C
         # if((chain.Jet_pt[Jet] > 40.) and (abs(chain.Jet_eta[Jet])<2.4) and (chain.run <= 380649) and (chain.run >= 380647)) : #For checking HCAL calib update in Run 2024D (fill 9618 postcalib)
         # if((chain.Jet_pt[Jet] > 40.) and (abs(chain.Jet_eta[Jet])<2.4) and (chain.run <= 380626) and (chain.run >= 380564)) : #For checking HCAL calib update in Run 2024D (fill 9611 + 9614 precalib)
-        print(chain.Jet_pt[Jet], chain.Jet_eta[Jet], chain.Jet_jetId[Jet])
-        if(chain.Jet_pt[Jet] > 25. and abs(chain.Jet_eta[Jet])<2.4 and chain.Jet_jetId[Jet]& (1 << 2)!=0):# tight jetID, recommendation from JETPOG for 2022
+        # print(chain.Jet_pt[Jet], chain.Jet_eta[Jet], chain.Jet_jetId[Jet])
+        # if(chain.Jet_pt[Jet] > 25. and abs(chain.Jet_eta[Jet])<2.4 and chain.Jet_jetId[Jet]& (1 << 2)!=0):# tight jetID, recommendation from JETPOG for 2022
+        if(chain.Jet_pt[Jet] > 25. and abs(chain.Jet_eta[Jet])<2.4):# !seems Jet_jetId is all 0
             jetNum+=1
             HT=HT+chain.Jet_pt[Jet] 
     return jetNum, HT    
@@ -133,13 +137,13 @@ def process_arguments():
  
     # input = '/store/data/Run2023B/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v2/60000/06d25571-df3e-4ceb-9e44-7452add3e004.root'
     # input = '/store/data/Run2022C/Muon/NANOAOD/PromptNanoAODv10-v1/40000/d4484006-7e4b-424e-86a4-346d17d862f8.root'
-    input = '/store/data/Run2024E/Muon0/NANOAOD/PromptReco-v1/000/380/956/00000/8413549d-588b-46ff-9c53-b98b34faa7e7.root'
+    # input = '/store/data/Run2024E/Muon0/NANOAOD/PromptReco-v1/000/380/956/00000/8413549d-588b-46ff-9c53-b98b34faa7e7.root'
+    input = '/store/data/Run2024D/Muon0/NANOAOD/PromptReco-v1/000/380/346/00000/3c839fb5-92c1-4140-a9ab-1efe2ad80a60.root'
     # Add arguments
     # parser.add_argument('--arg1', type=str, default='root://cmsxrootd.fnal.gov//'+input)
     parser.add_argument('--arg1', type=str, default=input)
     parser.add_argument('--arg2', type=str, default='./output/')
     parser.add_argument('--arg3', type=bool, default=True)
-    # parser.add_argument('--arg4', type=bool, default=True)
     parser.add_argument('--arg4', type=bool, default=True)
 
     # Parse the command-line arguments
@@ -167,6 +171,6 @@ if __name__=='__main__':
     #!!!need to update so that test and subjob is easy
     # main(args['arg1'], args['arg2'], args['arg3'], args['arg4'])
     #main(args['arg1'], args['arg2'], False, False) #ele
-    main(args['arg1'], args['arg2'], True, False) #hadronic
-    # main(args['arg1'], args['arg2'], True, True) #test
+    # main(args['arg1'], args['arg2'], True, False) #hadronic
+    main(args['arg1'], args['arg2'], True, True) #test
     # main(args['arg1'], args['arg2'], False, True) #test
