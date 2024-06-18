@@ -49,9 +49,10 @@ def HLTHistFill(inputDir, outFile, isHadronic, isTest, era):
     HLT_2btag = "HLT_PFHT400_SixPFJet32_PNet2BTagMean0p50"
     HLT_3btag = "HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3"
     HLT_all = f"{HLT_1btag}||{HLT_2btag}||{HLT_3btag}"
+    HLT_HH = 'HLT_PFHT280_QuadPFJet30_PNet2BTagMean0p55'
     
     binning = np.array((500., 600., 650., 700., 800., 900., 1000., 1300., 2000)) 
-    jet6ptBin = np.array((0., 25, 50, 75, 100., 200., 300., 400., 500., 600., 700.))
+    jet6ptBin = np.array((0., 25, 50, 75, 100.,  300., ))
     de_HT, nu_HT = getDeAndNuHist(df, offline, HLT_all, "HT", binning)
     de_jet6pt, nu_jet6pt = getDeAndNuHist(df, offline, HLT_all, "jet_6pt", jet6ptBin)
     
@@ -62,8 +63,10 @@ def HLTHistFill(inputDir, outFile, isHadronic, isTest, era):
     de_jet6pt_3b, nu_jet6pt_3b = getDeAndNuHist(df, f"{offline} && nb==3", HLT_3btag, "jet_6pt", jet6ptBin, '3b')
     de_jet6pt_4b, nu_jet6pt_4b = getDeAndNuHist(df, f"{offline} && nb>3", HLT_3btag, "jet_6pt", jet6ptBin, '4b')
     
+    de_HT_HH, nu_HT_HH = getDeAndNuHist(df, offline, HLT_HH, "HT", binning, 'HH')
     
-    histList = [de_HT, nu_HT, de_jet6pt, nu_jet6pt, de_HT_2b, nu_HT_2b, de_HT_3b, nu_HT_3b, de_HT_4b, nu_HT_4b, de_jet6pt_2b, nu_jet6pt_2b, de_jet6pt_3b, nu_jet6pt_3b, de_jet6pt_4b, nu_jet6pt_4b]
+    
+    histList = [de_HT, nu_HT, de_jet6pt, nu_jet6pt, de_HT_2b, nu_HT_2b, de_HT_3b, nu_HT_3b, de_HT_4b, nu_HT_4b, de_jet6pt_2b, nu_jet6pt_2b, de_jet6pt_3b, nu_jet6pt_3b, de_jet6pt_4b, nu_jet6pt_4b, de_HT_HH, nu_HT_HH]
     writeToFile(histList ,outFile)                                                               
     
 def getDeAndNuHist(df, offline, HLT, variable, binning, namePost=''):
