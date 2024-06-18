@@ -41,17 +41,17 @@ def plotEffOverLayEle(in2023B, in2023C, in2023D, in2022):
         
     
 def plotOverLayHard(in2023D, in2024C): 
-    plotEffOverlay(in2023D, in2024C, trigger='1btag', ifHadronic=True)
-    plotEffOverlay(in2023D, in2024C, trigger='2btag', ifHadronic=True)
-    plotEffOverlay(in2023D, in2024C, trigger='both', ifHadronic=True)
+    # plotEffOverlay(in2023D, in2024C, trigger='1btag', ifHadronic=True)
+    # plotEffOverlay(in2023D, in2024C, trigger='2btag', ifHadronic=True)
+    # plotEffOverlay(in2023D, in2024C, trigger='both', ifHadronic=True)
     
-    plotEffOverlay(in2023D, in2024C, '1btag', 'bjetNum', ifHadronic=True)
-    plotEffOverlay(in2023D, in2024C, '2btag', 'bjetNum', ifHadronic=True)
-    plotEffOverlay(in2023D, in2024C, 'both', 'bjetNum', ifHadronic=True)
+    # plotEffOverlay(in2023D, in2024C, '1btag', 'bjetNum', ifHadronic=True)
+    # plotEffOverlay(in2023D, in2024C, '2btag', 'bjetNum', ifHadronic=True)
+    # plotEffOverlay(in2023D, in2024C, 'both', 'bjetNum', ifHadronic=True)
     
-    plotEffOverlay(in2023D, in2024C, '1btag', 'HT', ifHadronic=True)
-    plotEffOverlay(in2023D, in2024C, '2btag', 'HT', ifHadronic=True)
-    plotEffOverlay(in2023D, in2024C, 'both', 'HT', ifHadronic=True)
+    # plotEffOverlay(in2023D, in2024C, '1btag', 'HT', ifHadronic=True)
+    # plotEffOverlay(in2023D, in2024C, '2btag', 'HT', ifHadronic=True)
+    # plotEffOverlay(in2023D, in2024C, 'both', 'HT', ifHadronic=True)
     
     
     

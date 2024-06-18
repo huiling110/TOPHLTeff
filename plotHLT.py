@@ -16,8 +16,8 @@ def main():
     # inputDir = '/eos/user/v/vshang/forTopHLT_05072024/2024DpreCalib/v1ForHadronic/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_05072024/2024DpostCalib/v1ForHadronic/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v1ForHadronic/'
-    # inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v2HadronicWithRdataframe/'
-    inputDir = '/eos/home-h/hhua/forTopHLT/2024E/v2HadronicWithRdataframe/'
+    inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v2HadronicWithRdataframe/'
+    # inputDir = '/eos/home-h/hhua/forTopHLT/2024E/v2HadronicWithRdataframe/'
 
     isHadronic = True
     
@@ -53,7 +53,7 @@ def HLTHistFill(inputDir, outFile, isHadronic, isTest, era):
     HLT_all = f"{HLT_1btag}||{HLT_2btag}||{HLT_3btag}"
     HLT_HH = 'HLT_PFHT280_QuadPFJet30_PNet2BTagMean0p55'
     
-    binning = np.array((500., 600., 650., 700., 800., 900., 1000., 1300., 2000)) 
+    binning = np.array((500., 550, 600.,  700., 800, 900. , 2000)) 
     jet6ptBin = np.array((0., 25, 50, 75, 100.,  300., ))
     de_HT, nu_HT = getDeAndNuHist(df, offline, HLT_all, "HT", binning, 'HLTAll')
     de_jet6pt, nu_jet6pt = getDeAndNuHist(df, offline, HLT_all, "jet_6pt", jet6ptBin, 'HLTAll')
