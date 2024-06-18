@@ -48,7 +48,7 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANO
                         'Jet_pt',
                         'Jet_eta',
                         'Jet_phi',
-                        'Jet_jetId',
+                        'Jet_jetId', #? why all 0?
                         'Jet_btagDeepFlavB', 
                         'Jet_btagPNetB', #2023D
                         'nElectron',
@@ -172,6 +172,6 @@ if __name__=='__main__':
     #!!!need to update so that test and subjob is easy
     # main(args['arg1'], args['arg2'], args['arg3'], args['arg4'])
     #main(args['arg1'], args['arg2'], False, False) #ele
-    # main(args['arg1'], args['arg2'], True, False) #hadronic
-    main(args['arg1'], args['arg2'], True, True) #test
+    main(args['arg1'], args['arg2'], True, False) #hadronic
+    # main(args['arg1'], args['arg2'], True, True) #test
     # main(args['arg1'], args['arg2'], False, True) #test
