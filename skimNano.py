@@ -37,11 +37,21 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
         };
     """) 
     
+    ROOT.gInterpreter.Declare("""
+    auto HTCal = [](const std::vector<ROOT::Math::PtEtaPhiMVector>& jets) {
+        double ht = 0.0;
+        for (const auto& jet : jets) {
+            ht += jet.Pt();
+        }
+        return ht;
+    };
+    """)
+    
     print('input: ', inputNano) 
     df = ROOT.RDataFrame("Events", inputNano)
     # print(df.GetColumnNames())  
     if ifTest:
-        df = df.Range(1000)
+        df = df.Range(10000)
    
     df = df.Filter('HLT_IsoMu24==1')
     
@@ -51,23 +61,7 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
     df = df.Define('nb', '(int)selectedBjets.size()')
     # df = df.Define('HT', 'std::accumulate(selectedJets.begin(), selectedJets.end(), 0., [](double sum, const ROOT::Math::PtEtaPhiMVector& jet) { return sum + jet.Pt(); })')
     df = df.Define('jet_6pt', 'nj>5 ? selectedJets[5].Pt() : -1')
-    # df = df.Define('HT', 'ROOT::VecOps::Sum(df.Take<float>("selectedJets.Pt()"))')
-    # df = df.Define("HT", """
-    #     ROOT::VecOps::Sum(selectedJets, [](const ROOT::Math::PtEtaPhiMVector& jet) { 
-    #         return jet.Pt(); 
-    #     })
-    # """)
-#     df = df.Define("HT", """
-#                    #include <vector>
-# #include "Math/Vector4D.h"
-#     [](const std::vector<ROOT::Math::PtEtaPhiMVector>& jets) {
-#         double ht = 0.0;
-#         for (const auto& jet : jets) {
-#             ht += jet.Pt();
-#         }
-#         return ht;
-#     }(selectedJets)
-#     """)
+    df = df.Define("HT", "HTCal(selectedJets)")
 
     
     # preSelect = 'nj>5 && HT>500. && nb>1'
@@ -99,8 +93,8 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
         
     branches_to_keep.append('nj')
     branches_to_keep.append('nb')    
-    # branches_to_keep.append('HT')
-    # branches_to_keep.append('jet_6pt')
+    branches_to_keep.append('HT')
+    branches_to_keep.append('jet_6pt')
     postFix = inputNano.rsplit("/", 1)[-1]
     df.Snapshot("Events", outDir+postFix, branches_to_keep)
     print('file saved here: ', outDir+postFix)
