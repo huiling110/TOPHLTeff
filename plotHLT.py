@@ -38,16 +38,6 @@ def main():
     
     
 def HLTHistFill(inputDir, outFile, isHadronic, isTest, era):
-
-    # Define the C++ CountIf function
-    # ROOT.gInterpreter.Declare("""
-    # template <typename T>
-    # auto CountIf(const ROOT::VecOps::RVec<T>& vec, const std::function<bool(T)>& predicate) {
-    #     return ROOT::VecOps::Sum(ROOT::VecOps::Map(vec, predicate));
-    # }
-    # """)
-
-
     df = ROOT.RDataFrame('Events', inputDir+'*.root')
     print('inputDir: ', inputDir)
     print('initial entries: ', df.Count().GetValue())
@@ -58,9 +48,9 @@ def HLTHistFill(inputDir, outFile, isHadronic, isTest, era):
     HLT_1btag = "HLT_PFHT450_SixPFJet36_PNetBTag0p35"
     HLT_2btag = "HLT_PFHT400_SixPFJet32_PNet2BTagMean0p50"
     HLT_3btag = "HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3"
-    df_HLT = df.Filter(f"{HLT_1btag}||{HLT_2btag}||{HLT_3btag}")
+    # df_HLT = df.Filter(f"{HLT_1btag}||{HLT_2btag}||{HLT_3btag}")
+    HLT_all = f"{HLT_1btag}||{HLT_2btag}||{HLT_3btag}"
     
-    binning = np.array((500., 600., 650., 700., 800., 900., 1000., 1300., 2000)) 
     # de_HT = offline_df.Histo1D(("de_HT", "HT(GeV)", len(binning)-1, binning), "HT") 
     # nu_HT = df_HLT.Histo1D(("nu_HT", "HT(GeV)", len(binning)-1, binning), "HT")
     # de_jet6pt = offline_df.Histo1D(("de_jet6pt", "p_{T}^{6th jet}(GeV)", 20, 0, 700), "jet_6pt")
@@ -73,12 +63,17 @@ def HLTHistFill(inputDir, outFile, isHadronic, isTest, era):
     # nu_HT_3b = df_HLT.Filter("nb==3").Histo1D(("nu_HT_3b", "HT(GeV)", len(binning)-1, binning), "HT")
     # de_HT_2b = offline_df.Filter("nb==2").Histo1D(("de_HT_2b", "HT(GeV)", len(binning)-1, binning), "HT") 
     
-    de_HT, nu_HT = getDeAndNuHist(df, offline, HLT_1btag, "HT", binning)
+    binning = np.array((500., 600., 650., 700., 800., 900., 1000., 1300., 2000)) 
+    jet6ptBin = np.array((0., 25, 50, 75, 100., 200., 300., 400., 500., 600., 700.))
+    de_HT, nu_HT = getDeAndNuHist(df, offline, HLT_all, "HT", binning)
+    de_jet6pt, nu_jet6pt = getDeAndNuHist(df, offline, HLT_all, "jet_6pt", jet6ptBin)
     
+    de_HT_2b, nu_HT_2b = getDeAndNuHist(df, f"{offline} && nb==2", HLT_2btag, "HT", binning)
     
     
     # de_HT.Print()
-    writeToFile([de_HT, nu_HT] ,outFile)                                                               
+    histList = [de_HT, nu_HT, de_jet6pt, nu_jet6pt, de_HT_2b, nu_HT_2b]
+    writeToFile(histList ,outFile)                                                               
     
 def getDeAndNuHist(df, offline, HLT, variable, binning):
     df = df.Filter(offline)
