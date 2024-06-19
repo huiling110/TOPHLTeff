@@ -38,9 +38,24 @@ def main():
     #     plotOverLayHard(in2023D, in2024C) 
     # else:
     #     plotEffOverLayEle(in2023B, in2023C, in2023D, in2022)
-    effVsEras(effList)
+    # effVsEras(effList)
     
-    # eff_HHVsAll(effList)
+    eff_HHVsAll(effList[2])
+
+def eff_HHVsAll(inputList):
+    varList = ['HT', 'jet_6pt', 'nb']
+    for iVar in varList:
+        eff_hardAll = ph.getEffFromFile(inputList, [f'de_{iVar}_HLTAll', f'nu_{iVar}_HLTAll'])
+        eff_HH = ph.getEffFromFile(inputList, [f'de_{iVar}_HH', f'nu_{iVar}_HH'])
+        effList = [eff_hardAll, eff_HH]
+        # legendList = ['Hardronic triggers', 'HH parking trigger'] 
+        legendList = ['HT450+6jet+1btag || HT400+6jet+2btag || HT330+4jet+3btag', 'HT280+4jet+2btag']
+    
+        xmin = effList[0].GetTotalHistogram().GetXaxis().GetXmin()
+        xmax = effList[0].GetTotalHistogram().GetXaxis().GetXmax()
+        plotName = f'{getOutDir(inputList)}HLTEff_{iVar}_HHVsAll.png'
+        ph.plotOverlay(effList, legendList, 'L1T+HLT efficiency', plotName, xmin, xmax, ['2024E'], [0, 1.1], [0.2, 0.25, 0.9, 0.5])
+        
 
 def effVsEras(inputList, HLT='HLTAll'):
     outDir = getOutDir(inputList[0])
