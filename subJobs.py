@@ -11,18 +11,19 @@ def main():
     # era = '2023D'
     # inputList = 'input/Muon2022.txt'
     # era = '2022'
-    inputList = 'input/Muon2024C.txt'
-    era = '2024C'
+    # inputList = 'input/Muon2024C.txt'
+    # era = '2024C'
     # inputList = 'input/Muon2024D.txt'
     # inputList = 'input/Muon2024D_all.txt'
-    # inputList = 'input/Muon2024E.txt'
+    inputList = 'input/Muon2024E.txt'
     # era = '2024DpreCalib'
     # era = '2024D'
-    # era = '2024E'
+    era = '2024E'
     isVictor = False
     # jobVersion = 'v1ForHadronic'
     # jobVersion = 'v1ForEle'
-    jobVersion = 'v2HadronicWithRdataframe'
+    # jobVersion = 'v2HadronicWithRdataframe'
+    jobVersion = 'v1EleTTPhase'
   
   
   

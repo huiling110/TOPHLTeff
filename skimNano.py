@@ -55,7 +55,7 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
                               auto eleSel = [](const ROOT::VecOps::RVec<float>& Electron_pt, const ROOT::VecOps::RVec<float>& Electron_eta, const ROOT::VecOps::RVec<float>& Electron_phi, const ROOT::VecOps::RVec<float>& Electron_mass,  const ROOT::VecOps::RVec<int>& Electron_cutBased) {
         std::vector<ROOT::Math::PtEtaPhiMVector> selectedElectrons;
             for (int i = 0; i < Electron_pt.size(); i++) {
-                if (!(Electron_pt[i] > 25. && abs(Electron_eta[i]) < 2.1 && Electron_cutBased[i] >= 4)) continue;
+                if (!(Electron_pt[i] > 10. && abs(Electron_eta[i]) < 2.4 && Electron_cutBased[i] >= 4)) continue;
                 selectedElectrons.emplace_back(Electron_pt[i], Electron_eta[i], Electron_phi[i], Electron_mass[i]);
             }
             return selectedElectrons;
@@ -86,7 +86,10 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
 
     
     preSelect = 'nj>5 && HT>500. && nb>1'
+    if not ifForHadronic:
+        preSelect = 'ne==1 && ele_1pt>16. && nj>2 && nb>1' #typical tt phase space
     df = df.Filter(preSelect)
+    print('preselection: ', preSelect)
     
     
     if ifTest:
@@ -111,8 +114,8 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
                         # 'HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned',# !disabled in 2024
                         # 'HLT_Ele28_eta2p1_WPTight_Gsf_HT150', #!disabled in 2024
                         'HLT_Ele30_WPTight_Gsf',
-                        # 'HLT_Ele14_eta2p5_IsoVVVL_Gsf_PFHT200_PNetBTag0p53', #!added in 2024C after run 379613
-                        # 'HLT_Mu12_IsoVVL_PFHT150_PNetBTag0p53',#!added in 2024C after run 379613
+                        'HLT_Ele14_eta2p5_IsoVVVL_Gsf_PFHT200_PNetBTag0p53', #!added in 2024C after run 379613
+                        'HLT_Mu12_IsoVVL_PFHT150_PNetBTag0p53',#!added in 2024C after run 379613
                         "run",
                         ]
         
@@ -120,6 +123,10 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
     branches_to_keep.append('nb')    
     branches_to_keep.append('HT')
     branches_to_keep.append('jet_6pt')
+    branches_to_keep.append('ne')
+    branches_to_keep.append('ele_1pt')
+    branches_to_keep.append('ele_1eta')
+    branches_to_keep.append('ele_1phi')
     postFix = inputNano.rsplit("/", 1)[-1]
     df.Snapshot("Events", outDir+postFix, branches_to_keep)
     print('after selection: ', df.Count().GetValue())
@@ -256,8 +263,8 @@ def process_arguments():
     # input = '/store/data/Run2023B/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v2/60000/06d25571-df3e-4ceb-9e44-7452add3e004.root'
     # input = '/store/data/Run2022C/Muon/NANOAOD/PromptNanoAODv10-v1/40000/d4484006-7e4b-424e-86a4-346d17d862f8.root'
     # input = '/store/data/Run2024E/Muon0/NANOAOD/PromptReco-v1/000/380/956/00000/8413549d-588b-46ff-9c53-b98b34faa7e7.root'
-    # input = '/store/data/Run2024D/Muon0/NANOAOD/PromptReco-v1/000/380/346/00000/3c839fb5-92c1-4140-a9ab-1efe2ad80a60.root'
-    input = '/store/data/Run2024C/Muon1/NANOAOD/PromptReco-v1/000/380/195/00000/0567ac8a-b6c6-466e-b0da-0474f2bbeea6.root'
+    input = '/store/data/Run2024D/Muon0/NANOAOD/PromptReco-v1/000/380/346/00000/3c839fb5-92c1-4140-a9ab-1efe2ad80a60.root'
+    # input = '/store/data/Run2024C/Muon1/NANOAOD/PromptReco-v1/000/380/195/00000/0567ac8a-b6c6-466e-b0da-0474f2bbeea6.root'
     # Add arguments
     # parser.add_argument('--arg1', type=str, default='root://cmsxrootd.fnal.gov//'+input)
     parser.add_argument('--arg1', type=str, default=input)
@@ -289,7 +296,7 @@ if __name__=='__main__':
     args = process_arguments()
     #!!!need to update so that test and subjob is easy
     # main(args['arg1'], args['arg2'], args['arg3'], args['arg4'])
-    #main(args['arg1'], args['arg2'], False, False) #ele
-    main(args['arg1'], args['arg2'], True, False) #hadronic
+    main(args['arg1'], args['arg2'], False, False) #ele
+    # main(args['arg1'], args['arg2'], True, False) #hadronic
     # main(args['arg1'], args['arg2'], True, True) #test
     # main(args['arg1'], args['arg2'], False, True) #test
