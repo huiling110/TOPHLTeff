@@ -12,7 +12,17 @@ def getEra(inputDir):
         era = '2023D'
     elif '2022' in inputDir:
         era = '2022'    
+    elif '2024C' in inputDir:
+        era = '2024C'
+    elif '2024D' in inputDir:
+        era = '2024D'
+    elif '2024E' in inputDir:
+        era = '2024E'
     return era    
+
+# def getEraNano(nanoFile):
+    
+    
 
 def checkMakeDir( folder ):
     if not os.path.exists( folder ):

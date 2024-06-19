@@ -2,6 +2,13 @@ import ROOT
 import os
 import argparse
 
+import usefulFunc as uf
+
+triggerSwitchedMap = {
+    '2024C': 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepJet_4p5',
+    '2024D': 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3',
+    '2024E': 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3',
+} 
 
 # def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023C/Muon0/NANOAOD/PromptNanoAODv12_v4-v1/60000/fdd8324d-a4f8-4286-945f-5528e7ae46e9.root', version = 'v0ForHadronic', ifForHadronic = True,   ifTest = False):
 # def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023D/Muon0/NANOAOD/PromptReco-v1/000/369/901/00000/3bdb0fca-4c12-4394-9812-509cb1d05cb7.root', version = 'v0ForHadronic', ifForHadronic = True,   ifTest = True):
@@ -19,6 +26,7 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANO
     # selLoop(chain, branches_to_keep, outDir, ifForHadronic, ifTest)#!obsolete, keep it for now
     
 def preSel(inputNano,  outDir, ifForHadronic, ifTest):
+    #faster and better with rDataFrame:)
     ROOT.gInterpreter.Declare("""
     #include <vector>
     #include "Math/Vector4D.h"
@@ -49,6 +57,7 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
     print('input: ', inputNano) 
     df = ROOT.RDataFrame("Events", inputNano)
     # print(df.GetColumnNames())  
+    print('initial events: ', df.Count().GetValue())
     if ifTest:
         df = df.Range(10000)
    
@@ -71,21 +80,26 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
         outDir = './output/'
     if not os.path.exists(outDir):
         os.makedirs(outDir)
-        
+    
+    era = uf.getEra(inputNano)
+       
     # List of branch names to keep
     branches_to_keep = [
                         #2023D
                         'HLT_PFHT450_SixPFJet36_PNetBTag0p35',
                         'HLT_PFHT400_SixPFJet32_PNet2BTagMean0p50',
-                        'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3',
+                        triggerSwitchedMap[era],
+                        # 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepJet_4p5', # ![ 378981, 380933], from HLT INFO GUI
+                        # 'HLT_PFHT340_QuadPFJet70_50_40_40_PNet2BTagMean0p70', #3.2	[378981,380933] ; 2024C[37941, 380252]
+                        # 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3', ##!seems not available in 2024C, starting 379613
                         # 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40',#!prescaled!
                         'HLT_PFHT280_QuadPFJet30_PNet2BTagMean0p55',#!ParkingHH since 2023C run 367661
                         'HLT_IsoMu24',
-                        'HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned',
-                        'HLT_Ele28_eta2p1_WPTight_Gsf_HT150',
+                        # 'HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned',# !disabled in 2024
+                        # 'HLT_Ele28_eta2p1_WPTight_Gsf_HT150', #!disabled in 2024
                         'HLT_Ele30_WPTight_Gsf',
-                        'HLT_Ele14_eta2p5_IsoVVVL_Gsf_PFHT200_PNetBTag0p53', #!added in 2024C after run 379613
-                        'HLT_Mu12_IsoVVL_PFHT150_PNetBTag0p53',#!added in 2024C after run 379613
+                        # 'HLT_Ele14_eta2p5_IsoVVVL_Gsf_PFHT200_PNetBTag0p53', #!added in 2024C after run 379613
+                        # 'HLT_Mu12_IsoVVL_PFHT150_PNetBTag0p53',#!added in 2024C after run 379613
                         "run",
                         ]
         
@@ -95,6 +109,7 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
     branches_to_keep.append('jet_6pt')
     postFix = inputNano.rsplit("/", 1)[-1]
     df.Snapshot("Events", outDir+postFix, branches_to_keep)
+    print('after selection: ', df.Count().GetValue())
     print('file saved here: ', outDir+postFix)
    
    
@@ -113,7 +128,7 @@ def selLoop(chain, branches_to_keep, outDir, ifForHadronic, ifTest):
                         #2023D
                         'HLT_PFHT450_SixPFJet36_PNetBTag0p35',
                         'HLT_PFHT400_SixPFJet32_PNet2BTagMean0p50',
-                        'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3',
+                        'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3', #!seems not available in 2024C
                         # 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40',#!prescaled!
                         #Additional triggers for DeepJet vs ParticleNet comparison
                         # 'HLT_QuadPFJet70_50_40_35_PFBTagParticleNet_2BTagSum0p65',
@@ -225,11 +240,11 @@ def process_arguments():
     # Create an ArgumentParser object
     parser = argparse.ArgumentParser(description='Description of your script.')
  
- 
     # input = '/store/data/Run2023B/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v2/60000/06d25571-df3e-4ceb-9e44-7452add3e004.root'
     # input = '/store/data/Run2022C/Muon/NANOAOD/PromptNanoAODv10-v1/40000/d4484006-7e4b-424e-86a4-346d17d862f8.root'
     # input = '/store/data/Run2024E/Muon0/NANOAOD/PromptReco-v1/000/380/956/00000/8413549d-588b-46ff-9c53-b98b34faa7e7.root'
-    input = '/store/data/Run2024D/Muon0/NANOAOD/PromptReco-v1/000/380/346/00000/3c839fb5-92c1-4140-a9ab-1efe2ad80a60.root'
+    # input = '/store/data/Run2024D/Muon0/NANOAOD/PromptReco-v1/000/380/346/00000/3c839fb5-92c1-4140-a9ab-1efe2ad80a60.root'
+    input = '/store/data/Run2024C/Muon1/NANOAOD/PromptReco-v1/000/380/195/00000/0567ac8a-b6c6-466e-b0da-0474f2bbeea6.root'
     # Add arguments
     # parser.add_argument('--arg1', type=str, default='root://cmsxrootd.fnal.gov//'+input)
     parser.add_argument('--arg1', type=str, default=input)

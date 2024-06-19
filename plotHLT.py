@@ -16,10 +16,13 @@ def main():
     # inputDir = '/eos/user/v/vshang/forTopHLT_05072024/2024DpreCalib/v1ForHadronic/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_05072024/2024DpostCalib/v1ForHadronic/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v1ForHadronic/'
-    inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v2HadronicWithRdataframe/'
+    # inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v2HadronicWithRdataframe/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024E/v2HadronicWithRdataframe/'
-
+    inputDir = '/eos/home-h/hhua/forTopHLT/2024C/v2HadronicWithRdataframe/'
     isHadronic = True
+    outVersion = 'v0ttHPhasephase'
+    # offline = "HT>500. && nj>5 && nb>1 && HLT_IsoMu24==1"
+    offline = "HT>500. && nj>5 && nb>1 && HLT_IsoMu24==1 && jet_6pt>40." #ttH phase space
     
     # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023B/v1ForEle/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023C/v1ForEle/'
@@ -32,20 +35,17 @@ def main():
     # isHadronic = False
    
     era = uf.getEra(inputDir) 
-    outFile = makeOutFile(inputDir, isTest) 
-  
-    HLTHistFill(inputDir, outFile, isHadronic, isTest, era)#!using rDataframe for fasting processing
+    outFile = makeOutFile(inputDir, isTest, outVersion) 
+    HLTHistFill(inputDir, outFile, isHadronic, isTest, era,  offline)#!using rDataframe for fasting processing
    
     # oldEventLoopSel(inputDir, outFile) # put old event loop here
     
     
-def HLTHistFill(inputDir, outFile, isHadronic, isTest, era):
+def HLTHistFill(inputDir, outFile, isHadronic, isTest, era, offline='HT>500. && nj>5 && nb>1 && HLT_IsoMu24==1'):
     df = ROOT.RDataFrame('Events', inputDir+'*.root')
     print('inputDir: ', inputDir)
     print('initial entries: ', df.Count().GetValue())
     
-    offline = "HT>500. && nj>5 && nb>1 && HLT_IsoMu24==1"
-    # offline_df = df.Filter(offline) 
     
     HLT_1btag = "HLT_PFHT450_SixPFJet36_PNetBTag0p35"
     HLT_2btag = "HLT_PFHT400_SixPFJet32_PNet2BTagMean0p50"
@@ -233,13 +233,15 @@ def makeHist_hard(chain, isTest, era):
         
     
     
-def makeOutFile(inputDir, isTest):
+def makeOutFile(inputDir, isTest, outVersion='v0'):
     outDir = inputDir+ 'result/'
     #outDir = inputDir+ 'resultBPix/'
     if isTest:
         outDir = 'output/'
     if not os.path.exists(outDir):
         os.makedirs(outDir)
+    outDir = outDir + outVersion + '/'
+    os.makedirs(outDir) if not os.path.exists(outDir) else None
     outFile = ROOT.TFile(outDir+'eff.root', 'RECREATE')
     return outFile
     
