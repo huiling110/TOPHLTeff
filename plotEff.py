@@ -12,9 +12,16 @@ def main():
     # in2024C = '/eos/user/v/vshang/forTopHLT_05072024/2024C/v1ForHadronic/result/eff.root'
     # in2023D = '/eos/user/v/vshang/forTopHLT_05072024/2024DpreCalib/v1ForHadronic/result/eff.root'
     # in2024C = '/eos/user/v/vshang/forTopHLT_05072024/2024DpostCalib/v1ForHadronic/result/eff.root'
-    in2024D = '/eos/home-h/hhua/forTopHLT/2024D/v2HadronicWithRdataframe/result/eff.root'
-    in2024E = '/eos/home-h/hhua/forTopHLT/2024E/v2HadronicWithRdataframe/result/eff.root'
+    # in2024D = '/eos/home-h/hhua/forTopHLT/2024D/v2HadronicWithRdataframe/result/eff.root'
+    # in2024E = '/eos/home-h/hhua/forTopHLT/2024E/v2HadronicWithRdataframe/result/eff.root'
+    # in2024C = '/eos/home-h/hhua/forTopHLT/2024C/v2HadronicWithRdataframe/result/eff.root'
     ifHadronic =True
+    
+    effList = [
+        '/eos/home-h/hhua/forTopHLT/2024C/v2HadronicWithRdataframe/result/v0ttHPhasephase/eff.root',
+        '/eos/home-h/hhua/forTopHLT/2024D/v2HadronicWithRdataframe/result/v0ttHPhasephase/eff.root',
+        '/eos/home-h/hhua/forTopHLT/2024E/v2HadronicWithRdataframe/result/v0ttHPhasephase/eff.root',
+    ]
     
     # in2023B = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023B/v1ForEle/result/eff.root' 
     # in2023C = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023C/v1ForEle/result/eff.root' 
@@ -31,16 +38,31 @@ def main():
     #     plotOverLayHard(in2023D, in2024C) 
     # else:
     #     plotEffOverLayEle(in2023B, in2023C, in2023D, in2022)
+    effVsEras(effList)
 
-    eff_2024D = ph.getEffFromFile(in2024D, ['de_HT_HLTAll', 'nu_HT_HLTAll'])
-    eff_2024E = ph.getEffFromFile(in2024E, ['de_HT_HLTAll', 'nu_HT_HLTAll']) 
-    xmin, xmax = ph.getXrangeFromFile(in2024D, ['de_HT_HLTAll', 'nu_HT_HLTAll'])
-    histList = [eff_2024D, eff_2024E]
-    legendList = ['2024D', '2024E']
-    outDir = getOutDir(in2024D)
+def effVsEras(inputList, HLT='HLTAll'):
+    # eff_2024D = ph.getEffFromFile(in2024D, ['de_HT_HLTAll', 'nu_HT_HLTAll'])
+    # eff_2024E = ph.getEffFromFile(in2024E, ['de_HT_HLTAll', 'nu_HT_HLTAll']) 
+    
+    effList = []
+    eraList = []
+    for iEff in inputList:
+        eff = ph.getEffFromFile(iEff, ['de_HT_HLTAll', 'nu_HT_HLTAll'])
+        era = uf.getEra(iEff)
+        effList.append(eff)
+        eraList.append(era)
+    print(effList) 
+    
+    # xmin, xmax = ph.getXrangeFromFile(in2024D, ['de_HT_HLTAll', 'nu_HT_HLTAll'])
+    xmin = effList[0].GetTotalHistogram().GetXaxis().GetXmin()
+    xmax = effList[0].GetTotalHistogram().GetXaxis().GetXmax()
+    # histList = [eff_2024D, eff_2024E]
+    # legendList = ['2024D', '2024E']
+    outDir = getOutDir(inputList[0])
+    
     plotName = outDir + 'HLTEff_HLTAll.png'
     # ph.plotOverlay(histList, legendList, '2024', 'L1T+HLT efficiency', plotName, 0, 1000, [0, 1.1])
-    ph.plotOverlay(histList, legendList, '2024', 'L1T+HLT efficiency', plotName, xmin, xmax, [0, 1.1])
+    ph.plotOverlay(effList, eraList, '2024', 'L1T+HLT efficiency', plotName, xmin, xmax, [0, 1.1])
     
     
     

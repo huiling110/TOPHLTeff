@@ -11,6 +11,7 @@ def getEffFromFile(inputDirFile, Histlist):
     return eff_b_eta1
 
 def getXrangeFromFile(inputDirFile, Histlist):
+#!redundent function 
     b_eta1List= getHistFromFile( inputDirFile, Histlist)
     xmin = b_eta1List[0].GetXaxis().GetXmin()
     xmax = b_eta1List[0].GetXaxis().GetXmax()
@@ -80,7 +81,7 @@ def plotOverlay(histList, legenList, era, yTitle, plotName, xmin, xmax, yRange=[
         # 0: ROOT.TColor.GetColor("#fdae61"),
         # 0: ROOT.TColor.GetColor("#fd8d3c"),
         # 1: ROOT.TColor.GetColor("#f03b20"),
-        # 2: ROOT.TColor.GetColor("#2ca25f"),
+        2: ROOT.TColor.GetColor("#2ca25f"),
         # 3: ROOT.TColor.GetColor("#d01c8b"),
         0: ROOT.TColor.GetColor("#fdae61"),
         1: ROOT.TColor.GetColor("#d01c8b"),

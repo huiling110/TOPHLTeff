@@ -49,7 +49,8 @@ def HLTHistFill(inputDir, outFile, isHadronic, isTest, era, offline='HT>500. && 
     
     HLT_1btag = "HLT_PFHT450_SixPFJet36_PNetBTag0p35"
     HLT_2btag = "HLT_PFHT400_SixPFJet32_PNet2BTagMean0p50"
-    HLT_3btag = "HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3"
+    # HLT_3btag = "HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3"
+    HLT_3btag = sn.triggerSwitchedMap[era]
     HLT_all = f"{HLT_1btag}||{HLT_2btag}||{HLT_3btag}"
     HLT_HH = 'HLT_PFHT280_QuadPFJet30_PNet2BTagMean0p55'
     
