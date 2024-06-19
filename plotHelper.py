@@ -65,7 +65,7 @@ def getHistFromFile(fileName, histNames):
     
 
 
-def plotOverlay(histList, legenList,   era , yTitle, plotName, xmin, xmax, yRange=[], legendPos=[0.7, 0.2, 0.9, 0.53],):
+def plotOverlay(histList, legenList,   yTitle, plotName, xmin, xmax,  era=['2024'] , yRange=[0, 1], legendPos=[0.7, 0.2, 0.9, 0.53], ifExtraTxt=False):
     print('start to plot overlay plot')
     mySty =  st.setMyStyle()
     mySty.cd()
@@ -75,16 +75,11 @@ def plotOverlay(histList, legenList,   era , yTitle, plotName, xmin, xmax, yRang
     # legend = ROOT.TLegend(0.65, 0.8, 0.9, 0.93)  # Create a legend to label the histograms
     # legend = ROOT.TLegend(0.7, 0.2, 0.9, 0.53)  # Create a legend to label the histograms
     legend = st.getMyLegend(legendPos[0], legendPos[1], legendPos[2], legendPos[3])
-    #yMax = getYmax(histList)
-    #plot style
     LineColorDic={
-        # 0: ROOT.TColor.GetColor("#fdae61"),
-        # 0: ROOT.TColor.GetColor("#fd8d3c"),
-        # 1: ROOT.TColor.GetColor("#f03b20"),
-        2: ROOT.TColor.GetColor("#2ca25f"),
-        # 3: ROOT.TColor.GetColor("#d01c8b"),
-        0: ROOT.TColor.GetColor("#fdae61"),
-        1: ROOT.TColor.GetColor("#d01c8b"),
+        0: [ROOT.TColor.GetColor("#f03b20"), 8], #rea
+        1: [ROOT.TColor.GetColor("#fd8d3c"), 41], #orange
+        # 2: [ROOT.TColor.GetColor("#2ca25f"), 101],
+        2: [ROOT.TColor.GetColor("#2ca25f"), 1], #green
         #2ca25f green
         #d01c8b purple
         ##fdae61 fc9272" orange
@@ -97,36 +92,32 @@ def plotOverlay(histList, legenList,   era , yTitle, plotName, xmin, xmax, yRang
         else:
             histogram.Draw("same")  # Draw subsequent histograms with "same" option to overlay
 
-        histogram.SetLineColor(LineColorDic[i])
-        histogram.SetMarkerColor(LineColorDic[i])
+        # histogram.SetLineColor(LineColorDic[i])
+        # histogram.SetMarkerColor(LineColorDic[i])
         histogram.SetLineWidth(3)  # Set line width for each histogram
         histogram.SetMarkerSize(1.5)
-        # histogram.SetMarkerStyle(45)
-        histogram.SetMarkerStyle(64)
-        # histogram.GetXaxis().SetTitle(histogram.GetTitle())  # Set X-axis title (modify as needed)
-        # histogram.GetYaxis().SetTitle(yTitle)  # Set Y-axis title (modify as needed)
-        # histogram.GetXaxis().SetTitleSize(0.05)
-        # histogram.GetYaxis().SetTitleSize(0.05)
+        histogram.SetLineColor(LineColorDic[i][0])
+        histogram.SetMarkerColor(LineColorDic[i][0])
+        histogram.SetMarkerStyle(LineColorDic[i][1])
+        
         xTitle = histogram.GetCopyTotalHisto().GetTitle()
         histogram.SetTitle(";"+xTitle+";"+yTitle)
         ROOT.gPad.Update()
         histogram.GetPaintedGraph().GetXaxis().SetTitleSize(0.05)
         histogram.GetPaintedGraph().GetYaxis().SetTitleSize(0.05)
-        # if len(yRange)>1:
-        #     histList[i].GetYaxis().SetRangeUser(yRange[0], yRange[1])
-        # else:
-        #     histList[i].GetYaxis().SetRangeUser(0, yMax*1.3)
         histogram.GetPaintedGraph().SetMinimum(yRange[0])
         histogram.GetPaintedGraph().SetMaximum(yRange[1])
         histogram.GetPaintedGraph().GetXaxis().SetLimits(xmin, xmax)
         
-        legend.AddEntry(histogram, legenList[i], "l")  # Add an entry to the legend
+        legend.AddEntry(histogram, legenList[i], "lp")  # Add an entry to the legend
         legend.Draw() 
         
     #st.addCMSTextToCan(can, 0.22, 0.34, 0.9, 0.94, era, True)
-    # st.addCMSTextToCan(can, 0.24, 0.39, 0.9, 0.94, era, True)
-    st.addTriggerInfo(ifHadronic=True)
-    #st.addTriggerInfo(ifHadronic=False)
+    st.addCMSTextToCan(can, 0.24, 0.39, 0.9, 0.94, era, True)
+    
+    if ifExtraTxt:
+        st.addTriggerInfo(ifHadronic=True)
+        #st.addTriggerInfo(ifHadronic=False)
     
     can.SaveAs(plotName)
     print('Done overlay plotting\n\n')

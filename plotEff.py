@@ -60,7 +60,7 @@ def effVsEras(inputList, HLT='HLTAll'):
     
     plotName = outDir + 'HLTEff_HLTAll.png'
     # ph.plotOverlay(histList, legendList, '2024', 'L1T+HLT efficiency', plotName, 0, 1000, [0, 1.1])
-    ph.plotOverlay(effList, eraList, '2024', 'L1T+HLT efficiency', plotName, xmin, xmax, [0, 1.1])
+    ph.plotOverlay(effList, eraList,  'L1T+HLT efficiency', plotName, xmin, xmax, eraList, [0, 1.1])
     
     
     

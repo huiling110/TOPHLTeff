@@ -101,7 +101,8 @@ def setMyStyle():
 
 
 
-def addCMSTextToCan(canvas, x1=0.23, x2=0.35,x3=0.7, y=0.96, era = '2016', isRun3=False):
+# def addCMSTextToCan(canvas, x1=0.23, x2=0.35,x3=0.7, y=0.96, era = '2016', isRun3=False):
+def addCMSTextToCan(canvas, x1=0.23, x2=0.35,x3=0.7, y=0.96, eraList = ['2024'], isRun3=False):
     can = canvas
      
     cmsTextFont = 61
@@ -121,25 +122,45 @@ def addCMSTextToCan(canvas, x1=0.23, x2=0.35,x3=0.7, y=0.96, era = '2016', isRun
     latex.SetTextSize(0.05*0.76)
     latex.DrawLatex(x2, y , extraText )
   
-    lumiText = lumiMap[era] /1000
+    # lumiText = lumiMap[era] /1000
     #lumiText_s = '35.2 fb^{-1}, 2022 + 27.2 fb^{-1}, 2023'
-    lumiText_s = '9.5 fb^{-1}, 2023D + 6.7 fb^{-1}, 2024C'
+    # lumiText_s = '9.5 fb^{-1}, 2023D + 6.7 fb^{-1}, 2024C'
     #lumiText_s = '2022-2023D'
-    energy = '13'
-    if isRun3:
-        energy = '13.6'
+    # energy = '13'
+    # if isRun3:
+        # energy = '13.6'
     #lumiText_s = lumiText_s + ' fb^{-1}('+ energy +'TeV)'
     #lumiText_s = lumiText_s + ' ('+ energy +' TeV)'
-    lumiText_s = energy + ' TeV'
+    # lumiText_s = energy + ' TeV'
     #lumiText_s = energy + ' TeV'
     # print(lumiText)
+    
+    lumiText = 0.
+    for iera in eraList:
+        lumiText = lumiMap[iera] /1000 + lumiText
+    # lumiText = lumiMap[era] /1000
+    lumiText_s = '{0:.1f}'.format(lumiText)
+    energy = '13.6' if isRun3 else '13'
+    lumiText_s = lumiText_s + ' fb^{-1}('+ energy +'TeV)'
     latex2 = ROOT.TLatex()
     latex2.SetNDC()
-    latex2.SetTextSize(0.038)
+    latex2.SetTextSize(0.04)
     latex2.SetTextAlign(31)
     latex2.SetTextFont(42)  
-    # latex2.DrawLatex(x2+0.6, y, lumiText_s )
-    latex2.DrawLatex( x3, y, lumiText_s )
+    latex2.DrawLatex( x3, y, lumiText_s ) 
+    
+    
+    
+    
+    
+    
+    # latex2 = ROOT.TLatex()
+    # latex2.SetNDC()
+    # latex2.SetTextSize(0.038)
+    # latex2.SetTextAlign(31)
+    # latex2.SetTextFont(42)  
+    # # latex2.DrawLatex(x2+0.6, y, lumiText_s )
+    # latex2.DrawLatex( x3, y, lumiText_s )
 
 
 def addTriggerInfo(ifHadronic=True):
