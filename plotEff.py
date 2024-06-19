@@ -43,24 +43,25 @@ def main():
     # eff_HHVsAll(effList)
 
 def effVsEras(inputList, HLT='HLTAll'):
-    
-    varList = ['HT', 'jet_6pt', 'nb']
-    effList = []
-    eraList = []
-    for iEff in inputList:
-        eff = ph.getEffFromFile(iEff, ['de_HT_HLTAll', 'nu_HT_HLTAll'])
-        era = uf.getEra(iEff)
-        effList.append(eff)
-        eraList.append(era)
-    print(effList) 
-    
-    xmin = effList[0].GetTotalHistogram().GetXaxis().GetXmin()
-    xmax = effList[0].GetTotalHistogram().GetXaxis().GetXmax()
     outDir = getOutDir(inputList[0])
     
-    plotName = outDir + 'HLTEff_HLTAll.png'
-    # ph.plotOverlay(histList, legendList, '2024', 'L1T+HLT efficiency', plotName, 0, 1000, [0, 1.1])
-    ph.plotOverlay(effList, eraList,  'L1T+HLT efficiency', plotName, xmin, xmax, eraList, [0, 1.1])
+    varList = ['HT', 'jet_6pt', 'nb']
+    for iVar in varList:
+        effList = []
+        eraList = []
+        for iEff in inputList:
+            # eff = ph.getEffFromFile(iEff, ['de_HT_HLTAll', 'nu_HT_HLTAll'])
+            eff = ph.getEffFromFile(iEff, [f'de_{iVar}_HLTAll', f'nu_{iVar}_HLTAll'])
+            era = uf.getEra(iEff)
+            effList.append(eff)
+            eraList.append(era)
+        print(effList) 
+        
+        xmin = effList[0].GetTotalHistogram().GetXaxis().GetXmin()
+        xmax = effList[0].GetTotalHistogram().GetXaxis().GetXmax()
+        
+        plotName =  f'{outDir}HLTEff_{iVar}_HLTAll.png'
+        ph.plotOverlay(effList, eraList,  'L1T+HLT efficiency', plotName, xmin, xmax, eraList, [0, 1.1])
     
     
     

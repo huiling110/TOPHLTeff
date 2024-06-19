@@ -72,8 +72,6 @@ def plotOverlay(histList, legenList,   yTitle, plotName, xmin, xmax,  era=['2024
     ROOT.gROOT.SetBatch(True)
     can = ROOT.TCanvas('overlay', 'overlay', 1000, 800)
     
-    # legend = ROOT.TLegend(0.65, 0.8, 0.9, 0.93)  # Create a legend to label the histograms
-    # legend = ROOT.TLegend(0.7, 0.2, 0.9, 0.53)  # Create a legend to label the histograms
     legend = st.getMyLegend(legendPos[0], legendPos[1], legendPos[2], legendPos[3])
     LineColorDic={
         0: [ROOT.TColor.GetColor("#f03b20"), 8], #rea
@@ -117,7 +115,6 @@ def plotOverlay(histList, legenList,   yTitle, plotName, xmin, xmax,  era=['2024
     
     if ifExtraTxt:
         st.addTriggerInfo(ifHadronic=True)
-        #st.addTriggerInfo(ifHadronic=False)
     
     can.SaveAs(plotName)
     print('Done overlay plotting\n\n')
