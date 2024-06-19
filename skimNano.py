@@ -18,9 +18,6 @@ def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANO
 
 
     inputNano = 'root://cmsxrootd.fnal.gov/'+ inputNano
-    
-    
-    
     preSel(inputNano,  outDir, ifForHadronic, ifTest)#faster run time with rDataFrame
     
     # selLoop(chain, branches_to_keep, outDir, ifForHadronic, ifTest)#!obsolete, keep it for now
@@ -54,6 +51,17 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
     };
     """)
     
+    ROOT.gInterpreter.Declare("""
+                              auto eleSel = [](const ROOT::VecOps::RVec<float>& Electron_pt, const ROOT::VecOps::RVec<float>& Electron_eta, const ROOT::VecOps::RVec<float>& Electron_phi, const ROOT::VecOps::RVec<float>& Electron_mass,  const ROOT::VecOps::RVec<int>& Electron_cutBased) {
+        std::vector<ROOT::Math::PtEtaPhiMVector> selectedElectrons;
+            for (int i = 0; i < Electron_pt.size(); i++) {
+                if (!(Electron_pt[i] > 25. && abs(Electron_eta[i]) < 2.1 && Electron_cutBased[i] >= 4)) continue;
+                selectedElectrons.emplace_back(Electron_pt[i], Electron_eta[i], Electron_phi[i], Electron_mass[i]);
+            }
+            return selectedElectrons;
+        };
+    """)
+    
     print('input: ', inputNano) 
     df = ROOT.RDataFrame("Events", inputNano)
     # print(df.GetColumnNames())  
@@ -67,9 +75,14 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
     df = df.Define('selectedBjets', 'jetSelNew(Jet_pt, Jet_eta, Jet_phi, Jet_mass, Jet_btagPNetB, kTRUE )')
     df = df.Define('nj', '(int)selectedJets.size()')
     df = df.Define('nb', '(int)selectedBjets.size()')
-    # df = df.Define('HT', 'std::accumulate(selectedJets.begin(), selectedJets.end(), 0., [](double sum, const ROOT::Math::PtEtaPhiMVector& jet) { return sum + jet.Pt(); })')
     df = df.Define('jet_6pt', 'nj>5 ? selectedJets[5].Pt() : -1')
     df = df.Define("HT", "HTCal(selectedJets)")
+    
+    df = df.Define('selectedElectrons', 'eleSel(Electron_pt, Electron_eta, Electron_phi, Electron_mass, Electron_cutBased)')
+    df = df.Define('ne', '(int)selectedElectrons.size()')
+    df = df.Define('ele_1pt', 'ne>0 ? selectedElectrons[0].Pt() : -1')
+    df = df.Define('ele_1eta', 'ne>0 ? selectedElectrons[0].Eta() : -1')
+    df = df.Define('ele_1phi', 'ne>0 ? selectedElectrons[0].Phi() : -1')
 
     
     preSelect = 'nj>5 && HT>500. && nb>1'
