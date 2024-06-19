@@ -56,9 +56,12 @@ def HLTHistFill(inputDir, outFile, isHadronic, isTest, era, offline='HT>500. && 
     
     binning = np.array((500., 550, 600.,  700., 800, 900. , 2000)) 
     jet6ptBin = np.array((0., 25, 50, 75, 100.,  300., ))
+    nbBin = np.array((0.5, 1.5, 2.5, 3.5, 4.5, 8.5))
     de_HT, nu_HT = getDeAndNuHist(df, offline, HLT_all, "HT", binning, 'HLTAll')
     de_jet6pt, nu_jet6pt = getDeAndNuHist(df, offline, HLT_all, "jet_6pt", jet6ptBin, 'HLTAll')
+    de_nb, nu_nb = getDeAndNuHist(df, offline, HLT_all, "nb", nbBin, 'HLTAll')
     
+    #For efficincy in different b multiplicity regions 
     de_HT_2b, nu_HT_2b = getDeAndNuHist(df, f"{offline} && nb==2", HLT_2btag, "HT", binning, 'HLTAll_2b')
     de_HT_3b, nu_HT_3b = getDeAndNuHist(df, f"{offline} && nb==3", HLT_3btag, "HT", binning, 'HLTAll_3b')
     de_HT_4b, nu_HT_4b = getDeAndNuHist(df, f"{offline} && nb>3", HLT_3btag, "HT", binning, 'HLTAll_4b')
@@ -67,9 +70,11 @@ def HLTHistFill(inputDir, outFile, isHadronic, isTest, era, offline='HT>500. && 
     de_jet6pt_4b, nu_jet6pt_4b = getDeAndNuHist(df, f"{offline} && nb>3", HLT_3btag, "jet_6pt", jet6ptBin, 'HLTAll_4b')
     
     de_HT_HH, nu_HT_HH = getDeAndNuHist(df, offline, HLT_HH, "HT", binning, 'HH')
+    de_jet6pt_HH, nu_jet6pt_HH = getDeAndNuHist(df, offline, HLT_HH, "jet_6pt", jet6ptBin, 'HH')
+    de_nb_HH, nu_nb_HH = getDeAndNuHist(df, offline, HLT_HH, "nb", nbBin, 'HH')
     
     
-    histList = [de_HT, nu_HT, de_jet6pt, nu_jet6pt, de_HT_2b, nu_HT_2b, de_HT_3b, nu_HT_3b, de_HT_4b, nu_HT_4b, de_jet6pt_2b, nu_jet6pt_2b, de_jet6pt_3b, nu_jet6pt_3b, de_jet6pt_4b, nu_jet6pt_4b, de_HT_HH, nu_HT_HH]
+    histList = [de_HT, nu_HT, de_jet6pt, nu_jet6pt, de_nb, nu_nb,  de_HT_2b, nu_HT_2b, de_HT_3b, nu_HT_3b, de_HT_4b, nu_HT_4b, de_jet6pt_2b, nu_jet6pt_2b, de_jet6pt_3b, nu_jet6pt_3b, de_jet6pt_4b, nu_jet6pt_4b, de_HT_HH, nu_HT_HH, de_jet6pt_HH, nu_jet6pt_HH, de_nb_HH, nu_nb_HH]
     writeToFile(histList ,outFile)                                                               
     
 def getDeAndNuHist(df, offline, HLT, variable, binning, namePost=''):

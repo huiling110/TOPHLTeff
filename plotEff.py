@@ -41,9 +41,8 @@ def main():
     effVsEras(effList)
 
 def effVsEras(inputList, HLT='HLTAll'):
-    # eff_2024D = ph.getEffFromFile(in2024D, ['de_HT_HLTAll', 'nu_HT_HLTAll'])
-    # eff_2024E = ph.getEffFromFile(in2024E, ['de_HT_HLTAll', 'nu_HT_HLTAll']) 
     
+    varList = ['HT', 'jet_6pt', 'nb']
     effList = []
     eraList = []
     for iEff in inputList:
@@ -56,8 +55,6 @@ def effVsEras(inputList, HLT='HLTAll'):
     # xmin, xmax = ph.getXrangeFromFile(in2024D, ['de_HT_HLTAll', 'nu_HT_HLTAll'])
     xmin = effList[0].GetTotalHistogram().GetXaxis().GetXmin()
     xmax = effList[0].GetTotalHistogram().GetXaxis().GetXmax()
-    # histList = [eff_2024D, eff_2024E]
-    # legendList = ['2024D', '2024E']
     outDir = getOutDir(inputList[0])
     
     plotName = outDir + 'HLTEff_HLTAll.png'
