@@ -159,3 +159,15 @@ def addTriggerInfo(ifHadronic=True):
     latex.SetTextAlign(31)
     latex.SetTextFont(42)
     latex.DrawLatex(0.65, 0.4, triggerText)
+    
+
+def getMyLegend(x1, x2, y1, y2):
+    legend = ROOT.TLegend(x1, x2, y1, y2)
+    legend.SetFillColor(0)  # transparent
+    legend.SetBorderSize(0)  # border size
+    # legend.SetTextSize(0.07)  # text size
+    legend.SetTextFont(42)  # font style
+    # legend.SetTextFont(82)  # font style
+    legend.SetFillColor(0)
+    legend.SetFillStyle(0) 
+    return legend

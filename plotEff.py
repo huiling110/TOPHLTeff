@@ -39,6 +39,8 @@ def main():
     # else:
     #     plotEffOverLayEle(in2023B, in2023C, in2023D, in2022)
     effVsEras(effList)
+    
+    # eff_HHVsAll(effList)
 
 def effVsEras(inputList, HLT='HLTAll'):
     
@@ -52,7 +54,6 @@ def effVsEras(inputList, HLT='HLTAll'):
         eraList.append(era)
     print(effList) 
     
-    # xmin, xmax = ph.getXrangeFromFile(in2024D, ['de_HT_HLTAll', 'nu_HT_HLTAll'])
     xmin = effList[0].GetTotalHistogram().GetXaxis().GetXmin()
     xmax = effList[0].GetTotalHistogram().GetXaxis().GetXmax()
     outDir = getOutDir(inputList[0])

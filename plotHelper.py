@@ -65,7 +65,7 @@ def getHistFromFile(fileName, histNames):
     
 
 
-def plotOverlay(histList, legenList, era, yTitle, plotName, xmin, xmax, yRange=[]):
+def plotOverlay(histList, legenList,   era , yTitle, plotName, xmin, xmax, yRange=[], legendPos=[0.7, 0.2, 0.9, 0.53],):
     print('start to plot overlay plot')
     mySty =  st.setMyStyle()
     mySty.cd()
@@ -73,8 +73,8 @@ def plotOverlay(histList, legenList, era, yTitle, plotName, xmin, xmax, yRange=[
     can = ROOT.TCanvas('overlay', 'overlay', 1000, 800)
     
     # legend = ROOT.TLegend(0.65, 0.8, 0.9, 0.93)  # Create a legend to label the histograms
-    legend = ROOT.TLegend(0.7, 0.2, 0.9, 0.53)  # Create a legend to label the histograms
-    
+    # legend = ROOT.TLegend(0.7, 0.2, 0.9, 0.53)  # Create a legend to label the histograms
+    legend = st.getMyLegend(legendPos[0], legendPos[1], legendPos[2], legendPos[3])
     #yMax = getYmax(histList)
     #plot style
     LineColorDic={
