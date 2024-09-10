@@ -8,13 +8,15 @@ triggerSwitchedMap = {
     '2024C': 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepJet_4p5',
     '2024D': 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3',
     '2024E': 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3',
+    '2024F': 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3',
+    '2024G': 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3',
 } 
 
-# def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023C/Muon0/NANOAOD/PromptNanoAODv12_v4-v1/60000/fdd8324d-a4f8-4286-945f-5528e7ae46e9.root', version = 'v0ForHadronic', ifForHadronic = True,   ifTest = False):
 # def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023D/Muon0/NANOAOD/PromptReco-v1/000/369/901/00000/3bdb0fca-4c12-4394-9812-509cb1d05cb7.root', version = 'v0ForHadronic', ifForHadronic = True,   ifTest = True):
 # def main(inputNano = 'root://cmsxrootd.fnal.gov//store/data/Run2023C/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v1/70000/61280236-03a6-4cf3-8008-6eca1d7236d0.root', version = 'v0ForHadronic', ifForHadronic = True,   ifTest = True):
-def main(inputNano = 'root://cmsxrootd.fnal.gov///store/data/Run2023B/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v2/60000/06d25571-df3e-4ceb-9e44-7452add3e004.root', outDir = './output/', ifForHadronic = True,   ifTest = True):
+def main(inputNano = '/store/data/Run2023B/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v2/60000/06d25571-df3e-4ceb-9e44-7452add3e004.root', outDir = './output/', ifForHadronic = True,   ifTest = True):
     # inputNano = 'root://cmsxrootd.fnal.gov/' +'/store/data/Run2023C/Muon0/NANOAOD/PromptNanoAODv12_v3-v1/2820000/e55c38a4-5776-4b0f-8190-39da36d63bca.root' 
+    inputNano = '/store/data/Run2024F/Muon0/NANOAOD/PromptReco-v1/000/383/367/00000/407206b5-4ab2-45e4-a40b-0d150ff3263a.root'
 
 
     inputNano = 'root://cmsxrootd.fnal.gov/'+ inputNano
@@ -97,7 +99,9 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
     if not os.path.exists(outDir):
         os.makedirs(outDir)
     
-    era = uf.getEra(inputNano)
+    # era = uf.getEra(inputNano)
+    era = uf.getEraNano(inputNano)
+    print('era: ', era)
        
     # List of branch names to keep
     branches_to_keep = [
@@ -296,7 +300,7 @@ if __name__=='__main__':
     args = process_arguments()
     #!!!need to update so that test and subjob is easy
     # main(args['arg1'], args['arg2'], args['arg3'], args['arg4'])
-    main(args['arg1'], args['arg2'], False, False) #ele
+    # main(args['arg1'], args['arg2'], False, False) #ele
     # main(args['arg1'], args['arg2'], True, False) #hadronic
-    # main(args['arg1'], args['arg2'], True, True) #test
+    main(args['arg1'], args['arg2'], True, True) #test
     # main(args['arg1'], args['arg2'], False, True) #test

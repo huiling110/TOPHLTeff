@@ -1,5 +1,6 @@
 import subprocess
 import os
+import re
 
 
 def getEra(inputDir):
@@ -20,7 +21,15 @@ def getEra(inputDir):
         era = '2024E'
     return era    
 
-# def getEraNano(nanoFile):
+def getEraNano(url):
+    match = re.search(r'Run(\d{4}[A-Z])', url)
+
+    if match:
+        era_string = match.group(1)
+        return era_string
+    else:
+        print("Era string not found")
+
     
     
 
