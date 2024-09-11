@@ -6,8 +6,8 @@ import skimNano as sn
 import usefulFunc as uf
 
 def main():
-    isTest = True
-    # isTest =False
+    # isTest = True
+    isTest =False
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023B/v1ForHadronic/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023C/v1ForHadronic/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2022/v1ForHadronic/'
@@ -19,7 +19,9 @@ def main():
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v2HadronicWithRdataframe/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024E/v2HadronicWithRdataframe/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024C/v2HadronicWithRdataframe/'
-    inputDir = '/eos/home-h/hhua/forTopHLT/2024F/v1ForHadronic/'
+    # inputDir = '/eos/home-h/hhua/forTopHLT/2024F/v1ForHadronic/'
+    inputDir = '/eos/user/h/hhua/forTopHLT/2024F/v1ForHadronic/'
+    #!what's the difference between /home-h and /user/h/hhua?
     isHadronic = True
     outVersion = 'v0ttHPhasephase'
     # offline = "HT>500. && nj>5 && nb>1 && HLT_IsoMu24==1"

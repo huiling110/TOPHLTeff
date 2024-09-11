@@ -16,16 +16,17 @@ def main():
     # inputList = 'input/Muon2024D.txt'
     # inputList = 'input/Muon2024D_all.txt'
     # inputList = 'input/Muon2024E.txt'
-    inputList = 'input/Muon2024F.txt'
-    # inputList = 'input/Muon2024G_partial.txt'
+    # inputList = 'input/Muon2024F.txt'
+    inputList = 'input/Muon2024G_partial.txt'
     # era = '2024DpreCalib'
     # era = '2024D'
     # era = '2024E'
-    era = '2024F'
-    # era = '2024G'
+    # era = '2024F'
+    era = '2024G'
     isVictor = False
     ifHardronic = True
-    jobVersion = 'v1ForHadronic'
+    # jobVersion = 'v1ForHadronic'
+    jobVersion = 'v1ForHadronic_partial'
     # jobVersion = 'v1ForEle'
     # jobVersion = 'v2HadronicWithRdataframe'
     # jobVersion = 'v1EleTTPhase'
@@ -55,7 +56,7 @@ def main():
     writeJob( jobDir+'singleJob.sh', inputList, outDir, ifHardronic)
     writeSub(jobDir +'subList.sub', jobDir, nanoFileNum)
     
-    # subHTCondor(jobDir+'subList.sub')  
+    subHTCondor(jobDir+'subList.sub')  
     
 # def makeOutDir(era, jobVersion):
 def makeOutDir(era, jobVersion, isVictor=False):

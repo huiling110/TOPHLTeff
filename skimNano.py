@@ -14,6 +14,8 @@ triggerSwitchedMap = {
 
 def main(inputNano = '/store/data/Run2023B/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v2/60000/06d25571-df3e-4ceb-9e44-7452add3e004.root', outDir = './output/', ifForHadronic = True,   ifTest = True):
     #!test default input files in parse_arguments()
+    print('inputNano: ', inputNano)
+    print('outDir: ', outDir, 'ifForHadronic: ', ifForHadronic, 'ifTest: ', ifTest)
     inputNano = 'root://cmsxrootd.fnal.gov/'+ inputNano
     preSel(inputNano,  outDir, ifForHadronic, ifTest)#faster run time with rDataFrame
     
@@ -150,8 +152,11 @@ def process_arguments():
     # Add arguments
     parser.add_argument('--input', type=str, default=input)
     parser.add_argument('--outDir', type=str, default='./output/')
-    parser.add_argument('--ifHardronic', type=bool, default=True)
-    parser.add_argument('--ifTest', type=bool, default=True)
+    # parser.add_argument('--ifHardronic', type=bool, default=True)
+    # parser.add_argument('--ifTest', type=bool, default=True)
+    parser.add_argument('--ifHardronic', type=str2bool, default=True, help='Boolean flag for hadronic')
+    parser.add_argument('--ifTest', type=str2bool, default=True, help='Boolean flag for test mode')
+
 
       # Parse the command-line arguments
     args = parser.parse_args()
@@ -166,6 +171,17 @@ def process_arguments():
 
     return arguments
 
+
+def str2bool(value):
+    """Convert a string representation of truth to true/false."""
+    if isinstance(value, bool):
+        return value
+    if value.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif value.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
 
 
 if __name__=='__main__':
