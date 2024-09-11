@@ -24,6 +24,7 @@ def main():
     era = '2024F'
     # era = '2024G'
     isVictor = False
+    ifHardronic = True
     jobVersion = 'v1ForHadronic'
     # jobVersion = 'v1ForEle'
     # jobVersion = 'v2HadronicWithRdataframe'
@@ -44,7 +45,6 @@ def main():
     name = getNameFromPath(inputList)
     uf.checkMakeDir(current_directory+ '/jobs/')
     print('jobVersion: ', name + jobVersion)
-    # jobDir = current_directory+ '/jobs/'+jobDir + '/' + jobVersion + '/'
     jobDir = current_directory+ '/jobs/'+name + '/' + jobVersion + '/'
     logDir = jobDir + 'logs/'
     uf.checkMakeDir(current_directory + '/jobs/' + name + '/')
@@ -52,14 +52,13 @@ def main():
     uf.checkMakeDir(logDir)
     print(jobDir)
     
-    writeJob( jobDir+'singleJob.sh', inputList, outDir)
+    writeJob( jobDir+'singleJob.sh', inputList, outDir, ifHardronic)
     writeSub(jobDir +'subList.sub', jobDir, nanoFileNum)
     
-    subHTCondor(jobDir+'subList.sub')  
+    # subHTCondor(jobDir+'subList.sub')  
     
 # def makeOutDir(era, jobVersion):
 def makeOutDir(era, jobVersion, isVictor=False):
-    #outBase = '/eos/user/h/hhua/forTopHLT/'
     outBase = '/eos/user/v/vshang/forTopHLT_05072024/' if isVictor else '/eos/user/h/hhua/forTopHLT/'
     outDir = outBase + era +'/'
     uf.checkMakeDir(outDir)
@@ -94,7 +93,8 @@ def getNameFromPath(file_path):
     return file_name_without_extension
     
 
-def writeJob( jobName, inFile, jobDir):
+# def writeJob( jobName, inFile, jobDir, ifHardronic=True):
+def writeJob( jobName, inFile, outDir, ifHardronic=True):
     current_script_path = os.path.abspath(__file__)
 
 # Get the directory containing the current script
@@ -105,7 +105,8 @@ def writeJob( jobName, inFile, jobDir):
         # 'lines=(`cat /afs/cern.ch/user/v/vshang/public/TOPHLTeff/{}`)'.format(inFile),
         f'lines=(`cat {current_script_dir}/{inFile}`)',
         'echo ${lines[$1]}',
-        'python3 skimNano.py --arg1 ${lines[$1]} ' + ' --arg2 {}  --arg3 True '.format(jobDir),
+        # 'python3 skimNano.py --arg1 ${lines[$1]} ' + ' --arg2 {}  --arg3 True '.format(jobDir),
+        f"python3 skimNano.py --input ${{lines[$1]}}   --outDir {outDir}  --ifHardronic {ifHardronic} --ifTest False",
 
     ]
     writeListToFile(lines, jobName)

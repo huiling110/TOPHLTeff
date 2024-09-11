@@ -1,5 +1,6 @@
 import ROOT
 import os
+import argparse
 
 import usefulFunc as uf
 
@@ -12,8 +13,7 @@ triggerSwitchedMap = {
 } 
 
 def main(inputNano = '/store/data/Run2023B/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v2/60000/06d25571-df3e-4ceb-9e44-7452add3e004.root', outDir = './output/', ifForHadronic = True,   ifTest = True):
-    # inputNano = 'root://cmsxrootd.fnal.gov/' +'/store/data/Run2023C/Muon0/NANOAOD/PromptNanoAODv12_v3-v1/2820000/e55c38a4-5776-4b0f-8190-39da36d63bca.root' 
-    # inputNano = '/store/data/Run2024F/Muon0/NANOAOD/PromptReco-v1/000/383/367/00000/407206b5-4ab2-45e4-a40b-0d150ff3263a.root'
+    #!test default input files in parse_arguments()
     inputNano = 'root://cmsxrootd.fnal.gov/'+ inputNano
     preSel(inputNano,  outDir, ifForHadronic, ifTest)#faster run time with rDataFrame
     
@@ -255,13 +255,49 @@ def jetSel(chain):
             HT=HT+chain.Jet_pt[Jet] 
     return jetNum, HT    
 
+def process_arguments():
+    # Create an ArgumentParser object
+    parser = argparse.ArgumentParser(description='Description of your script.')
+ 
+    # input = '/store/data/Run2023B/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v2/60000/06d25571-df3e-4ceb-9e44-7452add3e004.root'
+    # input = '/store/data/Run2022C/Muon/NANOAOD/PromptNanoAODv10-v1/40000/d4484006-7e4b-424e-86a4-346d17d862f8.root'
+    # input = '/store/data/Run2024E/Muon0/NANOAOD/PromptReco-v1/000/380/956/00000/8413549d-588b-46ff-9c53-b98b34faa7e7.root'
+    # input = '/store/data/Run2024D/Muon0/NANOAOD/PromptReco-v1/000/380/346/00000/3c839fb5-92c1-4140-a9ab-1efe2ad80a60.root'
+    # input = '/store/data/Run2024C/Muon1/NANOAOD/PromptReco-v1/000/380/195/00000/0567ac8a-b6c6-466e-b0da-0474f2bbeea6.root'
+    input = '/store/data/Run2024F/Muon0/NANOAOD/PromptReco-v1/000/383/367/00000/407206b5-4ab2-45e4-a40b-0d150ff3263a.root'
+    # Add arguments
+    # parser.add_argument('--arg1', type=str, default=input)
+    # parser.add_argument('--arg2', type=str, default='./output/')
+    # parser.add_argument('--arg3', type=bool, default=True)
+    # parser.add_argument('--arg4', type=bool, default=True)
+    parser.add_argument('--input', type=str, default=input)
+    parser.add_argument('--outDir', type=str, default='./output/')
+    parser.add_argument('--ifHardronic', type=bool, default=True)
+    parser.add_argument('--ifTest', type=bool, default=True)
+
+      # Parse the command-line arguments
+    args = parser.parse_args()
+
+    # Access the parsed arguments
+    arguments = {
+        'input': args.input,
+        'outDir': args.outDir,
+        'ifHardronic': args.ifHardronic,
+        'ifTest': args.ifTest
+    }
+
+    return arguments
+
 
 
 if __name__=='__main__':
-    args = uf.process_arguments()
+    args = process_arguments()
+    
+    main(args['input'], args['outDir'], args['ifHardronic'], args['ifTest'])
+
     #!!!need to update so that test and subjob is easy
     # main(args['arg1'], args['arg2'], args['arg3'], args['arg4'])
     # main(args['arg1'], args['arg2'], False, False) #ele
-    main(args['arg1'], args['arg2'], True, False) #hadronic
+    # main(args['arg1'], args['arg2'], True, False) #hadronic
     # main(args['arg1'], args['arg2'], True, True) #test
     # main(args['arg1'], args['arg2'], False, True) #test
