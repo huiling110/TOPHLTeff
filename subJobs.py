@@ -24,12 +24,11 @@ def main():
     # era = '2024F'
     era = '2024G'
     isVictor = False
-    ifHardronic = True
+    # ifHardronic = True
+    ifHardronic = False
     # jobVersion = 'v1ForHadronic'
-    jobVersion = 'v1ForHadronic_partial'
-    # jobVersion = 'v1ForEle'
-    # jobVersion = 'v2HadronicWithRdataframe'
-    # jobVersion = 'v1EleTTPhase'
+    # jobVersion = 'v1ForHadronic_partial'
+    jobVersion = 'v1EleTTPhase'
   
   
   

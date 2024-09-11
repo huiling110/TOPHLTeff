@@ -42,9 +42,15 @@ def main():
     # '/Muon1/Run2024F-PromptReco-v1/NANOAOD',
     
     #!2024G, not complete yet
-    '/Muon0/Run2024G-PromptReco-v1/NANOAOD',
-    '/Muon1/Run2024G-PromptReco-v1/NANOAOD',
+    # '/Muon0/Run2024G-PromptReco-v1/NANOAOD',
+    # '/Muon1/Run2024G-PromptReco-v1/NANOAOD',
     
+    # '/EGamma1/Run2024F-PromptReco-v1/NANOAOD',
+    # '/EGamma0/Run2024F-PromptReco-v1/NANOAOD',
+    '/EGamma1/Run2024G-PromptReco-v1/NANOAOD',
+    '/EGamma0/Run2024G-PromptReco-v1/NANOAOD',
+    
+# /EGamma1/Run2024G-PromptReco-v1/NANOAOD
     ]
     
     # outList = 'Muon2023B'
@@ -56,7 +62,9 @@ def main():
     # outList = 'Muon2024D_all'
     # outList = 'Muon2024E'
     # outList = 'Muon2024F'
-    outList = 'Muon2024G_partial'
+    # outList = 'Muon2024G_partial'
+    # outList = 'EGamma2024F'
+    outList = 'EGamma2024G_partial'
   
   
   

@@ -104,7 +104,13 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
     
     preSelect = 'nj>5 && HT>500. && nb>1'
     if not ifForHadronic:
-        preSelect = 'ne==1 && ele_1pt>16. && nj>2 && nb>1' #typical tt phase space
+        ifEleDataset = inputNano.find('EGamma')!=-1
+        print('ifEleDataset: ', ifEleDataset)
+        if not ifEleDataset:#for ele trigger
+            preSelect = 'ne==1 && ele_1pt>16. && nj>2 && nb>1' #typical tt phase space
+        else: 
+            preSelect = 'nm==1 && muon_1pt>14 && nj>2 && nb>1' #typical tt phase space
+        preSelect 
     df = df.Filter(preSelect)
     print('preselection: ', preSelect)
     
@@ -146,6 +152,11 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
     branches_to_keep.append('ele_1pt')
     branches_to_keep.append('ele_1eta')
     branches_to_keep.append('ele_1phi')
+    branches_to_keep.append('nm')
+    branches_to_keep.append('muon_1pt')
+    branches_to_keep.append('muon_1eta')
+    branches_to_keep.append('muon_1phi')
+    
     postFix = inputNano.rsplit("/", 1)[-1]
     df.Snapshot("Events", outDir+postFix, branches_to_keep)
     print('after selection: ', df.Count().GetValue())
