@@ -61,6 +61,18 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
         };
     """)
     
+    ROOT.gInterpreter.Declare("""
+                              auto muonSel = [](const ROOT::VecOps::RVec<float>& Muon_pt, const ROOT::VecOps::RVec<float>& Muon_eta, const ROOT::VecOps::RVec<float>& Muon_phi, const ROOT::VecOps::RVec<float>& Muon_mass,  const ROOT::VecOps::RVec<bool>& Muon_tightId, const ROOT::VecOps::RVec<float>& Muon_pfRelIso04_all) {
+        std::vector<ROOT::Math::PtEtaPhiMVector> selectedMuons;
+            for (int i = 0; i < Muon_pt.size(); i++) {
+                if (!(Muon_pt[i] > 10. && abs(Muon_eta[i]) < 2.4 && Muon_tightId[i] && Muon_pfRelIso04_all[i] < 0.15)) continue;
+                selectedMuons.emplace_back(Muon_pt[i], Muon_eta[i], Muon_phi[i], Muon_mass[i]);
+            }
+            return selectedMuons;
+        };
+    """)
+   
+    
     print('input: ', inputNano) 
     df = ROOT.RDataFrame("Events", inputNano)
     # print(df.GetColumnNames())  
@@ -82,6 +94,12 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
     df = df.Define('ele_1pt', 'ne>0 ? selectedElectrons[0].Pt() : -1')
     df = df.Define('ele_1eta', 'ne>0 ? selectedElectrons[0].Eta() : -1')
     df = df.Define('ele_1phi', 'ne>0 ? selectedElectrons[0].Phi() : -1')
+    
+    df = df.Define('selectedMuons', 'muonSel(Muon_pt, Muon_eta, Muon_phi, Muon_mass, Muon_tightId, Muon_pfRelIso04_all)')
+    df = df.Define('nm', '(int)selectedMuons.size()')
+    df = df.Define('muon_1pt', 'nm>0 ? selectedMuons[0].Pt() : -1')
+    df = df.Define('muon_1eta', 'nm>0 ? selectedMuons[0].Eta() : -1')
+    df = df.Define('muon_1phi', 'nm>0 ? selectedMuons[0].Phi() : -1')
 
     
     preSelect = 'nj>5 && HT>500. && nb>1'
