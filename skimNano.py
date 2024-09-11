@@ -177,7 +177,8 @@ def process_arguments():
     # input = '/store/data/Run2024E/Muon0/NANOAOD/PromptReco-v1/000/380/956/00000/8413549d-588b-46ff-9c53-b98b34faa7e7.root'
     # input = '/store/data/Run2024D/Muon0/NANOAOD/PromptReco-v1/000/380/346/00000/3c839fb5-92c1-4140-a9ab-1efe2ad80a60.root'
     # input = '/store/data/Run2024C/Muon1/NANOAOD/PromptReco-v1/000/380/195/00000/0567ac8a-b6c6-466e-b0da-0474f2bbeea6.root'
-    input = '/store/data/Run2024F/Muon0/NANOAOD/PromptReco-v1/000/383/367/00000/407206b5-4ab2-45e4-a40b-0d150ff3263a.root'
+    # input = '/store/data/Run2024F/Muon0/NANOAOD/PromptReco-v1/000/383/367/00000/407206b5-4ab2-45e4-a40b-0d150ff3263a.root'
+    input = '/store/data/Run2024F/EGamma1/NANOAOD/PromptReco-v1/000/382/165/00000/f5235ff3-bb75-4c73-8c6a-d1b1b5fcdf39.root'
     # Add arguments
     parser.add_argument('--input', type=str, default=input)
     parser.add_argument('--outDir', type=str, default='./output/')
