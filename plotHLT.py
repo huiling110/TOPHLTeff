@@ -6,8 +6,8 @@ import skimNano as sn
 import usefulFunc as uf
 
 def main():
-    # isTest = True
-    isTest =False
+    isTest = True
+    # isTest =False
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023B/v1ForHadronic/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023C/v1ForHadronic/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2022/v1ForHadronic/'
@@ -19,10 +19,11 @@ def main():
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v2HadronicWithRdataframe/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024E/v2HadronicWithRdataframe/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024C/v2HadronicWithRdataframe/'
-    # isHadronic = True
-    # outVersion = 'v0ttHPhasephase'
+    inputDir = '/eos/home-h/hhua/forTopHLT/2024F/v1ForHadronic/'
+    isHadronic = True
+    outVersion = 'v0ttHPhasephase'
     # offline = "HT>500. && nj>5 && nb>1 && HLT_IsoMu24==1"
-    # offline = "HT>500. && nj>5 && nb>1 && HLT_IsoMu24==1 && jet_6pt>40." #ttH phase space
+    offline = "HT>500. && nj>5 && nb>1 && HLT_IsoMu24==1 && jet_6pt>40." #ttH phase space
     
     # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023B/v1ForEle/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023C/v1ForEle/'
@@ -33,14 +34,17 @@ def main():
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023D/v1ForEle/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2022/v1ForEle/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v1EleTTPhase/'
-    inputDir = '/eos/home-h/hhua/forTopHLT/2024E/v1EleTTPhase/'
+    # inputDir = '/eos/home-h/hhua/forTopHLT/2024E/v1EleTTPhase/'
     # outVersion = 'v0tt'
-    outVersion = 'v1ttAndHT200'
-    isHadronic = False
-    offline = 'ne==1 && ele_1pt>16. && nj>2 && nb>1 && HLT_IsoMu24==1'#ttbar phase space 
-    offline = f"{offline} && HT>200."
+    # outVersion = 'v1ttAndHT200'
+    # isHadronic = False
+    # offline = 'ne==1 && ele_1pt>16. && nj>2 && nb>1 && HLT_IsoMu24==1'#ttbar phase space 
+    # offline = f"{offline} && HT>200."
    
-    era = uf.getEra(inputDir) 
+    # era = uf.getEra(inputDir) 
+    # era = uf.getEraNano(inputDir)
+    era = uf.extract_era_from_path(inputDir)
+    print('era: ', era)
     outFile = makeOutFile(inputDir, isTest, outVersion) 
     if isHadronic:
         HLTHistFill(inputDir, outFile, isHadronic, isTest, era,  offline)#!using rDataframe for fasting processing

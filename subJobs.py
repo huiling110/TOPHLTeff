@@ -15,15 +15,19 @@ def main():
     # era = '2024C'
     # inputList = 'input/Muon2024D.txt'
     # inputList = 'input/Muon2024D_all.txt'
-    inputList = 'input/Muon2024E.txt'
+    # inputList = 'input/Muon2024E.txt'
+    inputList = 'input/Muon2024F.txt'
+    # inputList = 'input/Muon2024G_partial.txt'
     # era = '2024DpreCalib'
     # era = '2024D'
-    era = '2024E'
+    # era = '2024E'
+    era = '2024F'
+    # era = '2024G'
     isVictor = False
-    # jobVersion = 'v1ForHadronic'
+    jobVersion = 'v1ForHadronic'
     # jobVersion = 'v1ForEle'
     # jobVersion = 'v2HadronicWithRdataframe'
-    jobVersion = 'v1EleTTPhase'
+    # jobVersion = 'v1EleTTPhase'
   
   
   
