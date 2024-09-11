@@ -20,7 +20,8 @@ def main():
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024E/v2HadronicWithRdataframe/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024C/v2HadronicWithRdataframe/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024F/v1ForHadronic/'
-    inputDir = '/eos/user/h/hhua/forTopHLT/2024F/v1ForHadronic/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2024F/v1ForHadronic/'
+    inputDir = '/eos/user/h/hhua/forTopHLT/2024G/v1ForHadronic_partial/'
     #!what's the difference between /home-h and /user/h/hhua?
     isHadronic = True
     outVersion = 'v0ttHPhasephase'

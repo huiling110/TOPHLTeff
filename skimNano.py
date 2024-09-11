@@ -186,12 +186,5 @@ def str2bool(value):
 
 if __name__=='__main__':
     args = process_arguments()
-    
     main(args['input'], args['outDir'], args['ifHardronic'], args['ifTest'])
 
-    #!!!need to update so that test and subjob is easy
-    # main(args['arg1'], args['arg2'], args['arg3'], args['arg4'])
-    # main(args['arg1'], args['arg2'], False, False) #ele
-    # main(args['arg1'], args['arg2'], True, False) #hadronic
-    # main(args['arg1'], args['arg2'], True, True) #test
-    # main(args['arg1'], args['arg2'], False, True) #test
