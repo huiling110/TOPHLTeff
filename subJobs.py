@@ -17,7 +17,8 @@ def main():
     # inputList = 'input/Muon2024D_all.txt'
     # inputList = 'input/Muon2024E.txt'
     # inputList = 'input/Muon2024F.txt'
-    inputList = 'input/Muon2024G_partial.txt'
+    # inputList = 'input/Muon2024G_partial.txt'
+    inputList = 'input/EGamma2024G_partial.txt'
     # era = '2024DpreCalib'
     # era = '2024D'
     # era = '2024E'
@@ -28,7 +29,13 @@ def main():
     ifHardronic = False
     # jobVersion = 'v1ForHadronic'
     # jobVersion = 'v1ForHadronic_partial'
-    jobVersion = 'v1EleTTPhase'
+    # jobVersion = 'v1EleTTPhase' #for eletron HLT efficiency measurement
+    jobVersion = 'v1MuonTTPhase'
+    
+    
+    
+    # era = uf.extract_era_from_path(inputList)#!not sure why this doesn't work
+    # print('era: ', era)
   
   
   
@@ -46,7 +53,7 @@ def main():
     uf.checkMakeDir(current_directory+ '/jobs/')
     print('jobVersion: ', name + jobVersion)
     jobDir = current_directory+ '/jobs/'+name + '/' + jobVersion + '/'
-    logDir = jobDir + 'logs/'
+    logDir = jobDir + 'logs/'#!logs can not be written to /eos
     uf.checkMakeDir(current_directory + '/jobs/' + name + '/')
     uf.checkMakeDir(jobDir)
     uf.checkMakeDir(logDir)

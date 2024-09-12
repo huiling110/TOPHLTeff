@@ -12,6 +12,7 @@ triggerSwitchedMap = {
     '2024G': 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3',
 } 
 
+# def main(inputNano = '/store/data/Run2023B/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v2/60000/06d25571-df3e-4ceb-9e44-7452add3e004.root', outDir = './output/', ifForHadronic = True,   ifTest = True):
 def main(inputNano = '/store/data/Run2023B/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v2/60000/06d25571-df3e-4ceb-9e44-7452add3e004.root', outDir = './output/', ifForHadronic = True,   ifTest = True):
     #!test default input files in parse_arguments()
     print('inputNano: ', inputNano)
@@ -80,7 +81,7 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
     if ifTest:
         df = df.Range(10000)
    
-    df = df.Filter('HLT_IsoMu24==1')
+    # df = df.Filter('HLT_IsoMu24==1')#!can not have this for muon trigger
     
     df = df.Define('selectedJets', 'jetSelNew(Jet_pt, Jet_eta, Jet_phi, Jet_mass,  Jet_btagPNetB, kFALSE )')
     df = df.Define('selectedBjets', 'jetSelNew(Jet_pt, Jet_eta, Jet_phi, Jet_mass, Jet_btagPNetB, kTRUE )')

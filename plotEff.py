@@ -5,10 +5,6 @@ import usefulFunc as uf
 
 
 def main():
-    # in2023B = '/eos/user/v/vshang/forTopHLT_11052023/2023B/v1ForHadronic/result/eff.root' 
-    # in2023C = '/eos/user/v/vshang/forTopHLT_11052023/2023C/v1ForHadronic/result/eff.root' 
-    # in2022 = '/eos/user/v/vshang/forTopHLT_11052023/2022/v1ForHadronic/result/eff.root'
-    # in2023D = '/eos/user/v/vshang/forTopHLT_05072024/2023D/v1ForHadronic/result/eff.root'
     # in2024C = '/eos/user/v/vshang/forTopHLT_05072024/2024C/v1ForHadronic/result/eff.root'
     # in2023D = '/eos/user/v/vshang/forTopHLT_05072024/2024DpreCalib/v1ForHadronic/result/eff.root'
     # in2024C = '/eos/user/v/vshang/forTopHLT_05072024/2024DpostCalib/v1ForHadronic/result/eff.root'
@@ -16,34 +12,31 @@ def main():
     # in2024E = '/eos/home-h/hhua/forTopHLT/2024E/v2HadronicWithRdataframe/result/eff.root'
     # in2024C = '/eos/home-h/hhua/forTopHLT/2024C/v2HadronicWithRdataframe/result/eff.root'
     # ifHadronic =True
-    effList = [
-    #     '/eos/home-h/hhua/forTopHLT/2024C/v2HadronicWithRdataframe/result/v0ttHPhasephase/eff.root',
-    #     '/eos/home-h/hhua/forTopHLT/2024D/v2HadronicWithRdataframe/result/v0ttHPhasephase/eff.root',
-    #     '/eos/home-h/hhua/forTopHLT/2024E/v2HadronicWithRdataframe/result/v0ttHPhasephase/eff.root',
-            '/eos/user/h/hhua/forTopHLT/2024F/v1ForHadronic/result/v0ttHPhasephase/eff.root',
-           '/eos/user/h/hhua/forTopHLT/2024G/v1ForHadronic_partial/result/v0ttHPhasephase/eff.root', 
-    ]
-    # HLT = 'HLTAll'
-    HLT = 'HH'
-    
-    
     # effList = [
+    # #     '/eos/home-h/hhua/forTopHLT/2024C/v2HadronicWithRdataframe/result/v0ttHPhasephase/eff.root',
+    # #     '/eos/home-h/hhua/forTopHLT/2024D/v2HadronicWithRdataframe/result/v0ttHPhasephase/eff.root',
+    # #     '/eos/home-h/hhua/forTopHLT/2024E/v2HadronicWithRdataframe/result/v0ttHPhasephase/eff.root',
+    #         '/eos/user/h/hhua/forTopHLT/2024F/v1ForHadronic/result/v0ttHPhasephase/eff.root',
+    #        '/eos/user/h/hhua/forTopHLT/2024G/v1ForHadronic_partial/result/v0ttHPhasephase/eff.root', 
+    # ]
+    # # HLT = 'HLTAll'
+    # HLT = 'HH'
+    
+    
+    effList = [
     #     # '/eos/home-h/hhua/forTopHLT/2024D/v1EleTTPhase/result/v0tt/eff.root',
     #     # '/eos/home-h/hhua/forTopHLT/2024E/v1EleTTPhase/result/v0tt/eff.root',
     #     '/eos/home-h/hhua/forTopHLT/2024D/v1EleTTPhase/result/v1ttAndHT200/eff.root',
     #     '/eos/home-h/hhua/forTopHLT/2024E/v1EleTTPhase/result/v1ttAndHT200/eff.root',
-    # ]
-    # ifHadronic = False
+        '/eos/user/h/hhua/forTopHLT/2024F/v1EleTTPhase/result/v1ttAndHT200/eff.root',
+        '/eos/user/h/hhua/forTopHLT/2024G/v1EleTTPhase/result/v1ttAndHT200/eff.root',
+    ]
+    # ifHadronic = False 
+    # HLT = 'HLTbothEle'
+    HLT = 'HLTcrossEle'
     
-    # in2023B = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023B/v1ForEle/result/eff.root' 
-    # in2023C = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023C/v1ForEle/result/eff.root' 
-    # in2023D = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023D/v1ForEle/result/eff.root' 
-    # in2022 = '/eos/user/v/vshang/forTopHLT_12192023BPix/2022/v1ForEle/result/eff.root'
-    # in2023B = '/eos/user/v/vshang/forTopHLT_11052023/2023B/v1ForEle/result/eff.root' 
-    # in2023C = '/eos/user/v/vshang/forTopHLT_11052023/2023C/v1ForEle/result/eff.root' 
-    # in2023D = '/eos/user/v/vshang/forTopHLT_11052023/2023D/v1ForEle/result/eff.root' 
-    # in2022 = '/eos/user/v/vshang/forTopHLT_11052023/2022/v1ForEle/result/eff.root' 
-    # ifHadronic = False
+    
+    
     
     # era = uf.getEra(in2023B)
     # if ifHadronic:
@@ -51,6 +44,7 @@ def main():
     # else:
     #     plotEffOverLayEle(in2023B, in2023C, in2023D, in2022)
     # effVsEras(effList, ifHadronic)
+    
     effVsEras(effList, HLT)
     
     # eff_HHVsAll(effList[2])

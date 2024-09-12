@@ -21,13 +21,14 @@ def main():
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024C/v2HadronicWithRdataframe/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024F/v1ForHadronic/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/2024F/v1ForHadronic/'
-    inputDir = '/eos/user/h/hhua/forTopHLT/2024G/v1ForHadronic_partial/'
-    #!what's the difference between /home-h and /user/h/hhua?
-    isHadronic = True
-    outVersion = 'v0ttHPhasephase'
-    # offline = "HT>500. && nj>5 && nb>1 && HLT_IsoMu24==1"
-    offline = "HT>500. && nj>5 && nb>1 && HLT_IsoMu24==1 && jet_6pt>40." #ttH phase space
-    
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2024G/v1ForHadronic_partial/'
+    # #!what's the difference between /home-h and /user/h/hhua?
+    # isHadronic = True
+    # outVersion = 'v0ttHPhasephase'
+    # # offline = "HT>500. && nj>5 && nb>1 && HLT_IsoMu24==1"
+    # offline = "HT>500. && nj>5 && nb>1 && HLT_IsoMu24==1 && jet_6pt>40." #ttH phase space
+   
+    #for electron HLT efficiency measurement
     # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023B/v1ForEle/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023C/v1ForEle/'
     # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023D/v1ForEle/'
@@ -38,11 +39,15 @@ def main():
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2022/v1ForEle/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v1EleTTPhase/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024E/v1EleTTPhase/'
+    inputDir = '/eos/user/h/hhua/forTopHLT/2024F/v1EleTTPhase/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2024G/v1EleTTPhase/'
     # outVersion = 'v0tt'
-    # outVersion = 'v1ttAndHT200'
-    # isHadronic = False
-    # offline = 'ne==1 && ele_1pt>16. && nj>2 && nb>1 && HLT_IsoMu24==1'#ttbar phase space 
-    # offline = f"{offline} && HT>200."
+    outVersion = 'v1ttAndHT200'
+    isHadronic = False
+    offline = 'ne==1 && ele_1pt>16. && nj>2 && nb>1 && HLT_IsoMu24==1'#ttbar phase space 
+    offline = f"{offline} && HT>200."
+  
+    #for muon HLT efficiency measurement
    
     # era = uf.getEra(inputDir) 
     # era = uf.getEraNano(inputDir)
