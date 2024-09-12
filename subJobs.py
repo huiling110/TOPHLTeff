@@ -18,12 +18,13 @@ def main():
     # inputList = 'input/Muon2024E.txt'
     # inputList = 'input/Muon2024F.txt'
     # inputList = 'input/Muon2024G_partial.txt'
-    inputList = 'input/EGamma2024G_partial.txt'
+    # inputList = 'input/EGamma2024G_partial.txt'
+    inputList = 'input/EGamma2024F.txt'
     # era = '2024DpreCalib'
     # era = '2024D'
     # era = '2024E'
-    # era = '2024F'
-    era = '2024G'
+    era = '2024F'
+    # era = '2024G'
     isVictor = False
     # ifHardronic = True
     ifHardronic = False

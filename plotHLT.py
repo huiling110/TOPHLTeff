@@ -39,15 +39,19 @@ def main():
     # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2022/v1ForEle/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v1EleTTPhase/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024E/v1EleTTPhase/'
-    inputDir = '/eos/user/h/hhua/forTopHLT/2024F/v1EleTTPhase/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2024F/v1EleTTPhase/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/2024G/v1EleTTPhase/'
     # outVersion = 'v0tt'
     outVersion = 'v1ttAndHT200'
     isHadronic = False
-    offline = 'ne==1 && ele_1pt>16. && nj>2 && nb>1 && HLT_IsoMu24==1'#ttbar phase space 
-    offline = f"{offline} && HT>200."
+    # offline = 'ne==1 && ele_1pt>16. && nj>2 && nb>1 && HLT_IsoMu24==1'#ttbar phase space 
+    # offline = f"{offline} && HT>200."
   
     #for muon HLT efficiency measurement
+    inputDir = '/eos/user/h/hhua/forTopHLT/2024F/v1MuonTTPhase/'
+    offline = 'nm==1 && muon_1pt>14. && nj>2 && nb>1 && HLT_Ele30_WPTight_Gsf==1'#ttbar phase space
+    offline = f"{offline} && HT>200."
+    ifMuonHLT = True
    
     # era = uf.getEra(inputDir) 
     # era = uf.getEraNano(inputDir)
@@ -57,36 +61,42 @@ def main():
     if isHadronic:
         HLTHistFill(inputDir, outFile, isHadronic, isTest, era,  offline)#!using rDataframe for fasting processing
     else:
-        HLTHistFill_ele(inputDir, outFile, isTest, era, offline)
+        HLTHistFill_ele(inputDir, outFile, isTest, era, offline, ifMuonHLT)
    
     # oldEventLoopSel(inputDir, outFile) # put old event loop here
 
-def HLTHistFill_ele(inputDir, outFile, isTest, era, offline):
+def HLTHistFill_ele(inputDir, outFile, isTest, era, offline, ifMuonHLT=False):
     df = ROOT.RDataFrame('Events', inputDir+'*.root')
     print('inputDir: ', inputDir)
     print('initial entries: ', df.Count().GetValue())
     
     singleEle = 'HLT_Ele30_WPTight_Gsf'
     eleCross = 'HLT_Ele14_eta2p5_IsoVVVL_Gsf_PFHT200_PNetBTag0p53'
-    
-    # offline = 'ne==1 && ele_1pt>16. && nj>2 && nb>1'
-    # offline = f"{offline} && HLT_IsoMu24==1"
+    offlineLep = 'ele'
+    lepName = 'e'
+    HLTName = 'Ele'
+    if ifMuonHLT:
+        singleEle = 'HLT_IsoMu24'
+        eleCross = 'HLT_Mu12_IsoVVL_PFHT150_PNetBTag0p53' 
+        offlineLep = 'muon' 
+        lepName = '#mu'
+        HLTName = 'Mu'
     
     ptBin = np.array((0., 16, 20, 25, 30, 35, 45, 300))
-    de_ele1pt, nu_ele1pt = getDeAndNuHist(df, offline, singleEle, "ele_1pt", 'p_{T}^{1st e}(GeV)', ptBin, 'HLTsingleEle')
-    de_ele1ptCross, nu_ele1ptCross = getDeAndNuHist(df, offline, eleCross, "ele_1pt", 'p_{T}^{1st e}(GeV)', ptBin, 'HLTcrossEle')
-    de_ele1pt_both, nu_ele1pt_both = getDeAndNuHist(df, offline, f"{singleEle}||{eleCross}", "ele_1pt", 'p_{T}^{1st e}(GeV)', ptBin, 'HLTbothEle')
+    de_ele1pt, nu_ele1pt = getDeAndNuHist(df, offline, singleEle, f"{offlineLep}_1pt", 'p_{T}^{1st lep}(GeV)', ptBin, f'HLTsingle{HLTName}')
+    de_ele1ptCross, nu_ele1ptCross = getDeAndNuHist(df, offline, eleCross, f"{offlineLep}_1pt", 'p_{T}^{1st lep}(GeV)', ptBin, f'HLTcross{HLTName}')
+    de_ele1pt_both, nu_ele1pt_both = getDeAndNuHist(df, offline, f"{singleEle}||{eleCross}", f"{offlineLep}_1pt", 'p_{T}^{1st lep}(GeV)', ptBin, 'HLTbothEle')
     
     etaBin = np.array((-2.5, -2.2, -1.8, -1.4, -1.0, -0.6, 0.6, 1.0, 1.4, 1.8, 2.2, 2.5)) 
-    de_ele1etaCross, nu_ele1etaCross = getDeAndNuHist(df, offline, eleCross, "ele_1eta", '#eta^{1st e}', etaBin, 'HLTcrossEle')
-    de_ele1eta_single, nu_ele1eta_single = getDeAndNuHist(df, offline, singleEle, "ele_1eta", '#eta^{1st e}', etaBin, 'HLTsingleEle')
-    de_ele1eta_both, nu_ele1eta_both = getDeAndNuHist(df, offline, f"{singleEle}||{eleCross}", "ele_1eta", '#eta^{1st e}', etaBin, 'HLTbothEle')
+    de_ele1etaCross, nu_ele1etaCross = getDeAndNuHist(df, offline, eleCross, f"{offlineLep}_1eta", '#eta^{1st lep}', etaBin, f'HLTcross{HLTName}')
+    de_ele1eta_single, nu_ele1eta_single = getDeAndNuHist(df, offline, singleEle, f"{offlineLep}_1eta", '#eta^{1st lep}', etaBin, f'HLTsingle{HLTName}')
+    de_ele1eta_both, nu_ele1eta_both = getDeAndNuHist(df, offline, f"{singleEle}||{eleCross}", f"{offlineLep}_1eta", '#eta^{1st lep}', etaBin, f'HLTboth{HLTName}')
     
     # HTBin = np.array((0., 50, 100, 150, 200, 250, 350, 1000))
     HTBin = np.array((0., 100, 125, 150, 175, 200, 225, 250, 300, 350, 400, 500, 1000))
-    de_HT, nu_HT = getDeAndNuHist(df, offline, singleEle, "HT", 'HT(GeV)', HTBin, 'HLTsingleEle')
-    de_HTCross, nu_HTCross = getDeAndNuHist(df, offline, eleCross, "HT", 'HT(GeV)', HTBin, 'HLTcrossEle')
-    de_HT_both, nu_HT_both = getDeAndNuHist(df, offline, f"{singleEle}||{eleCross}", "HT", 'HT(GeV)', HTBin, 'HLTbothEle') 
+    de_HT, nu_HT = getDeAndNuHist(df, offline, singleEle, "HT", 'HT(GeV)', HTBin, f'HLTsingle{HLTName}')
+    de_HTCross, nu_HTCross = getDeAndNuHist(df, offline, eleCross, "HT", 'HT(GeV)', HTBin, f'HLTcross{HLTName}')
+    de_HT_both, nu_HT_both = getDeAndNuHist(df, offline, f"{singleEle}||{eleCross}", "HT", 'HT(GeV)', HTBin, f'HLTboth{HLTName}')
     
     histList = [de_ele1pt, nu_ele1pt, de_ele1ptCross, nu_ele1ptCross, de_ele1pt_both, nu_ele1pt_both, de_ele1etaCross, nu_ele1etaCross, de_HT, nu_HT, de_HTCross, nu_HTCross, de_HT_both, nu_HT_both, de_ele1eta_single, nu_ele1eta_single, de_ele1eta_both, nu_ele1eta_both]
     writeToFile(histList ,outFile)
