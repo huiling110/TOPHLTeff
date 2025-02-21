@@ -41,7 +41,6 @@ def main():
     # '/Muon0/Run2024F-PromptReco-v1/NANOAOD',
     # '/Muon1/Run2024F-PromptReco-v1/NANOAOD',
     
-    #!2024G, not complete yet
     # '/Muon0/Run2024G-PromptReco-v1/NANOAOD',
     # '/Muon1/Run2024G-PromptReco-v1/NANOAOD',
     # '/Muon1/Run2024H-PromptReco-v1/NANOAOD',
@@ -55,6 +54,20 @@ def main():
     # '/EGamma0/Run2024F-PromptReco-v1/NANOAOD',
     # '/EGamma1/Run2024G-PromptReco-v1/NANOAOD',
     # '/EGamma0/Run2024G-PromptReco-v1/NANOAOD',
+    # '/EGamma0/Run2024H-PromptReco-v1/NANOAOD',
+    # '/EGamma1/Run2024H-PromptReco-v1/NANOAOD',
+    # '/EGamma0/Run2024I-PromptReco-v1/NANOAOD',
+    # '/EGamma0/Run2024I-PromptReco-v2/NANOAOD',
+    # '/EGamma1/Run2024I-PromptReco-v1/NANOAOD',
+    # '/EGamma1/Run2024I-PromptReco-v2/NANOAOD',
+    # '/EGamma0/Run2024E-PromptReco-v1/NANOAOD',
+    # '/EGamma1/Run2024E-PromptReco-v1/NANOAOD',
+    # '/EGamma0/Run2024E-PromptReco-v2/NANOAOD',
+    # '/EGamma1/Run2024E-PromptReco-v2/NANOAOD',
+    '/EGamma0/Run2024D-PromptReco-v1/NANOAOD',
+    '/EGamma1/Run2024D-PromptReco-v1/NANOAOD',
+    '/EGamma0/Run2024D-PromptReco-v2/NANOAOD',
+    '/EGamma1/Run2024D-PromptReco-v2/NANOAOD',
     
 # /EGamma1/Run2024G-PromptReco-v1/NANOAOD
     ]
@@ -74,6 +87,11 @@ def main():
     # outList = 'Muon2024G'
     # outList = 'Muon2024H'
     # outList = 'Muon2024I'
+    # outList = 'EGamma2024G'
+    # outList = 'EGamma2024H'
+    # outList = 'EGamma2024I'
+    # outList = 'EGamma2024E'
+    outList = 'EGamma2024D'
   
   
   

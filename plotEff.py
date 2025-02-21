@@ -9,46 +9,57 @@ def main():
     # in2024E = '/eos/home-h/hhua/forTopHLT/2024E/v2HadronicWithRdataframe/result/eff.root'
     # in2024C = '/eos/home-h/hhua/forTopHLT/2024C/v2HadronicWithRdataframe/result/eff.root'
     # ifHadronic =True
-    effList = [
+    # effList = [
     # #     '/eos/home-h/hhua/forTopHLT/2024C/v2HadronicWithRdataframe/result/v0ttHPhasephase/eff.root',
     # #     '/eos/home-h/hhua/forTopHLT/2024D/v2HadronicWithRdataframe/result/v0ttHPhasephase/eff.root',
     # #     '/eos/home-h/hhua/forTopHLT/2024E/v2HadronicWithRdataframe/result/v0ttHPhasephase/eff.root',
     #         '/eos/user/h/hhua/forTopHLT/2024F/v1ForHadronic/result/v0ttHPhasephase/eff.root',
-           '/eos/user/h/hhua/forTopHLT/2024D/v1ForHadronicV2/result/v0ttHPhasephase/eff.root',
-           '/eos/user/h/hhua/forTopHLT/2024E/v1ForHadronicV2/result/v0ttHPhasephase/eff.root',
-           '/eos/user/h/hhua/forTopHLT/2024F/v1ForHadronicV2/result/v0ttHPhasephase/eff.root',
-           '/eos/user/h/hhua/forTopHLT/2024G/v1ForHadronic/result/v0ttHPhasephase/eff.root', 
-           '/eos/user/h/hhua/forTopHLT/2024H/v1ForHadronic/result/v0ttHPhasephase/eff.root', 
-           '/eos/user/h/hhua/forTopHLT/2024I/v1ForHadronic/result/v0ttHPhasephase/eff.root', 
+        #    '/eos/user/h/hhua/forTopHLT/2024C/v1ForHadronicV2/result/v0ttHPhasephase/eff.root',
+        #    '/eos/user/h/hhua/forTopHLT/2024D/v1ForHadronicV2/result/v0ttHPhasephase/eff.root',
+        #    '/eos/user/h/hhua/forTopHLT/2024E/v1ForHadronicV2/result/v0ttHPhasephase/eff.root',
+        #    '/eos/user/h/hhua/forTopHLT/2024F/v1ForHadronicV2/result/v0ttHPhasephase/eff.root',
+        #    '/eos/user/h/hhua/forTopHLT/2024G/v1ForHadronic/result/v0ttHPhasephase/eff.root', 
+        #    '/eos/user/h/hhua/forTopHLT/2024H/v1ForHadronic/result/v0ttHPhasephase/eff.root', 
+        #    '/eos/user/h/hhua/forTopHLT/2024I/v1ForHadronic/result/v0ttHPhasephase/eff.root', 
         # '/eos/user/h/hhua/forTopHLT/2024G/v1ForHadronic_partial/result/v0ttHPhasephase_preMD3/eff.root',
         # '/eos/user/h/hhua/forTopHLT/2024G/v1ForHadronic_partial/result/v0ttHPhasephase_postMD3/eff.root',
-    ]
-    HLT = 'HLTAll'
+    # ]
+    # HLT = 'HLTAll'
     # HLT = 'HH'
     legendList = []#empty list will use the era as legend
-    # legendList = ['2024D', '2024E', '2024F', '2024G', '2024H', '2024I']
     
     
-    # effList = [
+    effList = [
     #     # '/eos/home-h/hhua/forTopHLT/2024D/v1EleTTPhase/result/v0tt/eff.root',
     #     # '/eos/home-h/hhua/forTopHLT/2024E/v1EleTTPhase/result/v0tt/eff.root',
-    #     '/eos/home-h/hhua/forTopHLT/2024D/v1EleTTPhase/result/v1ttAndHT200/eff.root',
-    #     '/eos/home-h/hhua/forTopHLT/2024E/v1EleTTPhase/result/v1ttAndHT200/eff.root',
+        # '/eos/home-h/hhua/forTopHLT/2024D/v1EleTTPhase/result/v1ttAndHT200/eff.root',
+        # '/eos/home-h/hhua/forTopHLT/2024E/v1EleTTPhase/result/v1ttAndHT200/eff.root',
         # '/eos/user/h/hhua/forTopHLT/2024F/v1EleTTPhase/result/v1ttAndHT200/eff.root',
         # '/eos/user/h/hhua/forTopHLT/2024G/v1EleTTPhase/result/v1ttAndHT200/eff.root',
         # '/eos/user/h/hhua/forTopHLT/2024F/v1MuonTTPhase/result/v1ttAndHT200/eff.root',
         # '/eos/user/h/hhua/forTopHLT/2024G/v1EleTTPhase/result/v1ttAndHT200_preMD3/eff.root',
         # '/eos/user/h/hhua/forTopHLT/2024G/v1EleTTPhase/result/v1ttAndHT200_postMD3/eff.root',
-    # ]
+        # '/eos/user/h/hhua/forTopHLT/2024H/v1EleTTPhase/result/v1ttAndHT200/eff.root',
+        # '/eos/user/h/hhua/forTopHLT/2024I/v1EleTTPhase/result/v1ttAndHT200/eff.root',
+        
+        # '/eos/user/h/hhua/forTopHLT/2024D/v1MuonTTPhase/result/v1ttAndHT200/eff.root',
+        # '/eos/user/h/hhua/forTopHLT/2024E/v1MuonTTPhase/result/v1ttAndHT200/eff.root',
+        '/eos/user/h/hhua/forTopHLT/2024F/v1MuonTTPhase/result/v1ttAndHT200/eff.root',
+        # '/eos/user/h/hhua/forTopHLT/2024G/v1MuonTTPhase/result/v1ttAndHT200/eff.root',
+        # '/eos/user/h/hhua/forTopHLT/2024H/v1MuonTTPhase/result/v1ttAndHT200/eff.root',
+        # '/eos/user/h/hhua/forTopHLT/2024I/v1MuonTTPhase/result/v1ttAndHT200/eff.root',
+    ]
     # HLT = 'HLTbothEle'
     # HLT = 'HLTcrossEle'
+    # HLT = 'HLTcrossMu'
+    HLT = 'HLTbothMu'
     # legendList = ['2024G_preMD', '2024G_postMD']
     
     
     
     
-    # effVsEras(effList, ifHadronic)
     effVsEras(effList, HLT, legendList)
+    # effVsEras(effList, ifHadronic)
     
     # eff_HHVsAll(effList[2])
 
@@ -75,6 +86,8 @@ def effVsEras(inputList, HLT='HLTAll', legendList=[]):
         'HH': ['HT', 'jet_6pt', 'nb'],
         'HLTcrossEle': ['ele_1pt', 'ele_1eta', 'HT'],
         'HLTbothEle': ['ele_1pt', 'ele_1eta', 'HT'],
+        'HLTcrossMu': ['muon_1pt', 'muon_1eta', 'HT'],
+        'HLTbothMu': ['muon_1pt', 'muon_1eta', 'HT'],
     }
     
     # for iVar in varList:

@@ -145,6 +145,15 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
                         'HLT_Mu12_IsoVVL_PFHT150_PNetBTag0p53',#!added in 2024C after run 379613
                         "run",
                         ]
+   
+    #check in run branch>379613 in df, then remove the ele and mu trigger in the branches_to_keep
+    # afterRun = df.Filter('run>379613') #Some files including this run, still don't have the lepton cross triggers
+    # if afterRun.Count().GetValue() == 0:
+    if era == '2024C':
+        branches_to_keep.remove('HLT_Ele14_eta2p5_IsoVVVL_Gsf_PFHT200_PNetBTag0p53')
+        branches_to_keep.remove('HLT_Mu12_IsoVVL_PFHT150_PNetBTag0p53')
+    # print('afterRun: ', afterRun.Count().GetValue())
+     
         
     branches_to_keep.append('nj')
     branches_to_keep.append('nb')    

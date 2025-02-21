@@ -21,27 +21,29 @@ def main():
     # inputDir = '/eos/user/h/hhua/forTopHLT/2024C/v1ForHadronicV2/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/2024D/v1ForHadronicV2/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/2024E/v1ForHadronicV2/'
-    inputDir = '/eos/user/h/hhua/forTopHLT/2024F/v1ForHadronicV2/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2024F/v1ForHadronicV2/'
     # #!what's the difference between /home-h and /user/h/hhua?
-    isHadronic = True
-    outVersion = 'v0ttHPhasephase'
-    offline = "HT>500. && nj>5 && nb>1 && HLT_IsoMu24==1 && jet_6pt>40." #ttH phase space
+    # isHadronic = True
+    # outVersion = 'v0ttHPhasephase'
+    # offline = "HT>500. && nj>5 && nb>1 && HLT_IsoMu24==1 && jet_6pt>40." #ttH phase space
+    # outVersion = 'v0ttHPhasephase'
     # outVersion = 'v0ttHPhasephase_preMD3'
     # outVersion = 'v0ttHPhasephase_postMD3'
-    outVersion = 'v0ttHPhasephase'
    
     #for electron HLT efficiency measurement
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v1EleTTPhase/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024E/v1EleTTPhase/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/2024F/v1EleTTPhase/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/2024G/v1EleTTPhase/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2024H/v1EleTTPhase/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2024I/v1EleTTPhase/'
     # outVersion = 'v0tt'
-    # outVersion = 'v1ttAndHT200'
     # isHadronic = False
+    # ifMuonHLT = False
     # offline = 'ne==1 && ele_1pt>16. && nj>2 && nb>1 && HLT_IsoMu24==1'#ttbar phase space 
     # offline = f"{offline} && HT>200."
     # offline = f'{offline} && run>384918 '#!MD3 in 2024G
-    # ifMuonHLT = False
+    # outVersion = 'v1ttAndHT200'
     # outVersion = 'v1ttAndHT200_postMD3'
     # offline = f'{offline} && run<=384918 '#!MD3 in 2024G
     # offline = f'{offline} && run>384918 '#!MD3 in 2024G
@@ -50,9 +52,15 @@ def main():
     #for muon HLT efficiency measurement
     # inputDir = '/eos/user/h/hhua/forTopHLT/2024F/v1MuonTTPhase/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/2024G/v1MuonTTPhase/'
-    # offline = 'nm==1 && muon_1pt>14. && nj>2 && nb>1 && HLT_Ele30_WPTight_Gsf==1'#ttbar phase space
-    # offline = f"{offline} && HT>200."
-    # ifMuonHLT = True
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2024H/v1MuonTTPhase/'
+    inputDir = '/eos/user/h/hhua/forTopHLT/2024E/v1MuonTTPhase/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2024D/v1MuonTTPhase/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2024I/v1MuonTTPhase/'
+    offline = 'nm==1 && muon_1pt>14. && nj>2 && nb>1 && HLT_Ele30_WPTight_Gsf==1'#ttbar phase space
+    offline = f"{offline} && HT>200."
+    outVersion = 'v1ttAndHT200'
+    isHadronic = False
+    ifMuonHLT = True
   
   
   
@@ -87,7 +95,8 @@ def HLTHistFill_ele(inputDir, outFile, isTest, era, offline, ifMuonHLT=False):
     ptBin = np.array((0., 16, 20, 25, 30, 35, 45, 300))
     de_ele1pt, nu_ele1pt = getDeAndNuHist(df, offline, singleEle, f"{offlineLep}_1pt", 'p_{T}^{1st lep}(GeV)', ptBin, f'HLTsingle{HLTName}')
     de_ele1ptCross, nu_ele1ptCross = getDeAndNuHist(df, offline, eleCross, f"{offlineLep}_1pt", 'p_{T}^{1st lep}(GeV)', ptBin, f'HLTcross{HLTName}')
-    de_ele1pt_both, nu_ele1pt_both = getDeAndNuHist(df, offline, f"{singleEle}||{eleCross}", f"{offlineLep}_1pt", 'p_{T}^{1st lep}(GeV)', ptBin, 'HLTbothEle')
+    # de_ele1pt_both, nu_ele1pt_both = getDeAndNuHist(df, offline, f"{singleEle}||{eleCross}", f"{offlineLep}_1pt", 'p_{T}^{1st lep}(GeV)', ptBin, 'HLTbothEle')
+    de_ele1pt_both, nu_ele1pt_both = getDeAndNuHist(df, offline, f"{singleEle}||{eleCross}", f"{offlineLep}_1pt", 'p_{T}^{1st lep}(GeV)', ptBin, f'HLTboth{HLTName}')
     
     etaBin = np.array((-2.5, -2.2, -1.8, -1.4, -1.0, -0.6, 0.6, 1.0, 1.4, 1.8, 2.2, 2.5)) 
     de_ele1etaCross, nu_ele1etaCross = getDeAndNuHist(df, offline, eleCross, f"{offlineLep}_1eta", '#eta^{1st lep}', etaBin, f'HLTcross{HLTName}')

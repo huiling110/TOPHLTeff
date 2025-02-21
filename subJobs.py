@@ -20,25 +20,29 @@ def main():
     # inputList = 'input/Muon2024G_partial.txt'
     # inputList = 'input/Muon2024G.txt'
     # inputList = 'input/Muon2024H.txt'
-    inputList = 'input/Muon2024I.txt'
-    # inputList = 'input/EGamma2024G_partial.txt'
+    # inputList = 'input/Muon2024I.txt'
     # inputList = 'input/EGamma2024F.txt'
+    # inputList = 'input/EGamma2024E.txt'
+    inputList = 'input/EGamma2024D.txt'
+    # inputList = 'input/EGamma2024G_partial.txt'
+    # inputList = 'input/EGamma2024G.txt'
+    # inputList = 'input/EGamma2024H.txt'
+    # inputList = 'input/EGamma2024I.txt'
     # era = '2024DpreCalib'
-    # era = '2024D'
+    era = '2024D'
     # era = '2024E'
     # era = '2024F'
     # era = '2024G'
     # era = '2024H'
-    era = '2024I'
+    # era = '2024I'
     isVictor = False
     # ifHardronic = True
     ifHardronic = False
     # jobVersion = 'v1ForHadronic'
     # jobVersion = 'v1ForHadronicV2'
     # jobVersion = 'v1ForHadronic_partial'
-    jobVersion = 'v1EleTTPhase' #for eletron HLT efficiency measurement
-    # jobVersion = 'v1MuonTTPhase'
-    # jobVersion = 'v1MuonTTPhase_v2'
+    # jobVersion = 'v1EleTTPhase' #for eletron HLT efficiency measurement
+    jobVersion = 'v1MuonTTPhase'
     
     
     
