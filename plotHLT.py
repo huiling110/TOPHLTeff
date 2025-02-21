@@ -8,13 +8,6 @@ import usefulFunc as uf
 def main():
     # isTest = True
     isTest =False
-    # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023B/v1ForHadronic/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023C/v1ForHadronic/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2022/v1ForHadronic/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT_05072024/2023D/v1ForHadronic/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT_05072024/2024C/v1ForHadronic/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT_05072024/2024DpreCalib/v1ForHadronic/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT_05072024/2024DpostCalib/v1ForHadronic/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v1ForHadronic/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v2HadronicWithRdataframe/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024E/v2HadronicWithRdataframe/'
@@ -22,39 +15,48 @@ def main():
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024F/v1ForHadronic/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/2024F/v1ForHadronic/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/2024G/v1ForHadronic_partial/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2024G/v1ForHadronic/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2024H/v1ForHadronic/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2024I/v1ForHadronic/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2024C/v1ForHadronicV2/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2024D/v1ForHadronicV2/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2024E/v1ForHadronicV2/'
+    inputDir = '/eos/user/h/hhua/forTopHLT/2024F/v1ForHadronicV2/'
     # #!what's the difference between /home-h and /user/h/hhua?
-    # isHadronic = True
-    # outVersion = 'v0ttHPhasephase'
-    # # offline = "HT>500. && nj>5 && nb>1 && HLT_IsoMu24==1"
-    # offline = "HT>500. && nj>5 && nb>1 && HLT_IsoMu24==1 && jet_6pt>40." #ttH phase space
+    isHadronic = True
+    outVersion = 'v0ttHPhasephase'
+    offline = "HT>500. && nj>5 && nb>1 && HLT_IsoMu24==1 && jet_6pt>40." #ttH phase space
+    # outVersion = 'v0ttHPhasephase_preMD3'
+    # outVersion = 'v0ttHPhasephase_postMD3'
+    outVersion = 'v0ttHPhasephase'
    
     #for electron HLT efficiency measurement
-    # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023B/v1ForEle/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023C/v1ForEle/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2023D/v1ForEle/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT_12192023BPix/2022/v1ForEle/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023B/v1ForEle/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023C/v1ForEle/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2023D/v1ForEle/'
-    # inputDir = '/eos/user/v/vshang/forTopHLT_11052023/2022/v1ForEle/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024D/v1EleTTPhase/'
     # inputDir = '/eos/home-h/hhua/forTopHLT/2024E/v1EleTTPhase/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/2024F/v1EleTTPhase/'
     # inputDir = '/eos/user/h/hhua/forTopHLT/2024G/v1EleTTPhase/'
     # outVersion = 'v0tt'
-    outVersion = 'v1ttAndHT200'
-    isHadronic = False
+    # outVersion = 'v1ttAndHT200'
+    # isHadronic = False
     # offline = 'ne==1 && ele_1pt>16. && nj>2 && nb>1 && HLT_IsoMu24==1'#ttbar phase space 
     # offline = f"{offline} && HT>200."
+    # offline = f'{offline} && run>384918 '#!MD3 in 2024G
+    # ifMuonHLT = False
+    # outVersion = 'v1ttAndHT200_postMD3'
+    # offline = f'{offline} && run<=384918 '#!MD3 in 2024G
+    # offline = f'{offline} && run>384918 '#!MD3 in 2024G
+    # outVersion = 'v1ttAndHT200_preMD3'
   
     #for muon HLT efficiency measurement
-    inputDir = '/eos/user/h/hhua/forTopHLT/2024F/v1MuonTTPhase/'
-    offline = 'nm==1 && muon_1pt>14. && nj>2 && nb>1 && HLT_Ele30_WPTight_Gsf==1'#ttbar phase space
-    offline = f"{offline} && HT>200."
-    ifMuonHLT = True
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2024F/v1MuonTTPhase/'
+    # inputDir = '/eos/user/h/hhua/forTopHLT/2024G/v1MuonTTPhase/'
+    # offline = 'nm==1 && muon_1pt>14. && nj>2 && nb>1 && HLT_Ele30_WPTight_Gsf==1'#ttbar phase space
+    # offline = f"{offline} && HT>200."
+    # ifMuonHLT = True
+  
+  
+  
    
-    # era = uf.getEra(inputDir) 
-    # era = uf.getEraNano(inputDir)
     era = uf.extract_era_from_path(inputDir)
     print('era: ', era)
     outFile = makeOutFile(inputDir, isTest, outVersion) 
@@ -113,7 +115,8 @@ def HLTHistFill(inputDir, outFile, isHadronic, isTest, era, offline='HT>500. && 
     # HLT_3btag = "HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3"
     HLT_3btag = sn.triggerSwitchedMap[era]
     HLT_all = f"{HLT_1btag}||{HLT_2btag}||{HLT_3btag}"
-    HLT_HH = 'HLT_PFHT280_QuadPFJet30_PNet2BTagMean0p55'
+    # HLT_HH = 'HLT_PFHT280_QuadPFJet30_PNet2BTagMean0p55'
+    HLT_HH = 'HLT_PFHT250_QuadPFJet25_PNet2BTagMean0p55'
     
     binning = np.array((500., 550, 600.,  700., 800, 900. , 2000)) 
     jet6ptBin = np.array((0., 25, 50, 75, 100.,  300., ))

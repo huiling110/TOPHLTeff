@@ -12,6 +12,7 @@
    ```python3 skimNano.py```
 - Submit jobs
     ```python3 subJobs.py```
+    - check job
 
 # Plot HLT efficiency
 - Generate HLT efficieny hists
@@ -22,5 +23,7 @@
 
 
 # To do
+- [] Make the workflow more automated 
+- [] Setup enviroment properly in CenOS9
 - [] Intergate nanoAOD tool data format for object selection
 - [] Check the btag change during data taking

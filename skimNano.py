@@ -10,9 +10,10 @@ triggerSwitchedMap = {
     '2024E': 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3',
     '2024F': 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3',
     '2024G': 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3',
+    '2024I': 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3',
+    '2024H': 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3',
 } 
 
-# def main(inputNano = '/store/data/Run2023B/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v2/60000/06d25571-df3e-4ceb-9e44-7452add3e004.root', outDir = './output/', ifForHadronic = True,   ifTest = True):
 def main(inputNano = '/store/data/Run2023B/Muon0/NANOAOD/PromptNanoAODv11p9_v1-v2/60000/06d25571-df3e-4ceb-9e44-7452add3e004.root', outDir = './output/', ifForHadronic = True,   ifTest = True):
     #!test default input files in parse_arguments()
     print('inputNano: ', inputNano)
@@ -134,8 +135,8 @@ def preSel(inputNano,  outDir, ifForHadronic, ifTest):
                         # 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepJet_4p5', # ![ 378981, 380933], from HLT INFO GUI
                         # 'HLT_PFHT340_QuadPFJet70_50_40_40_PNet2BTagMean0p70', #3.2	[378981,380933] ; 2024C[37941, 380252]
                         # 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_PNet3BTag_4p3', ##!seems not available in 2024C, starting 379613
-                        # 'HLT_PFHT330PT30_QuadPFJet_75_60_45_40',#!prescaled!
-                        'HLT_PFHT280_QuadPFJet30_PNet2BTagMean0p55',#!ParkingHH since 2023C run 367661
+                        # 'HLT_PFHT280_QuadPFJet30_PNet2BTagMean0p55',#!ParkingHH since 2023C run 367661
+                        'HLT_PFHT250_QuadPFJet25_PNet2BTagMean0p55',#!HT280 is the backup
                         'HLT_IsoMu24',
                         # 'HLT_Ele30_eta2p1_WPTight_Gsf_CentralPFJet35_EleCleaned',# !disabled in 2024
                         # 'HLT_Ele28_eta2p1_WPTight_Gsf_HT150', #!disabled in 2024
@@ -177,9 +178,11 @@ def process_arguments():
     # input = '/store/data/Run2022C/Muon/NANOAOD/PromptNanoAODv10-v1/40000/d4484006-7e4b-424e-86a4-346d17d862f8.root'
     # input = '/store/data/Run2024E/Muon0/NANOAOD/PromptReco-v1/000/380/956/00000/8413549d-588b-46ff-9c53-b98b34faa7e7.root'
     # input = '/store/data/Run2024D/Muon0/NANOAOD/PromptReco-v1/000/380/346/00000/3c839fb5-92c1-4140-a9ab-1efe2ad80a60.root'
-    # input = '/store/data/Run2024C/Muon1/NANOAOD/PromptReco-v1/000/380/195/00000/0567ac8a-b6c6-466e-b0da-0474f2bbeea6.root'
+    input = '/store/data/Run2024C/Muon1/NANOAOD/PromptReco-v1/000/380/195/00000/0567ac8a-b6c6-466e-b0da-0474f2bbeea6.root'
     # input = '/store/data/Run2024F/Muon0/NANOAOD/PromptReco-v1/000/383/367/00000/407206b5-4ab2-45e4-a40b-0d150ff3263a.root'
-    input = '/store/data/Run2024F/EGamma1/NANOAOD/PromptReco-v1/000/382/165/00000/f5235ff3-bb75-4c73-8c6a-d1b1b5fcdf39.root'
+    # input = '/store/data/Run2024F/EGamma1/NANOAOD/PromptReco-v1/000/382/165/00000/f5235ff3-bb75-4c73-8c6a-d1b1b5fcdf39.root'
+    # input = '/store/data/Run2024G/Muon0/NANOAOD/PromptReco-v1/000/383/814/00000/c96be705-bd3e-4cde-8967-ed77e70a6424.root'
+    # input = '/store/data/Run2024G/EGamma1/NANOAOD/PromptReco-v1/000/384/610/00000/765b14d1-f959-4a2e-8c75-6a91c75ca85f.root'#!seems problem with reading this file from jobs
     # Add arguments
     parser.add_argument('--input', type=str, default=input)
     parser.add_argument('--outDir', type=str, default='./output/')

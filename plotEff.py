@@ -5,47 +5,50 @@ import usefulFunc as uf
 
 
 def main():
-    # in2024C = '/eos/user/v/vshang/forTopHLT_05072024/2024C/v1ForHadronic/result/eff.root'
-    # in2023D = '/eos/user/v/vshang/forTopHLT_05072024/2024DpreCalib/v1ForHadronic/result/eff.root'
-    # in2024C = '/eos/user/v/vshang/forTopHLT_05072024/2024DpostCalib/v1ForHadronic/result/eff.root'
     # in2024D = '/eos/home-h/hhua/forTopHLT/2024D/v2HadronicWithRdataframe/result/eff.root'
     # in2024E = '/eos/home-h/hhua/forTopHLT/2024E/v2HadronicWithRdataframe/result/eff.root'
     # in2024C = '/eos/home-h/hhua/forTopHLT/2024C/v2HadronicWithRdataframe/result/eff.root'
     # ifHadronic =True
-    # effList = [
+    effList = [
     # #     '/eos/home-h/hhua/forTopHLT/2024C/v2HadronicWithRdataframe/result/v0ttHPhasephase/eff.root',
     # #     '/eos/home-h/hhua/forTopHLT/2024D/v2HadronicWithRdataframe/result/v0ttHPhasephase/eff.root',
     # #     '/eos/home-h/hhua/forTopHLT/2024E/v2HadronicWithRdataframe/result/v0ttHPhasephase/eff.root',
     #         '/eos/user/h/hhua/forTopHLT/2024F/v1ForHadronic/result/v0ttHPhasephase/eff.root',
-    #        '/eos/user/h/hhua/forTopHLT/2024G/v1ForHadronic_partial/result/v0ttHPhasephase/eff.root', 
-    # ]
-    # # HLT = 'HLTAll'
+           '/eos/user/h/hhua/forTopHLT/2024D/v1ForHadronicV2/result/v0ttHPhasephase/eff.root',
+           '/eos/user/h/hhua/forTopHLT/2024E/v1ForHadronicV2/result/v0ttHPhasephase/eff.root',
+           '/eos/user/h/hhua/forTopHLT/2024F/v1ForHadronicV2/result/v0ttHPhasephase/eff.root',
+           '/eos/user/h/hhua/forTopHLT/2024G/v1ForHadronic/result/v0ttHPhasephase/eff.root', 
+           '/eos/user/h/hhua/forTopHLT/2024H/v1ForHadronic/result/v0ttHPhasephase/eff.root', 
+           '/eos/user/h/hhua/forTopHLT/2024I/v1ForHadronic/result/v0ttHPhasephase/eff.root', 
+        # '/eos/user/h/hhua/forTopHLT/2024G/v1ForHadronic_partial/result/v0ttHPhasephase_preMD3/eff.root',
+        # '/eos/user/h/hhua/forTopHLT/2024G/v1ForHadronic_partial/result/v0ttHPhasephase_postMD3/eff.root',
+    ]
+    HLT = 'HLTAll'
     # HLT = 'HH'
+    legendList = []#empty list will use the era as legend
+    # legendList = ['2024D', '2024E', '2024F', '2024G', '2024H', '2024I']
     
     
-    effList = [
+    # effList = [
     #     # '/eos/home-h/hhua/forTopHLT/2024D/v1EleTTPhase/result/v0tt/eff.root',
     #     # '/eos/home-h/hhua/forTopHLT/2024E/v1EleTTPhase/result/v0tt/eff.root',
     #     '/eos/home-h/hhua/forTopHLT/2024D/v1EleTTPhase/result/v1ttAndHT200/eff.root',
     #     '/eos/home-h/hhua/forTopHLT/2024E/v1EleTTPhase/result/v1ttAndHT200/eff.root',
-        '/eos/user/h/hhua/forTopHLT/2024F/v1EleTTPhase/result/v1ttAndHT200/eff.root',
-        '/eos/user/h/hhua/forTopHLT/2024G/v1EleTTPhase/result/v1ttAndHT200/eff.root',
-    ]
-    # ifHadronic = False 
+        # '/eos/user/h/hhua/forTopHLT/2024F/v1EleTTPhase/result/v1ttAndHT200/eff.root',
+        # '/eos/user/h/hhua/forTopHLT/2024G/v1EleTTPhase/result/v1ttAndHT200/eff.root',
+        # '/eos/user/h/hhua/forTopHLT/2024F/v1MuonTTPhase/result/v1ttAndHT200/eff.root',
+        # '/eos/user/h/hhua/forTopHLT/2024G/v1EleTTPhase/result/v1ttAndHT200_preMD3/eff.root',
+        # '/eos/user/h/hhua/forTopHLT/2024G/v1EleTTPhase/result/v1ttAndHT200_postMD3/eff.root',
+    # ]
     # HLT = 'HLTbothEle'
-    HLT = 'HLTcrossEle'
+    # HLT = 'HLTcrossEle'
+    # legendList = ['2024G_preMD', '2024G_postMD']
     
     
     
     
-    # era = uf.getEra(in2023B)
-    # if ifHadronic:
-    #     plotOverLayHard(in2023D, in2024C) 
-    # else:
-    #     plotEffOverLayEle(in2023B, in2023C, in2023D, in2022)
     # effVsEras(effList, ifHadronic)
-    
-    effVsEras(effList, HLT)
+    effVsEras(effList, HLT, legendList)
     
     # eff_HHVsAll(effList[2])
 
@@ -64,18 +67,9 @@ def eff_HHVsAll(inputList):
         ph.plotOverlay(effList, legendList, 'L1T+HLT efficiency', plotName, xmin, xmax, ['2024E'], [0, 1.1], [0.2, 0.25, 0.9, 0.5])
         
 
-# def effVsEras(inputList, ifHadronic=True):
-def effVsEras(inputList, HLT='HLTAll', varList = ['HT', 'jet_6pt', 'nb']):
+def effVsEras(inputList, HLT='HLTAll', legendList=[]):
     outDir = getOutDir(inputList[0])
    
-    # if ifHadronic:
-    #     varList = ['HT', 'jet_6pt', 'nb']
-    #     HLT = 'HLTAll'
-    # else:
-    #     varList = ['ele_1pt', 'ele_1eta', 'HT']
-    
-    #     # HLT = 'HLTcrossEle'
-    #     HLT = 'HLTbothEle'
     triggerVarMap = {
         'HLTAll': ['HT', 'jet_6pt', 'nb'],
         'HH': ['HT', 'jet_6pt', 'nb'],
@@ -89,17 +83,18 @@ def effVsEras(inputList, HLT='HLTAll', varList = ['HT', 'jet_6pt', 'nb']):
         eraList = []
         for iEff in inputList:
             eff = ph.getEffFromFile(iEff, [f'de_{iVar}_{HLT}', f'nu_{iVar}_{HLT}'])
-            # era = uf.getEra(iEff)
             era = uf.extract_era_from_path(iEff)
             effList.append(eff)
             eraList.append(era)
-        print(effList) 
+        print(effList)
         
         xmin = effList[0].GetTotalHistogram().GetXaxis().GetXmin()
         xmax = effList[0].GetTotalHistogram().GetXaxis().GetXmax()
         
         plotName =  f'{outDir}HLTEff_{iVar}_{HLT}.png'
-        ph.plotOverlay(effList, eraList,  'L1T+HLT efficiency', plotName, xmin, xmax, eraList, [0, 1.1])
+        if not legendList:
+            legendList = eraList
+        ph.plotOverlay(effList, legendList,  'L1T+HLT efficiency', plotName, xmin, xmax, eraList, [0, 1.1])
     
     
     

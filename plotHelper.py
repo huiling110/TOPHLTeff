@@ -75,14 +75,24 @@ def plotOverlay(histList, legenList,   yTitle, plotName, xmin, xmax,  era=['2024
     can = ROOT.TCanvas('overlay', 'overlay', 1000, 800)
     
     legend = st.getMyLegend(legendPos[0], legendPos[1], legendPos[2], legendPos[3])
-    LineColorDic={
-        0: [ROOT.TColor.GetColor("#f03b20"), 8], #rea
-        1: [ROOT.TColor.GetColor("#fd8d3c"), 41], #orange
-        # 2: [ROOT.TColor.GetColor("#2ca25f"), 101],
-        2: [ROOT.TColor.GetColor("#2ca25f"), 1], #green
-        #2ca25f green
-        #d01c8b purple
-        ##fdae61 fc9272" orange
+    # LineColorDic={
+    #     0: [ROOT.TColor.GetColor("#f03b20"), 8], #rea
+    #     1: [ROOT.TColor.GetColor("#fd8d3c"), 41], #orange
+    #     # 2: [ROOT.TColor.GetColor("#2ca25f"), 101],
+    #     2: [ROOT.TColor.GetColor("#2ca25f"), 1], #green
+    #     3: [ROOT.TColor.GetColor("#d01c8b"), 2], #purple
+    #     4: [ROOT.TColor.GetColor("#fdae61"), 3], #orange
+    #     5: [ROOT.TColor.GetColor("#fc9272"), 4], #orange
+    #     6: [ROOT.TColor.GetColor("#fdae61"), 5], #orange
+    # }
+    LineColorDic = {
+    0: [ROOT.TColor.GetColor("#d73027"), 8],  # Red
+    1: [ROOT.TColor.GetColor("#fc8d59"), 41], # Orange
+    2: [ROOT.TColor.GetColor("#fee08b"), 101],# Yellow
+    3: [ROOT.TColor.GetColor("#91bfdb"), 2],  # Light Blue
+    4: [ROOT.TColor.GetColor("#4575b4"), 3],  # Blue
+    5: [ROOT.TColor.GetColor("#542788"), 4],  # Purple
+    6: [ROOT.TColor.GetColor("#7fbc41"), 5],  # Green
     }
     
 

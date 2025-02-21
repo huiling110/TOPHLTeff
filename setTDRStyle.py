@@ -1,5 +1,3 @@
-
-
 import ROOT
 from globeVariables import lumiMap
 
