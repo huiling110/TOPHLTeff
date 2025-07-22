@@ -1,0 +1,1 @@
+python3 plotHLT.py --inputDir /eos/user/c/cgiordan/forTopHLT/2024I/v1ForHadronic2024/ --era 2024I --outVersion attempt_2024I --isHadronic --offline ttH 

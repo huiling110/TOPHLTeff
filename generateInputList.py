@@ -1,129 +1,74 @@
+import argparse
 import subprocess
+import os
+
+DATASETS = {
+    "Muon2024I": [
+        '/Muon1/Run2024I-PromptReco-v1/NANOAOD',
+        '/Muon0/Run2024I-PromptReco-v1/NANOAOD',
+        '/Muon1/Run2024I-PromptReco-v2/NANOAOD',
+        '/Muon0/Run2024I-PromptReco-v2/NANOAOD',
+    ],
+    "Muon2025B": [
+        "/Muon0/Run2025B-PromptReco-v1/NANOAOD",
+        "/Muon1/Run2025B-PromptReco-v1/NANOAOD"
+    ],
+    "Muon2025C": [
+        "/Muon0/Run2025C-PromptReco-v1/NANOAOD",
+        "/Muon1/Run2025C-PromptReco-v1/NANOAOD"
+    ],
+    "EGamma2024I": [
+        '/EGamma0/Run2024I-PromptReco-v1/NANOAOD',
+        '/EGamma0/Run2024I-PromptReco-v2/NANOAOD',
+        '/EGamma1/Run2024I-PromptReco-v1/NANOAOD',
+        '/EGamma1/Run2024I-PromptReco-v2/NANOAOD',
+    ],
+    "EGamma2025C": [
+        "/EGamma0/Run2025C-PromptReco-v1/NANOAOD",
+        "/EGamma1/Run2025C-PromptReco-v1/NANOAOD",
+        "/EGamma2/Run2025C-PromptReco-v1/NANOAOD",
+        "/EGamma3/Run2025C-PromptReco-v1/NANOAOD"
+    ],
+    # add the others when needed!
+    # next improvement: authomatize the search with wildcards 
+    #(e.g. æ/EGamma*/Run<tag>-PromptReco-v*/NANOAOD")
+}
+
+
+def get_files(dataset):
+    command = f'dasgoclient --query="file dataset={dataset}"'
+    print("Running command:", command)
+    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    if result.returncode != 0:
+        print(f"Error fetching files for dataset {dataset}")
+        return []
+    return result.stdout.strip().splitlines()
+
+
+def save_list_to_txt(file_list, output_path):
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    with open(output_path, "w") as f:
+        for item in file_list:
+            f.write(f"{item}\n")
+    print(f"File saved to: {output_path}")
+
 
 def main():
-    #dasgoclient --query="dataset=/Muon*/Run2023*-PromptNanoAODv*/NANOAOD"  for getting datasets
-    datasets = [
-    # '/Muon0/Run2023B-PromptNanoAODv11p9_v1-v2/NANOAOD',
-    # '/Muon1/Run2023B-PromptNanoAODv11p9_v1-v2/NANOAOD',
-    # '/Muon0/Run2023C-PromptNanoAODv11p9_v1-v1/NANOAOD',
-    # '/Muon0/Run2023C-PromptNanoAODv12_v2-v2/NANOAOD',
-    # '/Muon0/Run2023C-PromptNanoAODv12_v3-v1/NANOAOD',
-    # '/Muon0/Run2023C-PromptNanoAODv12_v4-v1/NANOAOD',
-    # '/Muon1/Run2023C-PromptNanoAODv11p9_v1-v1/NANOAOD',
-    # '/Muon1/Run2023C-PromptNanoAODv12_v2-v2/NANOAOD',
-    # '/Muon1/Run2023C-PromptNanoAODv12_v3-v1/NANOAOD',
-    # '/Muon1/Run2023C-PromptNanoAODv12_v4-v1/NANOAOD',
-    # '/Muon0/Run2023D-PromptReco-v1/NANOAOD',
-    # '/Muon0/Run2023D-PromptReco-v2/NANOAOD',
-    # '/Muon1/Run2023D-PromptReco-v1/NANOAOD',
-    # '/Muon1/Run2023D-PromptReco-v2/NANOAOD ',
-   
-    # '/Muon/Run2022C-PromptNanoAODv10-v1/NANOAOD',
-    # '/Muon/Run2022C-PromptNanoAODv10_v1-v1/NANOAOD',
-    # '/Muon/Run2022D-PromptNanoAODv10_v1-v1/NANOAOD',
-    # '/Muon/Run2022D-PromptNanoAODv10_v2-v1/NANOAOD',
-    # '/Muon/Run2022E-PromptNanoAODv10_v1-v3/NANOAOD',
-    # '/Muon/Run2022F-PromptNanoAODv10_v1-v2/NANOAOD',
-    # '/Muon/Run2022F-PromptNanoAODv11_v1-v2/NANOAOD',
-    # '/Muon/Run2022G-PromptNanoAODv10_v1-v1/NANOAOD',
-    # '/Muon/Run2022G-PromptNanoAODv11_v1-v2/NANOAOD',
+    parser = argparse.ArgumentParser(description="Generate file list from DAS for selected dataset group.")
+    parser.add_argument("--tag", required=True, choices=DATASETS.keys(), help="Dataset tag to use (e.g., Muon2025C)")
+    args = parser.parse_args()
 
-    # '/Muon0/Run2024C-PromptReco-v1/NANOAOD',
-    # '/Muon1/Run2024C-PromptReco-v1/NANOAOD',    
+    tag = args.tag
+    datasets = DATASETS[tag]
+    all_files = []
 
-    # '/Muon0/Run2024D-PromptReco-v1/NANOAOD',
-    # '/Muon1/Run2024D-PromptReco-v1/NANOAOD',
-    # '/Muon0/Run2024E-PromptReco-v1/NANOAOD',
-    # '/Muon0/Run2024E-PromptReco-v2/NANOAOD'
-    # '/Muon1/Run2024E-PromptReco-v1/NANOAOD',
-    # '/Muon1/Run2024E-PromptReco-v2/NANOAOD',
-    
-    # '/Muon0/Run2024F-PromptReco-v1/NANOAOD',
-    # '/Muon1/Run2024F-PromptReco-v1/NANOAOD',
-    
-    # '/Muon0/Run2024G-PromptReco-v1/NANOAOD',
-    # '/Muon1/Run2024G-PromptReco-v1/NANOAOD',
-    # '/Muon1/Run2024H-PromptReco-v1/NANOAOD',
-    # '/Muon0/Run2024H-PromptReco-v1/NANOAOD',
-    # '/Muon1/Run2024I-PromptReco-v1/NANOAOD',
-    # '/Muon0/Run2024I-PromptReco-v1/NANOAOD',
-    # '/Muon1/Run2024I-PromptReco-v2/NANOAOD',
-    # '/Muon0/Run2024I-PromptReco-v2/NANOAOD',
-    
-    # '/EGamma1/Run2024F-PromptReco-v1/NANOAOD',
-    # '/EGamma0/Run2024F-PromptReco-v1/NANOAOD',
-    # '/EGamma1/Run2024G-PromptReco-v1/NANOAOD',
-    # '/EGamma0/Run2024G-PromptReco-v1/NANOAOD',
-    # '/EGamma0/Run2024H-PromptReco-v1/NANOAOD',
-    # '/EGamma1/Run2024H-PromptReco-v1/NANOAOD',
-    # '/EGamma0/Run2024I-PromptReco-v1/NANOAOD',
-    # '/EGamma0/Run2024I-PromptReco-v2/NANOAOD',
-    # '/EGamma1/Run2024I-PromptReco-v1/NANOAOD',
-    # '/EGamma1/Run2024I-PromptReco-v2/NANOAOD',
-    # '/EGamma0/Run2024E-PromptReco-v1/NANOAOD',
-    # '/EGamma1/Run2024E-PromptReco-v1/NANOAOD',
-    # '/EGamma0/Run2024E-PromptReco-v2/NANOAOD',
-    # '/EGamma1/Run2024E-PromptReco-v2/NANOAOD',
-    '/EGamma0/Run2024D-PromptReco-v1/NANOAOD',
-    '/EGamma1/Run2024D-PromptReco-v1/NANOAOD',
-    '/EGamma0/Run2024D-PromptReco-v2/NANOAOD',
-    '/EGamma1/Run2024D-PromptReco-v2/NANOAOD',
-    
-# /EGamma1/Run2024G-PromptReco-v1/NANOAOD
-    ]
-    
-    # outList = 'Muon2023B'
-    # outList = 'Muon2023C'
-    # outList = 'Muon2023D'
-    # outList = 'Muon2022'
-    # outList = 'Muon2024C'
-    # outList = 'Muon2024D'
-    # outList = 'Muon2024D_all'
-    # outList = 'Muon2024E'
-    # outList = 'Muon2024F'
-    # outList = 'Muon2024G_partial'
-    # outList = 'EGamma2024F'
-    # outList = 'EGamma2024G_partial'
-    # outList = 'Muon2024G'
-    # outList = 'Muon2024H'
-    # outList = 'Muon2024I'
-    # outList = 'EGamma2024G'
-    # outList = 'EGamma2024H'
-    # outList = 'EGamma2024I'
-    # outList = 'EGamma2024E'
-    outList = 'EGamma2024D'
-  
-  
-  
-   
-    filesList = [] 
-    for idataset in datasets: 
-        iList = getFiles(idataset)
-        filesList.extend(iList)
-    print(filesList)
-    
-    
-    outList = 'input/' + outList +'.txt'
-    print(outList)
-    saveListToTxt(filesList, outList)
-    
-def saveListToTxt(inList, outFile):
-    with open(outFile, 'w') as file:
-    # Loop through the list and write each element to a separate line
-        for item in inList:
-            file.write("%s\n" % item)    
-    print('file saved here: ', outFile)
-    
-def getFiles(dataset):
-    command = 'dasgoclient --query=\"file dataset={}\"'.format( dataset)   
-    print('run command: ', command)
-    output = subprocess.run(command, shell=True, capture_output=True, text=True)
-    print(output.stdout)
-    lists = output.stdout.splitlines()
-    # print(lists)
-    return lists
-    
-    
-    
-if __name__=='__main__':
+    for dataset in datasets:
+        file_list = get_files(dataset)
+        all_files.extend(file_list)
+
+    output_file = f"input/{tag}.txt"
+    save_list_to_txt(all_files, output_file)
+
+
+if __name__ == "__main__":
     main()
